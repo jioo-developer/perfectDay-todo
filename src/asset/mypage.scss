@@ -1,0 +1,82 @@
+.mypage {
+  width: 100%;
+  position: relative;
+  height: 93.8vh;
+
+  header,
+  .section_1 {
+    width: 85%;
+    margin: 20px auto 0 auto;
+  }
+
+  .section_1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 135px;
+
+    figure {
+      cursor: pointer;
+
+      img {
+        width: 80px;
+        margin-bottom: 25px;
+      }
+    }
+
+    p,
+    h3 {
+      font-size: 25px;
+      line-height: 1.3;
+      font-family: "AppleSDGothicNeosB";
+      color: #3a4759;
+    }
+
+    .myName b {
+      color: #49a5f3;
+    }
+
+    span {
+      color: #999a9b;
+      font-size: 10px;
+      font-family: "AppleSDGothicNeosB";
+    }
+  }
+
+  .section_2 {
+    height: calc(959px - 300px);
+    .tab_menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tab_menu li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 60px;
+      border-top: 1px solid #dcdcdc;
+      box-sizing: border-box;
+      padding: 0 30px;
+      font-family: "AppleSDGothicNeoM";
+      color: #3a4759;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .tab_menu li:last-child {
+      border-bottom: 1px solid #dcdcdc;
+      box-sizing: border-box;
+    }
+
+    .tab_menu li a {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-family: "AppleSDGothicNeoM";
+      color: #3a4759;
+      font-size: 15px;
+    }
+  }
+}

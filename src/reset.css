@@ -1,0 +1,106 @@
+@import url("https://cdn.syncfusion.com/ej2/material.css");
+/* 리액트 캘린더 css */
+
+@font-face {
+  font-family: "AppleSDGothicNeoR";
+  font-weight: 400;
+  src: url("./font/AppleSDGothicNeoR.eot");
+  src: url("./font/AppleSDGothicNeoR.woff") format("woff");
+}
+
+@font-face {
+  font-family: "AppleSDGothicNeoM";
+  font-weight: 500;
+  src: url("./font/AppleSDGothicNeoM.eot");
+  src: url("./font/AppleSDGothicNeoM.woff") format("woff");
+}
+
+@font-face {
+  font-family: "AppleSDGothicNeoSB";
+  font-weight: 600;
+  src: url("./font/AppleSDGothicNeoSB.eot");
+  src: url("./font/AppleSDGothicNeoSB.woff") format("woff");
+}
+* {
+  margin: 0;
+  padding: 0;
+  word-break: keep-all;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+img {
+  display: block;
+  float: left;
+}
+
+a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.wrap {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 375px;
+  overflow: hidden;
+}
+
+.App {
+  max-width: 375px;
+  margin: 0 auto;
+}
+
+header,
+section,
+footer {
+  float: left;
+  width: 100%;
+}
+
+footer {
+  margin-bottom: 20px;
+  align-self: flex-end;
+}
+
+footer p {
+  text-align: center;
+  font-family: "AppleSDGothicNeoR";
+  color: #3a4759;
+  font-size: 13.3px;
+}
+
+.none {
+  display: none;
+}
+
+.center_wrap {
+  display: flex;
+  height: 98vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+button {
+  outline: 0;
+  background: transparent;
+}
+
+.MuiSvgIcon-colorPrimary {
+  color: rgb(247 198 103) !important;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.MuiSvgIcon-colorAction {
+  color: rgb(247 198 103) !important;
+  margin: 0 17px;
+  height: 0.8em !important;
+  margin-bottom: 3px !important;
+  cursor: pointer;
+}

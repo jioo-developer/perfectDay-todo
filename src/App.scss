@@ -1,0 +1,264 @@
+#root {
+  overflow: hidden;
+  position: relative;
+}
+
+.wrap {
+  margin: 0 auto;
+  max-width: 375px;
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  header {
+    margin-top: 15px;
+
+    .main_nav img {
+      width: 23px;
+    }
+
+    .header_in {
+      display: flex;
+      justify-content: space-between;
+
+      .time {
+        font-family: "AppleSDGothicNeoR";
+        color: #000000;
+        font-size: 15px;
+      }
+
+      .none {
+        display: none;
+      }
+    }
+  }
+
+  .title_header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    color: #3a4759;
+    font-size: 20px;
+    margin-top: 20px;
+    height: 35px;
+
+    P {
+      color: #333;
+      font-size: 18px;
+      text-align: center;
+      width: 100%;
+      font-family: "AppleSDGothicNeoSB";
+    }
+
+    img {
+      cursor: pointer;
+    }
+
+    img:last-child {
+      width: 22px;
+    }
+  }
+}
+
+.section01 {
+  margin: 32px 0;
+  overflow: visible;
+
+  .s1_wrap {
+    display: flex;
+    justify-content: space-between;
+    height: 127px;
+
+    img {
+      width: 115px;
+    }
+  }
+
+  p {
+    line-height: 1.2;
+  }
+
+  .today {
+    font-size: 15.5px;
+    color: #545454;
+    font-family: "AppleSDGothicNeoM";
+
+    span {
+      color: #49a5f3;
+    }
+  }
+  .parcent {
+    margin: 5px 0 10px 0;
+    font-size: 70px;
+    line-height: 1;
+    font-family: "AppleSDGothicNeoSB";
+    color: #545454;
+  }
+
+  .caption {
+    font-size: 15.5px;
+    font-family: "AppleSDGothicNeoM";
+    color: #545454;
+  }
+
+  .race {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+
+    .member,
+    .member_caption {
+      font-size: 14px;
+      font-family: "AppleSDGothicNeoM";
+      color: #545454;
+    }
+
+    .member {
+      border-bottom: 1px solid #808080;
+      box-sizing: border-box;
+      width: 60px;
+      text-align: center;
+    }
+
+    .member_caption {
+      padding-left: 5px;
+    }
+  }
+}
+
+.section02 {
+  overflow: visible;
+  min-height: 300px;
+  height: calc(959px - 300px);
+  .schedule {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+
+    span {
+      font-size: 14px;
+      color: #f7c667;
+      font-family: "AppleSDGothicNeoSB";
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    span:first-child {
+      margin-right: 15px;
+    }
+
+    p {
+      font-family: "AppleSDGothicNeoSB";
+      font-size: 16px;
+      color: #545454;
+      line-height: 1.15;
+    }
+
+    .reset {
+      align-self: flex-end;
+      font-family: "AppleSDGothicNeoSB";
+      font-size: 13px;
+      color: #333;
+      width: 80px;
+      cursor: pointer;
+      text-align: right;
+      margin-bottom: 1.5px;
+    }
+  }
+}
+
+.list {
+  margin-top: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: flex-start;
+
+  .today_date,
+  .today_txt {
+    font-family: "AppleSDGothicNeoSB";
+    font-size: 16px;
+    color: #707070;
+  }
+
+  button {
+    border: 0;
+    border-radius: 50%;
+
+    img {
+      width: 25px;
+      cursor: pointer;
+    }
+  }
+
+  .off {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .op_off {
+    color: #ddd;
+    font-family: "AppleSDGothicNeoM";
+    text-decoration: line-through;
+  }
+}
+
+.footer_bar {
+  display: flex;
+  max-width: 375px;
+  overflow: visible;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto;
+  float: none;
+
+  button {
+    border: 0;
+    border-radius: 50%;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    margin-left: -27.5px;
+    width: 55px;
+    height: 60px;
+    z-index: 1000;
+    cursor: pointer;
+  }
+
+  .f-con {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    height: 50px;
+    padding-top: 8px;
+    cursor: pointer;
+
+    p {
+      padding-top: 5px;
+    }
+
+    img {
+      height: 20px;
+    }
+  }
+
+  .home {
+    border-right: 1px solid #e7e7e7;
+  }
+
+  .calendar a,
+  .home a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+}

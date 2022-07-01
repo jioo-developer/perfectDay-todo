@@ -1,0 +1,239 @@
+.calendar {
+  .todays {
+    position: relative;
+    right: 5px;
+    top: 13px;
+    font-size: 18px;
+    text-align: center;
+    color: #555;
+    line-height: 1.2;
+    background: #fff;
+    width: 85px;
+    font-family: "AppleSDGothicNeoSB";
+    margin: 0 auto;
+  }
+
+  .cal_data {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    padding-top: 20px;
+    height: 83vh;
+  }
+
+  .cal_wrap {
+    padding-top: 20px;
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  .cal_wrap .days {
+    display: flex;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .cal_wrap::after {
+    top: 368px;
+  }
+
+  .cal_wrap .day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7);
+    color: #999;
+    height: 40px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: "AppleSDGothicNeoSB";
+    cursor: pointer;
+  }
+
+  .today {
+    background: #f1f1f1;
+  }
+
+  .cal_wrap .date_wrap {
+    display: flex;
+    flex-flow: wrap;
+    height: 280px;
+    margin-top: 13px;
+  }
+
+  .cal_wrap .day:nth-child(7n -1) {
+    color: #688ced;
+  }
+
+  .cal_wrap .day:nth-child(7n) {
+    color: #f787a7;
+  }
+
+  .cal_wrap .day.disable {
+    color: #ddd;
+  }
+
+  .title_wrap {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .date_top {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .date_top > div:last-child {
+    text-align: right;
+    margin-right: 10px;
+  }
+
+  .date_title,
+  .date_arrow {
+    font-size: 20px;
+    font-family: "AppleSDGothicNeoSB";
+    color: #f5aa19;
+    margin: 7px 0;
+  }
+  .date_arrow {
+    display: inherit;
+    color: #747474;
+    font-size: 24px;
+    margin: 0 !important;
+    position: relative;
+    bottom: 3px;
+    right: 15px;
+  }
+
+  .date_title:last-child {
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 0 !important;
+    position: relative;
+    bottom: 3px;
+  }
+
+  .date_title img {
+    margin: 0 10px;
+    cursor: pointer;
+    filter: invert(100%) sepia() saturate(10000%) hue-rotate(0deg);
+  }
+
+  .all_view {
+    font-size: 12px;
+    color: #808080;
+  }
+
+  .date_wrap {
+    width: 100%;
+    height: 35px;
+
+    box-sizing: border-box;
+    border-radius: 30px;
+
+    p {
+      font-size: 16px;
+      font-family: "AppleSDGothicNeoR";
+      color: #707070;
+    }
+  }
+
+  .d_days {
+    float: right;
+    width: 58px;
+    height: 25px;
+    overflow: hidden;
+    background: #80c4fd;
+    color: #fff;
+    border-radius: 50px;
+    font-size: 14px;
+    border: 0;
+    order: 1;
+    cursor: pointer;
+    position: relative;
+    z-index: 1000;
+  }
+
+  .button_wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .dday-reset {
+    border: 0;
+    outline: 0;
+    font-family: "AppleSDGothicNeoR";
+    font-size: 15px;
+    float: right;
+    margin-right: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+    order: 0;
+    position: relative;
+    z-index: 1000;
+  }
+}
+
+hr {
+  border-color: #ddd;
+}
+
+.change_btn {
+  cursor: pointer;
+}
+
+.prev_btn {
+  margin-right: 10px;
+  transform: rotate(90deg);
+}
+
+.next_btn {
+  margin-left: 10px;
+  transform: rotate(90deg);
+}
+
+.important_data {
+  margin-top: 20px;
+  padding: 0 0 130px 8px;
+
+  .title_wrap {
+    border: 0;
+    align-items: flex-start;
+  }
+
+  .date_title {
+    width: 100%;
+    margin: 0;
+  }
+
+  #d_day_txt {
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 77%;
+    margin-bottom: 20px;
+  }
+
+  .date_txt {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+.input_wrap {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 10px;
+}

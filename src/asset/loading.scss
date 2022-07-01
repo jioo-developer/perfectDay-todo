@@ -1,0 +1,47 @@
+.logo_wrap{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-end;
+
+    img{
+        margin: 0 auto;
+        width: 133px;
+    }
+
+    .introImg{
+        padding-right: 25px;
+    }
+
+    .title{
+        font-size: 21px;
+        color: #3A4759;
+        font-family: "AppleSDGothicNeoM";
+        line-height: 1.2;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .intro_title{
+        font-family: "AppleSDGothicNeoM";
+    }
+
+    .caption{
+        font-size: 13px;
+        font-family: "AppleSDGothicNeoR";
+        color: #707070;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .enter{
+        text-align: center;
+        margin-top: 10px;
+        font-family: "AppleSDGothicNeoR";
+        color: #707070;
+        cursor: pointer;
+        font-size: 14px;
+    }
+}
+

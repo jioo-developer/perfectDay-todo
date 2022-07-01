@@ -1,0 +1,65 @@
+form,input{
+    outline: 0;
+    border: 0;
+    width: 300px;
+    height: 30px;
+    
+    input{
+        text-align: center;
+        background: transparent;
+        border-bottom: 1px solid #7d7d7d;
+        box-sizing: border-box;
+    }
+}
+
+.gretting_wrap{
+    width: 100%;
+    height:0;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+    display: flex;
+
+    h4{
+        font-size: 20px;
+        font-family: "AppleSDGothicNeoSB";
+        color: #3A4759;
+    }
+
+    p{
+        font-size: 18px;
+        line-height: 1;
+        color: #7d7d7d;
+        font-family: "AppleSDGothicNeoR";
+        margin-top: 10px;
+        border-bottom: 1px solid #7d7d7d;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .out{
+        width: 200px;
+        height: 45px;
+        margin-top: 20px;
+        border-radius: 25px;
+        background-color: #A0CEF5;
+        color: #fff;
+        text-align: center;
+        line-height: 45px;
+        border: 0;
+    }
+}
+
+.resign{
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+    font-family: "AppleSDGothicNeoR";
+    color: #707070;
+}
+
+.height{
+    height: auto;
+}

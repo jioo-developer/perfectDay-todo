@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Radio_Button" data-name="Radio Button" transform="translate(-0.187)">
+    <circle id="Dot_2" data-name="Dot 2" cx="12" cy="12" r="12" transform="translate(0.187)" fill="rgba(0,0,0,0.06)"/>
+    <path id="Dot_2-2" data-name="Dot 2" d="M7,0A7,7,0,1,1,0,7,7,7,0,0,1,7,0Z" transform="translate(5.187 5)" fill="#8cc6f6"/>
+  </g>
+</svg>

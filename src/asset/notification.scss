@@ -1,0 +1,95 @@
+.noti_wrap {
+  float: left;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -187.5px;
+  z-index: 1000;
+  max-width: 375px;
+
+  @media all and (min-width: 320px) and (max-width: 1000px) {
+    right: 0;
+  }
+
+  .cover {
+    background: #c5c5c5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.4;
+  }
+
+  aside {
+    display: flex;
+    width: 83%;
+    height: 100%;
+    flex-direction: column;
+    background: #fff;
+    margin-left: auto;
+    position: relative;
+    z-index: 900;
+  }
+
+  .aside_header {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    .noti_title {
+      font-family: "AppleSDGothicNeoR";
+      font-size: 16px;
+      color: #666;
+      line-height: 1;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .noti_body {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .noti_body li {
+    display: flex;
+    width: 100%;
+    height: 85px;
+    border-top: 1px solid #eee;
+    box-sizing: border-box;
+    padding: 20px 0 20px 20px;
+
+    img {
+      width: 38px;
+      height: 38px;
+      margin-right: 10px;
+    }
+
+    .li_time {
+      color: #777;
+    }
+
+    .li_title {
+      margin-top: 5px;
+      font-family: "AppleSDGothicNeoSB";
+      font-size: 16px;
+      color: #777;
+    }
+  }
+
+  .noti_body li:last-child {
+    border-bottom: 1px solid #eee;
+  }
+}
