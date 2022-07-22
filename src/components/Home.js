@@ -17,7 +17,6 @@ function Home({ creation, currentUser, dispatch }) {
   useEffect(() => {
     setDomReady(true);
     dayMemo();
-    console.log(ListNum);
   }, []);
 
   useEffect(() => {
