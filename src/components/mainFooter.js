@@ -1,20 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import "../reset.css";
 import "../App.scss";
-import { EditorAction } from "..";
+import { EditorAction } from "../module/reducer";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-function MainFooter(props) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+function MainFooter({ todolist }) {
   const location = window.location.pathname;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <footer className="footer_bar">
       {location === "/" ? (
         <button
           onClick={() => {
-            if (props.todolist.length >= 6) {
+            if (todolist.length >= 6) {
               window.alert("생성가능한 갯수를 초과하였습니다");
             } else {
               dispatch(EditorAction());

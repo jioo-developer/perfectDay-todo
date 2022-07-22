@@ -1,14 +1,14 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EditorAction, listAction, TodoPost } from "..";
+import { EditorAction, listAction, TodoPost } from "../module/reducer";
 import "../asset/editor.scss";
 import useInput from "../hooks/useInput";
 function Editor() {
   let [write, setwrite] = useInput("");
   let [writeH, setwriteH] = useInput("");
   let [writeM, setwriteM] = useInput("");
-  const toggleState = useSelector((state) => state.editorToggle);
   const dispatch = useDispatch();
+  const toggleState = useSelector((state) => state.editorToggle);
 
   function postLogic() {
     let logicFac = {
@@ -34,13 +34,7 @@ function Editor() {
       : dispatch(TodoPost(logicFac));
     document.querySelector(".hour").value = "";
     document.querySelector(".minute").value = "";
-    const amount = loadAmount().length + 1;
-    dispatch(listAction(amount));
     dispatch(EditorAction());
-  }
-
-  function loadAmount() {
-    return Array.from(document.querySelectorAll(".list"));
   }
 
   const onChangeHour = useCallback(

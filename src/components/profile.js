@@ -1,22 +1,17 @@
 import React, { useEffect } from "react";
 import Header from "./header";
 import MainFooter from "./mainFooter";
-import { useNavigate } from "react-router-dom";
 import "../reset.css";
 import "../asset/profile.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { ProfileAction } from "..";
+import { useSelector } from "react-redux";
+import { ProfileAction } from "../module/reducer";
 
-function Profile(props) {
+function Profile({ dispatch, navigate }) {
   let profileList = [1, 2, 3, 4, 5, 6];
 
   const loadSelect = useSelector((state) => state.profile);
 
   const select = "id";
-
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const loadCharacter = new Promise(function (res, rej) {

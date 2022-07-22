@@ -1,10 +1,8 @@
 import React from "react";
 import "../asset/loading.scss";
 import "../reset.css";
-import { useNavigate } from "react-router-dom";
 
-function Introduce(props) {
-  const navigate = useNavigate();
+function Introduce({ navigate }) {
   return (
     <div>
       <div className="center_wrap">

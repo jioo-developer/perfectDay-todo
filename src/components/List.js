@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { batch, useDispatch, useSelector } from "react-redux";
 import {
   contentAction,
@@ -6,7 +6,7 @@ import {
   reportAction,
   successDate,
   TodoPost,
-} from "../index";
+} from "../module/reducer";
 import MainFooter from "../components/mainFooter";
 import styled from "styled-components";
 
@@ -26,8 +26,7 @@ const ClearBtn = styled.button`
   opacity: 0;
 `;
 
-function List(props) {
-  const todolist = useSelector((state) => state.Todo);
+function List({ todolist, saveList }) {
   const dispatch = useDispatch();
 
   function createPost() {
@@ -50,9 +49,7 @@ function List(props) {
 
   function saveHandler() {
     window.alert("현재까지의 리스트를 저장합니다");
-    localStorage.setItem(props.saveList, JSON.stringify(todolist));
-    localStorage.setItem(props.saveCounter, props.parcent);
-    localStorage.setItem(props.loadAmount, props.listAmount);
+    localStorage.setItem(saveList, JSON.stringify(todolist));
   }
 
   function successHandler(e) {
@@ -65,22 +62,10 @@ function List(props) {
       dispatch(reportAction());
       dispatch(contentAction(successTitle));
     });
-
-    const endList = new Promise(function (res, rej) {
-      setTimeout(() => {
-        res(Array.from(document.querySelectorAll(".clearList")).length);
-      }, 500);
-    });
-
-    endList.then((result) => {
-      dispatch(Counter(result));
-    });
   }
 
   function deleteHandler() {
-    localStorage.removeItem(props.saveList);
-    localStorage.removeItem(props.saveCounter);
-    localStorage.removeItem(props.loadAmount);
+    localStorage.removeItem(saveList);
     window.location.reload();
   }
 
@@ -95,46 +80,58 @@ function List(props) {
               <span onClick={deleteHandler}>초기화</span>
             </div>
           </div>
-          {todolist.map((listData, index) => {
-            return (
-              <div
-                className={`list ${
-                  todolist[index].clear === true ? "clearList" : ""
-                }`}
-                key={index}
-              >
-                {todolist[index].clear === false ? (
-                  <p className="today_date">
-                    {listData.writeH}:{listData.writeM}
-                  </p>
-                ) : (
-                  <ClearList>
-                    {listData.writeH}:{listData.writeM}
-                  </ClearList>
-                )}
+          {todolist
+            .filter((value, idx, arr) => {
+              return (
+                arr.findIndex((item) => {
+                  return (
+                    item.write === value.write &&
+                    item.writeH === value.writeH &&
+                    item.writeM === item.writeM
+                  );
+                }) === idx
+              );
+            })
+            .map((listData, index) => {
+              return (
+                <div
+                  className={`list ${
+                    todolist[index].clear === true ? "clearList" : "going"
+                  }`}
+                  key={index}
+                >
+                  {todolist[index].clear === false ? (
+                    <p className="today_date">
+                      {listData.writeH}:{listData.writeM}
+                    </p>
+                  ) : (
+                    <ClearList>
+                      {listData.writeH}:{listData.writeM}
+                    </ClearList>
+                  )}
 
-                {todolist[index].clear === false ? (
-                  <p className="today_txt">{listData.write}</p>
-                ) : (
-                  <ClearIndent>{listData.write}</ClearIndent>
-                )}
-                {todolist[index].clear === false ? (
-                  <button
-                    onClick={(e) => {
-                      successHandler(e);
-                      let copyArray = todolist;
-                      copyArray[index].clear = true;
-                      dispatch(TodoPost(...copyArray));
-                    }}
-                  >
-                    <img src="/img/before_check.svg" alt="check" />
-                  </button>
-                ) : (
-                  <ClearBtn />
-                )}
-              </div>
-            );
-          })}
+                  {todolist[index].clear === false ? (
+                    <p className="today_txt">{listData.write}</p>
+                  ) : (
+                    <ClearIndent>{listData.write}</ClearIndent>
+                  )}
+                  {todolist[index].clear === false ? (
+                    <button
+                      onClick={(e) => {
+                        successHandler(e);
+                        let copyArray = todolist;
+                        copyArray[index].clear = true;
+                        dispatch(TodoPost(...copyArray));
+                      }}
+                    >
+                      <img src="/img/before_check.svg" alt="check" />
+                    </button>
+                  ) : (
+                    <ClearBtn />
+                  )}
+                </div>
+              );
+            })}
         </div>
       </section>
       <MainFooter todolist={todolist}></MainFooter>

@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from "react";
 import "../reset.css";
 import "../asset/login.scss";
-import { useNavigate } from "react-router-dom";
 
-function Login(props) {
-  const navigate = useNavigate();
+function Login({ USER_ID, navigate, creation }) {
   const [nickName, setNickName] = useState("");
-  const userData = props.USER_ID;
+  const userData = USER_ID;
 
   function signUp(e) {
     e.preventDefault();
@@ -25,7 +23,7 @@ function Login(props) {
       findmonth: findmonth,
       findDay: findDay,
     };
-    localStorage.setItem(props.creation, JSON.stringify(saveDay));
+    localStorage.setItem(creation, JSON.stringify(saveDay));
   };
 
   const updateNickName = useCallback(

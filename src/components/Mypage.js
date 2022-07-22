@@ -1,20 +1,17 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../reset.css";
 import "../asset/mypage.scss";
 import Header from "./header";
 import MainFooter from "./mainFooter";
 import Rank from "./rank";
-import { useDispatch, useSelector } from "react-redux";
-import { ProfileAction, rankAction } from "..";
+import { useSelector } from "react-redux";
+import { ProfileAction, rankAction } from "../module/reducer";
 
-function MyPage(props) {
-  const navigate = useNavigate();
-  const user = localStorage.getItem(props.USER_ID);
+function MyPage({ USER_ID, navigate, dispatch }) {
+  const user = localStorage.getItem(USER_ID);
   const rankState = useSelector((state) => state.rankToggle);
   const loadSelect = useSelector((state) => state.profile);
-  const dispath = useDispatch();
   const select = "id";
 
   useEffect(() => {
@@ -26,7 +23,7 @@ function MyPage(props) {
     });
 
     loadCharacter.then((result) => {
-      dispath(ProfileAction(result));
+      dispatch(ProfileAction(result));
     });
   }, []);
 
@@ -57,7 +54,7 @@ function MyPage(props) {
               프로필이미지변경
               <img src="/img/my_arrow.svg" alt="" />
             </li>
-            <li onClick={() => dispath(rankAction())}>
+            <li onClick={() => dispatch(rankAction())}>
               등급표
               <img src="/img/my_arrow.svg" alt="" />
             </li>
@@ -78,7 +75,7 @@ function MyPage(props) {
             </li>
           </ul>
         </section>
-        {rankState === false ? null : <Rank />}
+        {rankState === false ? null : <Rank dispatch={dispatch} />}
       </div>
       <MainFooter />
     </div>

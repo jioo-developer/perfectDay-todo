@@ -2,25 +2,22 @@ import React, { useState, useEffect, useCallback } from "react";
 import Header from "./header";
 import List from "./List";
 import Editor from "./editor";
-import { useDispatch, useSelector } from "react-redux";
-import { Counter, listAction, LoadSaveList } from "..";
+import { useSelector } from "react-redux";
+import { LoadSaveList, NumAction } from "../module/reducer";
 import Notification from "./Notification";
-function Home(props) {
+function Home({ creation, currentUser, dispatch }) {
   const [plusDay, setplusDay] = useState(1);
   const loaddingState = useSelector((state) => state.loadding);
-  const parcent = useSelector((state) => state.clearCounter);
-  const listAmount = useSelector((state) => state.list);
   const [domReady, setDomReady] = useState(false);
   const saveList = "saveList";
-  const saveCounter = "counter";
-  const loadAmount = "loadAmount";
-  const UserName = props.currentUser;
+  const UserName = currentUser;
   const issueState = useSelector((state) => state.issue);
-  const dispatch = useDispatch();
-
+  const todolist = useSelector((state) => state.Todo);
+  const ListNum = useSelector((state) => state.num);
   useEffect(() => {
     setDomReady(true);
     dayMemo();
+    console.log(ListNum);
   }, []);
 
   useEffect(() => {
@@ -40,42 +37,39 @@ function Home(props) {
           dispatch(LoadSaveList(arr));
         }
       });
-      const loadCounter = new Promise(function (res) {
-        const findData = JSON.parse(localStorage.getItem(saveCounter));
-        const result = findData === null ? 0 : findData;
-        res(result);
-      });
-
-      loadCounter.then((result) => {
-        dispatch(Counter(result));
-      });
-
-      const AmountLoad = new Promise(function (res) {
-        const findAmount = localStorage.getItem(loadAmount);
-        const result = findAmount === null ? 0 : findAmount;
-        res(result);
-      });
-
-      AmountLoad.then((result) => {
-        dispatch(listAction(result));
-      });
     }
   }, [domReady]);
 
-  const dayMemo = useCallback(async () => {
-    const loadCreator = JSON.parse(localStorage.getItem(props.creation));
-    const now = new Date();
+  const dayMemo = useCallback(() => {
+    const loadCreator = JSON.parse(localStorage.getItem(creation));
+    if (loadCreator != null) {
+      const now = new Date();
 
-    let start = await new Date(
-      `${loadCreator.findyear},${loadCreator.findmonth + 1},
-      ${loadCreator.findDay - 1}`
-    );
+      let start = new Date(
+        `${loadCreator.findyear},${loadCreator.findmonth + 1},
+        ${loadCreator.findDay - 1}`
+      );
 
-    const diff = now - start;
+      const diff = now - start;
 
-    const Today = 1000 * 60 * 60 * 24;
-    setplusDay(Math.floor(diff / Today));
+      const Today = 1000 * 60 * 60 * 24;
+      setplusDay(Math.floor(diff / Today));
+    }
   }, [plusDay]);
+
+  function loadNum() {
+    if (todolist.length !== 0 && domReady === true) {
+      const onNum = Array.from(document.querySelectorAll(".clearList")).length;
+      const offNum = Array.from(document.querySelectorAll(".going")).length;
+      const arr = [];
+      arr.push(onNum, offNum);
+      dispatch(NumAction(arr));
+    }
+  }
+
+  useEffect(() => {
+    loadNum();
+  }, [todolist]);
 
   return (
     <div className="wrap">
@@ -86,20 +80,18 @@ function Home(props) {
             <p className="today">
               오늘 <span>{UserName}</span> 님은
             </p>
-            <p className="parcent">
-              {parcent}/{listAmount}
-            </p>
+            {todolist.length === 0 ? (
+              <p className="parcent">0/0</p>
+            ) : (
+              <p className="parcent">{`${ListNum[0]}/${
+                ListNum[0] + ListNum[1]
+              }`}</p>
+            )}
+
             <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
           </div>
-          {listAmount === 0 ? (
-            <img src="/img/wow.svg" alt="" />
-          ) : listAmount !== 0 && parcent === listAmount ? (
-            <img src="/img/75.svg" alt="" />
-          ) : (
-            <img src="/img/50.svg" alt="" />
-          )}
+          <img src="/img/wow.svg" alt="" />
         </div>
-
         <div className="race">
           <p className="member">{UserName}</p>
           <div className="member_caption">
@@ -107,15 +99,9 @@ function Home(props) {
           </div>
         </div>
       </section>
-      <List
-        saveList={saveList}
-        saveCounter={saveCounter}
-        parcent={parcent}
-        loadAmount={loadAmount}
-        listAmount={listAmount}
-      />
+      <List saveList={saveList} todolist={todolist} />
       <Editor />
-      {issueState ? <Notification /> : null}
+      {issueState ? <Notification dispatch={dispatch} /> : null}
     </div>
   );
 }

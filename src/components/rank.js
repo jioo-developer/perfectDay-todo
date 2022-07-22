@@ -1,11 +1,9 @@
 import React from "react";
 import "../reset.css";
 import "../asset/rank.scss";
-import { useDispatch } from "react-redux";
-import { rankAction } from "..";
+import { rankAction } from "../module/reducer";
 
-function RankTable() {
-  const dispath = useDispatch();
+function RankTable({ dispatch }) {
   return (
     <div className="rank_wrap">
       <ul className="table">
@@ -40,7 +38,7 @@ function RankTable() {
           </figcaption>
         </li>
       </ul>
-      <div className="rankClose" onClick={() => dispath(rankAction())}>
+      <div className="rankClose" onClick={() => dispatch(rankAction())}>
         <img src="/img/clear.svg" alt="" />
       </div>
     </div>

@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "../asset/loading.scss";
-function Loading() {
-  const navigate = useNavigate();
+function Loading({ navigate }) {
   useEffect(() => {
     setTimeout(() => {
       navigate("/");

@@ -1,13 +1,12 @@
 import React from "react";
-import { batch, useDispatch, useSelector } from "react-redux";
-import { issueAction, reportAction } from "..";
+import { batch, useSelector } from "react-redux";
+import { issueAction, reportAction } from "../module/reducer";
 import "../asset/notification.scss";
 
-function Notification() {
+function Notification({ dispatch }) {
   const reportState = useSelector((state) => state.report);
   const finishData = useSelector((state) => state.successDate[0]);
   const finishTitle = useSelector((state) => state.successCon);
-  const dispatch = useDispatch();
 
   return (
     <div className="noti_wrap">
