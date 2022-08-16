@@ -80,58 +80,46 @@ function List({ todolist, saveList }) {
               <span onClick={deleteHandler}>초기화</span>
             </div>
           </div>
-          {todolist
-            .filter((value, idx, arr) => {
-              return (
-                arr.findIndex((item) => {
-                  return (
-                    item.write === value.write &&
-                    item.writeH === value.writeH &&
-                    item.writeM === item.writeM
-                  );
-                }) === idx
-              );
-            })
-            .map((listData, index) => {
-              return (
-                <div
-                  className={`list ${
-                    todolist[index].clear === true ? "clearList" : "going"
-                  }`}
-                  key={index}
-                >
-                  {todolist[index].clear === false ? (
-                    <p className="today_date">
-                      {listData.writeH}:{listData.writeM}
-                    </p>
-                  ) : (
-                    <ClearList>
-                      {listData.writeH}:{listData.writeM}
-                    </ClearList>
-                  )}
+          {todolist.map((listData, index) => {
+            return (
+              <div
+                className={`list ${
+                  todolist[index].clear === true ? "clearList" : "going"
+                }`}
+                key={index}
+              >
+                {todolist[index].clear === false ? (
+                  <p className="today_date">
+                    {listData.writeH}:{listData.writeM}
+                  </p>
+                ) : (
+                  <ClearList>
+                    {listData.writeH}:{listData.writeM}
+                  </ClearList>
+                )}
 
-                  {todolist[index].clear === false ? (
-                    <p className="today_txt">{listData.write}</p>
-                  ) : (
-                    <ClearIndent>{listData.write}</ClearIndent>
-                  )}
-                  {todolist[index].clear === false ? (
-                    <button
-                      onClick={(e) => {
-                        successHandler(e);
-                        let copyArray = todolist;
-                        copyArray[index].clear = true;
-                        dispatch(TodoPost(...copyArray));
-                      }}
-                    >
-                      <img src="/img/before_check.svg" alt="check" />
-                    </button>
-                  ) : (
-                    <ClearBtn />
-                  )}
-                </div>
-              );
-            })}
+                {todolist[index].clear === false ? (
+                  <p className="today_txt">{listData.write}</p>
+                ) : (
+                  <ClearIndent>{listData.write}</ClearIndent>
+                )}
+                {todolist[index].clear === false ? (
+                  <button
+                    onClick={(e) => {
+                      successHandler(e);
+                      let copyArray = todolist;
+                      copyArray[index].clear = true;
+                      dispatch(TodoPost(...copyArray));
+                    }}
+                  >
+                    <img src="/img/before_check.svg" alt="check" />
+                  </button>
+                ) : (
+                  <ClearBtn />
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
       <MainFooter todolist={todolist}></MainFooter>
