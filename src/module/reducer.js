@@ -8,7 +8,7 @@ const initialState = {
   report: false,
   rankToggle: false,
   profile: 1,
-  num: [0, 0],
+  num: 0,
 };
 //issue = "bell 이미지변경"
 // report = notification 상태 on / off
@@ -136,7 +136,7 @@ export default function reducer(state = initialState, action) {
     case num:
       return {
         ...state,
-        num: [...action.data],
+        num: action.data,
       };
 
     default:

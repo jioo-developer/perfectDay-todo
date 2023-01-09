@@ -14,6 +14,7 @@ function Home({ creation, currentUser, dispatch }) {
   const issueState = useSelector((state) => state.issue);
   const todolist = useSelector((state) => state.Todo);
   const ListNum = useSelector((state) => state.num);
+  const [startClearNum, setStart] = useState(0);
   useEffect(() => {
     setDomReady(true);
     dayMemo();
@@ -59,12 +60,16 @@ function Home({ creation, currentUser, dispatch }) {
   function loadNum() {
     if (todolist.length !== 0 && domReady === true) {
       const onNum = Array.from(document.querySelectorAll(".clearList")).length;
-      const offNum = Array.from(document.querySelectorAll(".going")).length;
-      const arr = [];
-      arr.push(onNum, offNum);
-      dispatch(NumAction(arr));
+      dispatch(NumAction(onNum));
     }
   }
+
+  useEffect(() => {
+    if (ListNum !== 0) {
+      const allNum = Array.from(document.querySelectorAll(".list")).length;
+      setStart(Math.floor((ListNum / allNum) * 100));
+    }
+  }, [ListNum]);
 
   useEffect(() => {
     loadNum();
@@ -79,13 +84,7 @@ function Home({ creation, currentUser, dispatch }) {
             <p className="today">
               오늘 <span>{UserName}</span> 님은
             </p>
-            {todolist.length === 0 ? (
-              <p className="parcent">0/0</p>
-            ) : (
-              <p className="parcent">{`${ListNum[0]}/${
-                ListNum[0] + ListNum[1]
-              }`}</p>
-            )}
+            <p className="parcent">{startClearNum}%</p>
 
             <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
           </div>
