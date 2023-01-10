@@ -14,7 +14,7 @@ function MainFooter({ todolist }) {
       {location === "/" ? (
         <button
           onClick={() => {
-            if (todolist.length >= 6) {
+            if (todolist.length >= 10) {
               window.alert("생성가능한 갯수를 초과하였습니다");
             } else {
               dispatch(EditorAction());

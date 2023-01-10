@@ -1,6 +1,5 @@
 .rank_wrap {
-  width: 300px;
-  max-width: 375px;
+  width: 200px;
   background: #fff;
   box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.2);
   padding: 20px 0;
@@ -16,12 +15,13 @@
 
   .table li {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     margin-bottom: 10px;
 
     figure {
       width: 45px;
+      margin-right: 20px;
     }
 
     h6 {

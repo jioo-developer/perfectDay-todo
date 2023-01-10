@@ -7,7 +7,6 @@ import {
   successDate,
   TodoPost,
 } from "../module/reducer";
-import MainFooter from "../components/mainFooter";
 import styled from "styled-components";
 
 const ClearList = styled.p`
@@ -122,7 +121,6 @@ function List({ todolist, saveList }) {
           })}
         </div>
       </section>
-      <MainFooter todolist={todolist}></MainFooter>
     </>
   );
 }

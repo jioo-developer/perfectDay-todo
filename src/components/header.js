@@ -15,18 +15,7 @@ function Header() {
           <Link to="/Mypage" className="main_nav">
             <img src="./img/nav.svg" alt="nav" />
           </Link>
-        ) : (
-          <Link to="/" className="header_nav">
-            <div
-              style={{
-                color: "#f7b237",
-                fontFamily: "AppleSDGothicNeoSB",
-              }}
-            >
-              &lt;
-            </div>
-          </Link>
-        )}
+        ) : null}
         <p className="main_titles">
           {location === "/"
             ? "완벽한 하루"

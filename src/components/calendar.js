@@ -130,56 +130,58 @@ function Calendar() {
   }, [selectedMonth]);
 
   return (
-    <div className="wrap calendar">
-      <Header />
-      <section className="cal_data">
-        <div className="date_top">
-          <div className="date_title">
-            {selectedYear}.
-            {selectedMonth < 10 ? `0${selectedMonth}` : selectedMonth}
-          </div>
-          <div className="date_arrow">
-            <div className="prev_btn change_btn" onClick={prevMonth}>
-              &lt;
+    <>
+      <div className="wrap calendar">
+        <Header />
+        <section className="cal_data">
+          <div className="date_top">
+            <div className="date_title">
+              {selectedYear}.
+              {selectedMonth < 10 ? `0${selectedMonth}` : selectedMonth}
             </div>
-            <div className="next_btn change_btn" onClick={nextMonth}>
-              &gt;
-            </div>
-          </div>
-        </div>
-        <div className="cal_wrap">
-          <div className="days">{returnWeek()}</div>
-          <div className="date_wrap">{returnDay()}</div>
-        </div>
-        <section className="important_data">
-          <div className="title_wrap">
-            <div className="date_title">일정예약</div>
-            {text.length !== 0
-              ? text.map((value, index) => {
-                  return (
-                    <div className="date_txt">
-                      <p className="txt" key={index}>
-                        {value}
-                      </p>
-
-                      <p>{`D - ${propsTime}`}</p>
-                    </div>
-                  );
-                })
-              : null}
-            <div className="input_wrap">
-              <input id="d_day_txt" onChange={(e) => setPromise(e)}></input>
-              <div className="button_wrap">
-                <button className="d_days" onClick={postPromise}>
-                  작성
-                </button>
+            <div className="date_arrow">
+              <div className="prev_btn change_btn" onClick={prevMonth}>
+                &lt;
+              </div>
+              <div className="next_btn change_btn" onClick={nextMonth}>
+                &gt;
               </div>
             </div>
           </div>
+          <div className="cal_wrap">
+            <div className="days">{returnWeek()}</div>
+            <div className="date_wrap">{returnDay()}</div>
+          </div>
+          <section className="important_data">
+            <div className="title_wrap">
+              <div className="date_title">일정예약</div>
+              {text.length !== 0
+                ? text.map((value, index) => {
+                    return (
+                      <div className="date_txt">
+                        <p className="txt" key={index}>
+                          {value}
+                        </p>
+
+                        <p>{`D - ${propsTime}`}</p>
+                      </div>
+                    );
+                  })
+                : null}
+              <div className="input_wrap">
+                <input id="d_day_txt" onChange={(e) => setPromise(e)}></input>
+                <div className="button_wrap">
+                  <button className="d_days" onClick={postPromise}>
+                    작성
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
         </section>
-      </section>
+      </div>
       <MainFooter />
-    </div>
+    </>
   );
 }
 

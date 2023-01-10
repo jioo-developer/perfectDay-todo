@@ -62,7 +62,6 @@ footer {
 }
 
 footer {
-  margin-bottom: 20px;
   align-self: flex-end;
 }
 
@@ -103,4 +102,8 @@ button {
   height: 0.8em !important;
   margin-bottom: 3px !important;
   cursor: pointer;
+}
+
+iframe {
+  display: none;
 }

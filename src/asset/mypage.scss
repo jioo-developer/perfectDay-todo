@@ -1,7 +1,6 @@
 .mypage {
   width: 100%;
   position: relative;
-  height: 93.8vh;
 
   header,
   .section_1 {
@@ -14,6 +13,8 @@
     justify-content: space-between;
     align-items: center;
     height: 135px;
+    padding-bottom: 30px;
+    box-sizing: border-box;
 
     figure {
       cursor: pointer;
@@ -39,12 +40,14 @@
     span {
       color: #999a9b;
       font-size: 10px;
+      margin-top: 5px;
+      display: block;
       font-family: "AppleSDGothicNeosB";
     }
   }
 
   .section_2 {
-    height: calc(959px - 300px);
+    height: 65.5vh;
     .tab_menu {
       display: flex;
       flex-direction: column;

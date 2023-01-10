@@ -4,6 +4,7 @@ import List from "./List";
 import Editor from "./editor";
 import { useSelector } from "react-redux";
 import { LoadSaveList, NumAction } from "../module/reducer";
+import MainFooter from "../components/mainFooter";
 import Notification from "./Notification";
 function Home({ creation, currentUser, dispatch }) {
   const [plusDay, setplusDay] = useState(1);
@@ -73,34 +74,40 @@ function Home({ creation, currentUser, dispatch }) {
 
   useEffect(() => {
     loadNum();
+    const allNum = Array.from(document.querySelectorAll(".list")).length;
+    const onNum = Array.from(document.querySelectorAll(".clearList")).length;
+    setStart(Math.floor(allNum / onNum) * 100);
   }, [todolist]);
 
   return (
-    <div className="wrap">
-      <Header />
-      <section className="section01">
-        <div className="s1_wrap">
-          <div className="s1_txt_wrap">
-            <p className="today">
-              오늘 <span>{UserName}</span> 님은
-            </p>
-            <p className="parcent">{startClearNum}%</p>
+    <>
+      <div className="wrap">
+        <Header />
+        <section className="section01">
+          <div className="s1_wrap">
+            <div className="s1_txt_wrap">
+              <p className="today">
+                오늘 <span>{UserName}</span> 님은
+              </p>
+              <p className="parcent">{startClearNum}%</p>
 
-            <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
+              <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
+            </div>
+            <img src="/img/wow.svg" alt="" />
           </div>
-          <img src="/img/wow.svg" alt="" />
-        </div>
-        <div className="race">
-          <p className="member">{UserName}</p>
-          <div className="member_caption">
-            님은 {plusDay}일째 완벽한 하루를 사용중!!
+          <div className="race">
+            <p className="member">{UserName}</p>
+            <div className="member_caption">
+              님은 {plusDay}일째 완벽한 하루를 사용중!!
+            </div>
           </div>
-        </div>
-      </section>
-      <List saveList={saveList} todolist={todolist} />
-      <Editor />
-      {issueState ? <Notification dispatch={dispatch} /> : null}
-    </div>
+        </section>
+        <List saveList={saveList} todolist={todolist} />
+        <Editor />
+        {issueState ? <Notification dispatch={dispatch} /> : null}
+      </div>
+      <MainFooter todolist={todolist}></MainFooter>
+    </>
   );
 }
 
