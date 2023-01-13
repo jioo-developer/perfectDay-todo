@@ -21,6 +21,7 @@ function Home({ creation, currentUser, dispatch }) {
     dayMemo();
   }, []);
 
+
   useEffect(() => {
     if (domReady) {
       const loadList = new Promise(function (res) {
@@ -58,27 +59,18 @@ function Home({ creation, currentUser, dispatch }) {
     }
   }, [plusDay]);
 
-  function loadNum() {
+
+    function loadNum() {
     if (todolist.length !== 0 && domReady === true) {
       const onNum = Array.from(document.querySelectorAll(".clearList")).length;
       dispatch(NumAction(onNum));
     }
   }
 
-  useEffect(() => {
-    if (ListNum !== 0) {
-      const allNum = Array.from(document.querySelectorAll(".list")).length;
-      setStart(Math.floor((ListNum / allNum) * 100));
-    }
-  }, [ListNum]);
-
-  useEffect(() => {
+    useEffect(() => {
     loadNum();
-    const allNum = Array.from(document.querySelectorAll(".list")).length;
-    if (ListNum !== 0) {
-      setStart(Math.floor((ListNum / allNum) * 100));
-    }
   }, [todolist]);
+
 
   return (
     <>

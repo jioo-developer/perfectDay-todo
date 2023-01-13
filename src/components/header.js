@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 function Header() {
   const location = window.location.pathname;
-  const issueBell = useSelector((state) => state.report);
+  const finishTitle = useSelector((state) => state.successCon);
+  const [bellToggle,setBell] = useState(false)
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(finishTitle.length > 0) {
+      setBell(true)
+    }
+  },[finishTitle])
+  
+
   return (
     <header className="main_header pd-x20">
       <Clock />
@@ -27,13 +36,18 @@ function Header() {
             ? "프로필변경"
             : null}
         </p>
-       <img
-            src= {issueBell ? "/img/bell.svg" : "/img/no_bell.svg" }
+        {
+          location === '/' 
+          ? <img
+            src={bellToggle ? "/img/bell.svg" : "/img/no_bell.svg"} 
             alt="bell"
-	          className={issueBell === false ? "down" :null}
-            onClick={() => dispatch(issueAction())}
-            style={{ marginTop: "-6px" }}
-          />
+            onClick={() =>{
+               dispatch(issueAction())
+            }}
+          /> 
+           : null
+        }
+
       </div>
     </header>
   );

@@ -10,7 +10,6 @@ const initialState = {
   num: 0,
 };
 //issue = "bell 이미지변경"
-// report = notification 상태 on / off
 
 const ToggleEditor = "ToggleEditor";
 const Todo = "Todo";

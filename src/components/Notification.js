@@ -1,6 +1,6 @@
 import React from "react";
-import { batch, useSelector } from "react-redux";
-import { issueAction, reportAction } from "../module/reducer";
+import { useSelector } from "react-redux";
+import { issueAction } from "../module/reducer";
 import "../asset/notification.scss";
 
 function Notification({ dispatch }) {
@@ -20,9 +20,7 @@ function Notification({ dispatch }) {
             alt=""
             src="/img/clear.svg"
             onClick={() => {
-              batch(() => {
-                dispatch(issueAction());
-              });
+               dispatch(issueAction())
             }}
           />
         </div>
