@@ -67,10 +67,21 @@ function Home({ creation, currentUser, dispatch }) {
     }
   }
 
-    useEffect(() => {
-    loadNum();
+  useEffect(() => {
+   loadNum();
+  const allNum = Array.from(document.querySelectorAll(".list")).length;
+    if (ListNum !== 0) {
+      setStart(Math.floor((ListNum / allNum) * 100));
+    }
   }, [todolist]);
 
+    useEffect(() => {
+      console.log(ListNum)
+    if (ListNum !== 0) {
+      const allNum = Array.from(document.querySelectorAll(".list")).length;
+      setStart(Math.floor((ListNum / allNum) * 100));
+    }
+  }, [ListNum]);
 
   return (
     <>

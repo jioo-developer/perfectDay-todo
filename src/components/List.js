@@ -69,7 +69,7 @@ function List({ todolist, saveList }) {
                 }`}
                 key={index}
               >
-                <p className={clearState !== false ?  "clearList" : "today_date"}>
+                <p className={clearState !== false ?  "clearText" : "today_date"}>
                     {listData.writeH}:{listData.writeM}
                   </p>
 
