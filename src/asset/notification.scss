@@ -4,10 +4,8 @@
   height: 100vh;
   position: absolute;
   top: 0;
-  left: 50%;
-  margin-left: -187.5px;
+  right: 0;
   z-index: 1000;
-  max-width: 375px;
 
   @media all and (min-width: 320px) and (max-width: 1000px) {
     right: 0;
@@ -25,7 +23,7 @@
 
   aside {
     display: flex;
-    width: 83%;
+    width: 87%;
     height: 100%;
     flex-direction: column;
     background: #fff;

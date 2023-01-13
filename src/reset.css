@@ -107,3 +107,9 @@ button {
 iframe {
   display: none;
 }
+
+
+.pd-x20{
+  padding: 0 20px;
+  box-sizing: border-box;
+}

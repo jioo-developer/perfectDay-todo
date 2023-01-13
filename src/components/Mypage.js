@@ -31,7 +31,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
     <div>
       <div className="wrap mypage">
         <Header />
-        <section className="section_1">
+        <section className="section_1  pd-x20">
           <div className="profile_wrap">
             <h3 className="myName">
               <b>{user}</b>님은
@@ -76,8 +76,8 @@ function MyPage({ USER_ID, navigate, dispatch }) {
           </ul>
         </section>
         {rankState === false ? null : <Rank dispatch={dispatch} />}
+        <MainFooter />
       </div>
-      <MainFooter />
     </div>
   );
 }

@@ -4,13 +4,15 @@ import { issueAction, reportAction } from "../module/reducer";
 import "../asset/notification.scss";
 
 function Notification({ dispatch }) {
-  const reportState = useSelector((state) => state.report);
-  const finishData = useSelector((state) => state.successDate[0]);
+  const finishData = useSelector((state) => state.successDate);
   const finishTitle = useSelector((state) => state.successCon);
 
   return (
-    <div className="noti_wrap">
-      <div className="cover"></div>
+    <>
+    {
+      finishTitle.length !== 0 
+  ?<div className="noti_wrap">
+    <div className="cover"></div>
       <aside>
         <div className="aside_header">
           <p className="noti_title">알림함</p>
@@ -20,38 +22,41 @@ function Notification({ dispatch }) {
             onClick={() => {
               batch(() => {
                 dispatch(issueAction());
-                if (reportState) {
-                  dispatch(reportAction());
-                }
               });
             }}
           />
         </div>
         <ul className="noti_body">
+          {
+            finishTitle.map((item,index)=>{
+              return (
           <li>
             <img src="/img/check_btn.svg" alt="" />
             <div className="li_txt_wrap">
               <p className="li_time">
-                {reportState === false && finishData === undefined
-                  ? null
-                  : `${finishData.year}년 ${finishData.month}월 ${
-                      finishData.date
-                    }일 ${finishData.hour}:${
-                      finishData.min < 10
-                        ? "0" + finishData.min
-                        : finishData.min
+                {`${finishData[index].year}년 ${finishData[index].month}월 ${
+                     finishData[index].date
+                    }일 ${finishData[index].hour}:${
+                      finishData[index].min < 10
+                        ? "0" + finishData[index].min
+                        : finishData[index].min
                     }`}
               </p>
               <p className="li_title">
-                {reportState === false && finishData === undefined
-                  ? null
-                  : finishTitle}
+                {item}
               </p>
             </div>
           </li>
+              )
+            })
+          }
         </ul>
       </aside>
     </div>
+      : null
+    }
+    </>
+  
   );
 }
 

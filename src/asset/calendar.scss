@@ -17,7 +17,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 81vh;
     padding-top: 20px;
   }
 
@@ -204,7 +203,8 @@ hr {
 
 .important_data {
   margin-top: 20px;
-  padding: 0 0 130px 8px;
+  height: 278px;
+  padding-left: 10px;
 
   .title_wrap {
     border: 0;
@@ -236,4 +236,10 @@ hr {
   width: 100%;
   justify-content: space-between;
   margin-top: 10px;
+}
+
+
+.dayDate:hover {
+  background: #80c4fd;
+  color: #fff !important;
 }

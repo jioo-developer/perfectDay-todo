@@ -84,7 +84,7 @@ function Home({ creation, currentUser, dispatch }) {
     <>
       <div className="wrap">
         <Header />
-        <section className="section01">
+        <section className="section01 pd-x20">
           <div className="s1_wrap">
             <div className="s1_txt_wrap">
               <p className="today">
@@ -106,8 +106,8 @@ function Home({ creation, currentUser, dispatch }) {
         <List saveList={saveList} todolist={todolist} />
         <Editor />
         {issueState ? <Notification dispatch={dispatch} /> : null}
+        <MainFooter todolist={todolist}></MainFooter>
       </div>
-      <MainFooter todolist={todolist}></MainFooter>
     </>
   );
 }

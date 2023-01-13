@@ -2,18 +2,12 @@
   width: 100%;
   position: relative;
 
-  header,
-  .section_1 {
-    width: 85%;
-    margin: 20px auto 0 auto;
-  }
-
   .section_1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 135px;
-    padding-bottom: 30px;
+    padding: 20px;
     box-sizing: border-box;
 
     figure {
@@ -47,7 +41,7 @@
   }
 
   .section_2 {
-    height: 65.5vh;
+    height: 587px;
     .tab_menu {
       display: flex;
       flex-direction: column;

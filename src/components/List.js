@@ -1,29 +1,11 @@
-import React, { useCallback, useEffect } from "react";
-import { batch, useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { batch, useDispatch} from "react-redux";
 import {
   contentAction,
-  Counter,
-  reportAction,
   successDate,
   TodoPost,
 } from "../module/reducer";
-import styled from "styled-components";
 
-const ClearList = styled.p`
-  color: #ddd;
-  font-family: "AppleSDGothicNeoSB";
-  text-decoration: line-through;
-  font-size: 16px;
-`;
-
-const ClearIndent = styled(ClearList)`
-  text-indent: -20px;
-`;
-
-const ClearBtn = styled.button`
-  pointer-events: none;
-  opacity: 0;
-`;
 
 function List({ todolist, saveList }) {
   const dispatch = useDispatch();
@@ -58,7 +40,6 @@ function List({ todolist, saveList }) {
 
     batch(() => {
       dispatch(successDate(createPost()));
-      dispatch(reportAction());
       dispatch(contentAction(successTitle));
     });
   }
@@ -70,7 +51,7 @@ function List({ todolist, saveList }) {
 
   return (
     <>
-      <section className="section02">
+      <section className="section02 pd-x20">
         <div className="in_s2">
           <div className="schedule">
             <p>일정스케줄</p>
@@ -80,30 +61,20 @@ function List({ todolist, saveList }) {
             </div>
           </div>
           {todolist.map((listData, index) => {
+            const clearState = todolist[index].clear
             return (
               <div
                 className={`list ${
-                  todolist[index].clear === true ? "clearList" : "going"
+                  clearState === true ? "clearList" : "going"
                 }`}
                 key={index}
               >
-                {todolist[index].clear === false ? (
-                  <p className="today_date">
+                <p className={clearState !== false ?  "clearList" : "today_date"}>
                     {listData.writeH}:{listData.writeM}
                   </p>
-                ) : (
-                  <ClearList>
-                    {listData.writeH}:{listData.writeM}
-                  </ClearList>
-                )}
 
-                {todolist[index].clear === false ? (
-                  <p className="today_txt">{listData.write}</p>
-                ) : (
-                  <ClearIndent>{listData.write}</ClearIndent>
-                )}
-                {todolist[index].clear === false ? (
-                  <button
+               <p className={clearState !== false ? 'clearIndent' : "today_txt"} >{listData.write}</p>
+                 <button className={clearState !== false ? "clearBtn " : null}
                     onClick={(e) => {
                       successHandler(e);
                       let copyArray = todolist;
@@ -113,9 +84,6 @@ function List({ todolist, saveList }) {
                   >
                     <img src="/img/before_check.svg" alt="check" />
                   </button>
-                ) : (
-                  <ClearBtn />
-                )}
               </div>
             );
           })}

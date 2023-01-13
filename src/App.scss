@@ -6,8 +6,7 @@
 .wrap {
   max-width: 414px;
   width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
+  height:100vh;
   display: flex;
   flex-direction: column;
 
@@ -64,7 +63,6 @@
 
 .section01 {
   margin: 32px 0;
-  overflow: visible;
 
   .s1_wrap {
     display: flex;
@@ -129,9 +127,7 @@
 }
 
 .section02 {
-  overflow: visible;
-  min-height: 300px;
-  height: 515px;
+  height: 490px;
   .schedule {
     display: flex;
     width: 100%;
@@ -211,12 +207,9 @@
 
 .footer_bar {
   display: flex;
-  overflow: visible;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   position: relative;
-  width: 100%;
-  float: none;
 
   button {
     border: 0;
@@ -227,7 +220,7 @@
     margin-left: -27.5px;
     width: 55px;
     height: 60px;
-    z-index: 1000;
+    z-index: 990;
     cursor: pointer;
   }
 
@@ -260,4 +253,21 @@
     justify-content: center;
     height: 100%;
   }
+}
+
+
+.clearList {
+    color: #ddd;
+    font-family: "AppleSDGothicNeoSB";
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.clearIndent {
+  text-indent: -20px;
+}
+
+.clearBtn {
+  pointer-events: none;
+  opacity: 0;
 }

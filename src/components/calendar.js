@@ -85,7 +85,7 @@ function Calendar() {
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
   function selectDay(e) {
-    return new Promise(function (res) {
+    return new Promise(function (res,rej) {
       let selectDate = new Date(
         selectedYear,
         selectedMonth,
@@ -97,9 +97,16 @@ function Calendar() {
       let ResultDay = selectDate - thisDay;
 
       let TimeResult = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
-      res(TimeResult);
+      if(TimeResult > 0) {
+        res(TimeResult);
+      } else {
+        rej()
+      }
+      
     }).then((result) => {
       setPropTime(result);
+    }).catch(()=>{
+      window.alert("이미 지난 날짜입니다.")
     });
   }
 
@@ -133,7 +140,7 @@ function Calendar() {
     <>
       <div className="wrap calendar">
         <Header />
-        <section className="cal_data">
+        <section className="cal_data pd-x20">
           <div className="date_top">
             <div className="date_title">
               {selectedYear}.
@@ -179,8 +186,8 @@ function Calendar() {
             </div>
           </section>
         </section>
+        <MainFooter />
       </div>
-      <MainFooter />
     </>
   );
 }

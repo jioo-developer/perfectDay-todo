@@ -8,7 +8,7 @@ function Header() {
   const issueBell = useSelector((state) => state.report);
   const dispatch = useDispatch();
   return (
-    <header className="main_header">
+    <header className="main_header pd-x20">
       <Clock />
       <div className="title_header">
         {location === "/" ? (
@@ -27,22 +27,13 @@ function Header() {
             ? "프로필변경"
             : null}
         </p>
-        {issueBell ? (
-          <img
-            src="/img/bell.svg"
+       <img
+            src= {issueBell ? "/img/bell.svg" : "/img/no_bell.svg" }
             alt="bell"
+	          className={issueBell === false ? "down" :null}
             onClick={() => dispatch(issueAction())}
             style={{ marginTop: "-6px" }}
           />
-        ) : (
-          <img
-            src="/img/no_bell.svg"
-            alt="bell"
-            className="down"
-            style={{ marginTop: "-6px" }}
-            onClick={() => dispatch(issueAction())}
-          />
-        )}
       </div>
     </header>
   );
