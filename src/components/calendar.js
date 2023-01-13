@@ -17,7 +17,7 @@ function Calendar() {
   const [selectedYear, setSelectedYear] = useState(today.year);
   const [selectedMonth, setSelectedMonth] = useState(today.month);
   const dateTotalCount = new Date(selectedYear, selectedMonth, 0).getDate();
-  const [propsTime, setPropTime] = useState(0);
+  const [propsTime, setPropTime] = useState([]);
   const [promiseText, setPromise] = UseInput("");
   const [text, setText] = useState([]);
 
@@ -74,7 +74,7 @@ function Calendar() {
         <div
           className="day dayDate"
           onClick={(e) => {
-            selectDay(e);
+            connectNum(e)
           }}
         >
           {value}
@@ -84,12 +84,16 @@ function Calendar() {
     return dayMap;
   }, [selectedYear, selectedMonth, dateTotalCount]);
 
-  function selectDay(e) {
+  function connectNum(e){
+    selectDay(e.target.innerText)
+  }
+
+  function selectDay(params) {
     return new Promise(function (res,rej) {
       let selectDate = new Date(
         selectedYear,
         selectedMonth,
-        parseInt(e.target.innerText)
+        parseInt(params)
       );
 
       let thisDay = new Date(today.year, today.month, today.date);
@@ -100,13 +104,18 @@ function Calendar() {
       if(TimeResult > 0) {
         res(TimeResult);
       } else {
-        rej()
+        rej(TimeResult)
       }
       
     }).then((result) => {
-      setPropTime(result);
-    }).catch(()=>{
-      window.alert("이미 지난 날짜입니다.")
+      let copy = [...propsTime];
+      copy.push(result)
+      setPropTime(copy)
+    }).catch((result)=>{
+      if(!isNaN(result)) {
+        window.alert("이미 지난 날짜입니다.")
+      }
+     
     });
   }
 
@@ -135,6 +144,11 @@ function Calendar() {
   useEffect(() => {
     todayCheck();
   }, [selectedMonth]);
+
+  useEffect(()=>{
+    console.log(propsTime)
+  },[propsTime])
+
 
   return (
     <>
@@ -170,7 +184,7 @@ function Calendar() {
                           {value}
                         </p>
 
-                        <p>{`D - ${propsTime}`}</p>
+                        <p>{`D - ${propsTime[index]}`}</p>
                       </div>
                     );
                   })

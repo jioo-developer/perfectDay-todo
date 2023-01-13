@@ -76,7 +76,6 @@ function Home({ creation, currentUser, dispatch }) {
   }, [todolist]);
 
     useEffect(() => {
-      console.log(ListNum)
     if (ListNum !== 0) {
       const allNum = Array.from(document.querySelectorAll(".list")).length;
       setStart(Math.floor((ListNum / allNum) * 100));
