@@ -5,7 +5,6 @@ const initialState = {
   loadding: false,
   issue: false,
   successCon: [],
-  report: false,
   rankToggle: false,
   profile: 1,
   num: 0,
@@ -18,7 +17,6 @@ const Todo = "Todo";
 const success = "success";
 const loadList = "loadList";
 const issue = "issue";
-const report = "report";
 const successCon = "successCon";
 const rank = "rank";
 const profile = "profile";
@@ -47,9 +45,6 @@ export const issueAction = () => ({
   type: issue,
 });
 
-export const reportAction = () => ({
-  type: report,
-});
 
 export const contentAction = (data) => ({
   type: successCon,
@@ -108,11 +103,6 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         issue: !state.issue,
-      };
-    case report:
-      return {
-        ...state,
-        report: !state.report,
       };
 
     case successCon:
