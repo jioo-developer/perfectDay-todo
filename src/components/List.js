@@ -2,6 +2,7 @@ import React from "react";
 import { batch, useDispatch} from "react-redux";
 import {
   contentAction,
+  reportAction,
   successDate,
   TodoPost,
 } from "../module/reducer";
@@ -79,7 +80,10 @@ function List({ todolist, saveList }) {
                       successHandler(e);
                       let copyArray = todolist;
                       copyArray[index].clear = true;
-                      dispatch(TodoPost(...copyArray));
+                      batch(()=>{
+                        dispatch(TodoPost(...copyArray));
+                        dispatch(reportAction());
+                      })
                     }}
                   >
                     <img src="/img/before_check.svg" alt="check" />

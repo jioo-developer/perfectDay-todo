@@ -5,16 +5,8 @@ import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 function Header() {
   const location = window.location.pathname;
-  const finishTitle = useSelector((state) => state.successCon);
-  const [bellToggle,setBell] = useState(false)
+  const reportState = useSelector((state) => state.report);
   const dispatch = useDispatch();
-
-  useEffect(()=>{
-    if(finishTitle.length > 0) {
-      setBell(true)
-    }
-  },[finishTitle])
-  
 
   return (
     <header className="main_header pd-x20">
@@ -39,7 +31,7 @@ function Header() {
         {
           location === '/' 
           ? <img
-            src={bellToggle ? "/img/bell.svg" : "/img/no_bell.svg"} 
+            src={ reportState  ? "/img/bell.svg" : "/img/no_bell.svg"} 
             alt="bell"
             onClick={() =>{
                dispatch(issueAction())

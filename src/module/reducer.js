@@ -4,6 +4,7 @@ const initialState = {
   successDate: [],
   loadding: false,
   issue: false,
+  report: false,
   successCon: [],
   rankToggle: false,
   profile: 1,
@@ -20,6 +21,7 @@ const successCon = "successCon";
 const rank = "rank";
 const profile = "profile";
 const num = "num";
+const report = "report";
 
 export const EditorAction = () => ({
   type: ToggleEditor,
@@ -28,6 +30,10 @@ export const EditorAction = () => ({
 export const TodoPost = (data) => ({
   type: Todo,
   data,
+});
+
+export const reportAction = () => ({
+  type: report,
 });
 
 export const successDate = (date) => ({
@@ -126,6 +132,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         num: action.data,
+      };
+
+      case report:
+      return {
+        ...state,
+        report: !state.report,
       };
 
     default:
