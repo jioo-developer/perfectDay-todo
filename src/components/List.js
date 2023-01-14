@@ -6,34 +6,29 @@ import {
   successDate,
   TodoPost,
 } from "../module/reducer";
-
+import {today} from "../module/today"
 
 function List({ todolist, saveList }) {
   const dispatch = useDispatch();
 
-  function createPost() {
-    const nowTime = new Date(),
-      year = nowTime.getFullYear(),
-      month = nowTime.getMonth() + 1,
-      date = nowTime.getDate(),
-      hour = nowTime.getHours(),
-      min = nowTime.getMinutes();
+  // 완료시점 만드는 함수
 
-    const DateFac = {
-      year: year,
-      month: month,
-      date: date,
-      hour: hour,
-      min: min,
-    };
+  function createPost() {
+    const DateFac = {...today}
+    DateFac.hour =  new Date().getHours();
+    DateFac.min =  new Date().getMinutes();
     return DateFac;
   }
 
+  // 완료시점 만드는 함수
+
+  // 리스트 저장 함수
   function saveHandler() {
     window.alert("현재까지의 리스트를 저장합니다");
     localStorage.setItem(saveList, JSON.stringify(todolist));
   }
 
+  // 클리어를 실행하는 함수
   function successHandler(e) {
     const successTitle =
       e.currentTarget.parentElement.getElementsByClassName("today_txt")[0]
@@ -44,6 +39,8 @@ function List({ todolist, saveList }) {
       dispatch(contentAction(successTitle));
     });
   }
+
+  // 할일 초기화 함수
 
   function deleteHandler() {
     localStorage.removeItem(saveList);

@@ -4,27 +4,27 @@ import MainFooter from "./mainFooter";
 import "../reset.css";
 import "../asset/calendar.scss";
 import UseInput from "../hooks/useInput";
+import {today} from "../module/today"
 
 function Calendar() {
-  const today = {
-    year: new Date().getFullYear(), //오늘 연도
-    month: new Date().getMonth() + 1, //오늘 월
-    date: new Date().getDate(), //오늘 날짜
-    day: new Date().getDay(), //오늘 요일
-  };
+  const nowday = {...today}
+  today.day = new Date().getDay()
 
   const week = ["일", "월", "화", "수", "목", "금", "토"];
-  const [selectedYear, setSelectedYear] = useState(today.year);
-  const [selectedMonth, setSelectedMonth] = useState(today.month);
+  const [selectedYear, setSelectedYear] = useState(nowday.year);
+  // 선택년도 state
+  const [selectedMonth, setSelectedMonth] = useState(nowday.month);
+  // 선택년 월 state
   const dateTotalCount = new Date(selectedYear, selectedMonth, 0).getDate();
+  // 선택년 월 일 state
   const [propsTime, setPropTime] = useState([]);
   const [promiseText, setPromise] = UseInput("");
   const [text, setText] = useState([]);
 
   //선택한 년>달의 마지막 날짜
 
+  //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
-    //이전 달 보기 보튼
     if (selectedMonth === 1) {
       setSelectedMonth(12);
       setSelectedYear(selectedYear - 1);
@@ -33,8 +33,10 @@ function Calendar() {
     }
   }, [selectedMonth]);
 
+  //이전 달 보기 버튼
+
+  //다음 달 보기 버튼
   const nextMonth = useCallback(() => {
-    //다음 달 보기 버튼
     if (selectedMonth === 12) {
       setSelectedMonth(1);
       setSelectedYear(selectedYear + 1);
@@ -43,9 +45,11 @@ function Calendar() {
     }
   }, [selectedMonth]);
 
+  //다음 달 보기 버튼
+
+  //주 반환 함수
   const returnWeek = useCallback(() => {
-    //요일 반환 함수
-    const result = week.map((value, index) => {
+    const result = week.map((value) => {
       return (
         <div key={value} className="day">
           {value}
@@ -55,8 +59,8 @@ function Calendar() {
     return result;
   }, []);
 
-  const returnDay = useCallback(() => {
-    //선택된 달의 날짜들 반환 함수
+  //선택된 달의 날짜들 반환 함수
+  const returnDay = (() => {
     let dayArr = [];
     for (const nowDay of week) {
       const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
@@ -74,7 +78,7 @@ function Calendar() {
         <div
           className="day dayDate"
           onClick={(e) => {
-            connectNum(e)
+            selectDay(e.target.innerText)
           }}
         >
           {value}
@@ -82,21 +86,21 @@ function Calendar() {
       ) : null;
     });
     return dayMap;
-  }, [selectedYear, selectedMonth, dateTotalCount]);
+  })
 
-  function connectNum(e){
-    selectDay(e.target.innerText)
-  }
+  ///선택된 달의 날짜들 반환 함수
 
+  // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
   function selectDay(params) {
     return new Promise(function (res,rej) {
       let selectDate = new Date(
         selectedYear,
         selectedMonth,
         parseInt(params)
+        //params는 선택된 날짜의 텍스트를 숫자로 변환
       );
 
-      let thisDay = new Date(today.year, today.month, today.date);
+      let thisDay = new Date(nowday.year, nowday.month, nowday.date);
 
       let ResultDay = selectDate - thisDay;
 
@@ -119,6 +123,9 @@ function Calendar() {
     });
   }
 
+  // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
+
+  // 오늘 날짜 체크하는 함수
   function todayCheck() {
     let thisMonth = new Date().getMonth() + 1;
     let todayOn = Array.from(document.getElementsByClassName("dayDate"));
@@ -129,26 +136,26 @@ function Calendar() {
           i--;
         }
       }
-      todayOn[today.date - 1].classList.add("today");
+      todayOn[nowday.date - 1].classList.add("today");
     } else {
-      todayOn[today.date - 1].classList.remove("today");
+      todayOn[nowday.date - 1].classList.remove("today");
     }
   }
 
+  // 오늘 날짜 체크하는 함수
+
+  // 일정 제작 함수
   function postPromise() {
     let copyArray = [...text];
     copyArray.push(promiseText);
     setText(copyArray);
   }
 
+  // 일정 제작 함수
+
   useEffect(() => {
     todayCheck();
   }, [selectedMonth]);
-
-  useEffect(()=>{
-    console.log(propsTime)
-  },[propsTime])
-
 
   return (
     <>

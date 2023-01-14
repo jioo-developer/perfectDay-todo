@@ -12,10 +12,12 @@ function MyPage({ USER_ID, navigate, dispatch }) {
   const user = localStorage.getItem(USER_ID);
   const rankState = useSelector((state) => state.rankToggle);
   const loadSelect = useSelector((state) => state.profile);
-  const select = "id";
+  const select = "profile-id";
+
+ // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   useEffect(() => {
-    const loadCharacter = new Promise(function (res, rej) {
+    const loadCharacter = new Promise(function (res) {
       const result = localStorage.getItem(select);
       if (result != null) {
         res(result);
@@ -26,6 +28,8 @@ function MyPage({ USER_ID, navigate, dispatch }) {
       dispatch(ProfileAction(result));
     });
   }, []);
+
+  // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   return (
     <div>

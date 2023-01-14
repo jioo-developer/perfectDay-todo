@@ -10,6 +10,8 @@ function Editor() {
   const dispatch = useDispatch();
   const toggleState = useSelector((state) => state.editorToggle);
 
+//  포스트를 만드는 함수
+
   function postLogic() {
     let logicFac = {
       write: write,
@@ -36,6 +38,8 @@ function Editor() {
     document.querySelector(".minute").value = "";
     dispatch(EditorAction());
   }
+
+  //  포스트를 만드는 함수
 
   const onChangeHour = useCallback(
     (e) => {

@@ -11,6 +11,7 @@ function Notification({ dispatch }) {
     <>
     {
       finishTitle.length !== 0 
+      // 알림이 아에 없어서도 켜지는데 최소 1개라도 있어야 켜지게 설정
   ?<div className="noti_wrap">
     <div className="cover"></div>
       <aside>
@@ -23,12 +24,14 @@ function Notification({ dispatch }) {
                batch(()=>{
                 dispatch(issueAction())
                 dispatch(reportAction())
+                // 벨과 알림창 on / off 설정
                })
             }}
           />
         </div>
         <ul className="noti_body">
           {
+            // 알림들 만드는 map 함수 
             finishTitle.map((item,index)=>{
               return (
           <li>
