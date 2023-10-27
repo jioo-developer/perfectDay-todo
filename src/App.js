@@ -3,7 +3,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 
 import "./reset.css";
 import "./App.scss";
-import Loading from "./components/loading";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import MyPage from "./components/Mypage";
@@ -21,8 +20,6 @@ function App() {
   useEffect(() => {
     if (currentUser === null) {
       navigate("/login");
-    } else {
-      navigate("/loading");
     }
   }, []);
   return (
@@ -43,7 +40,6 @@ function App() {
           <Login USER_ID={USER_ID} creation={creation} navigate={navigate} />
         }
       />
-      <Route path="/loading" element={<Loading navigate={navigate} />} />
       <Route
         path="/mypage"
         element={

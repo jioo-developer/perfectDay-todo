@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import "../reset.css";
 import "../asset/login.scss";
 import {today} from "../module/today"
@@ -11,17 +11,8 @@ function Login({ USER_ID, navigate, creation }) {
     e.preventDefault();
     localStorage.setItem(creation, JSON.stringify(today));
     localStorage.setItem(userData, nickName);
-    navigate("/loading");
   }
 
-  // 생성일자 생성 함수
-
-  const updateNickName = useCallback(
-    (e) => {
-      setNickName(e.target.value);
-    },
-    [nickName]
-  );
 
   return (
     <div className="center_wrap">
@@ -30,7 +21,7 @@ function Login({ USER_ID, navigate, creation }) {
         <input
           type="text"
           placeholder="사용 할 닉네임을 적어주세요."
-          onChange={updateNickName}
+          onChange={e => setNickName(e.target.value)}
         />
         <p className="resign">(재지정하는 경우 1일째로 다시시작합니다)</p>
       </form>
