@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Header from "./header";
 import "../reset.css";
 import "../asset/profile.scss";
 import { useSelector } from "react-redux";

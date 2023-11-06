@@ -10,15 +10,14 @@ import Introduce from "./components/introduce";
 import Profile from "./components/profile";
 import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
-import { useDispatch, useSelector } from "react-redux";
 import Header from "./components/header";
+import { useDispatch, useSelector } from "react-redux";
 function App() {
   const USER_ID = "currentUser";
   const creation = localStorage.getItem("creationDay");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = localStorage.getItem(USER_ID);
-
   const todolist = useSelector((state) => state.Todo);
   // 할일 list
 
@@ -27,13 +26,13 @@ function App() {
   }, []);
 
   function footer() {
-    if (currentUser !== null || creation === null) {
+    if (currentUser !== null || creation != null) {
       return <MainFooter todolist={todolist} />;
     } else return null;
   }
 
   function header() {
-    if (currentUser !== null || creation === null) return <Header />;
+    if (currentUser !== null || creation != null) return <Header />;
     else return null;
   }
   return (

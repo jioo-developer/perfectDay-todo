@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Header from "./header";
 import "../reset.css";
 import "../asset/calendar.scss";
 import UseInput from "../hooks/useInput";

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../reset.css";
 import "../asset/mypage.scss";
-import Header from "./header";
 import Rank from "./rank";
 import { useSelector } from "react-redux";
 import { ProfileAction, rankAction } from "../module/reducer";

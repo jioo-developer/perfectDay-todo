@@ -1,22 +1,23 @@
 import React from "react";
-import { batch, useDispatch} from "react-redux";
+import { batch, useDispatch } from "react-redux";
 import {
   contentAction,
   reportAction,
   successDate,
   TodoPost,
 } from "../module/reducer";
-import {today} from "../module/today"
+import { today } from "../module/today";
 
 function List({ todolist, saveList }) {
+  console.log(todolist);
   const dispatch = useDispatch();
 
   // 완료시점 만드는 함수
 
   function createPost() {
-    const DateFac = {...today}
-    DateFac.hour =  new Date().getHours();
-    DateFac.min =  new Date().getMinutes();
+    const DateFac = { ...today };
+    DateFac.hour = new Date().getHours();
+    DateFac.min = new Date().getMinutes();
     return DateFac;
   }
 
@@ -59,7 +60,7 @@ function List({ todolist, saveList }) {
             </div>
           </div>
           {todolist.map((listData, index) => {
-            const clearState = todolist[index].clear
+            const clearState = todolist[index].clear;
             return (
               <div
                 className={`list ${
@@ -67,24 +68,31 @@ function List({ todolist, saveList }) {
                 }`}
                 key={index}
               >
-                <p className={clearState !== false ?  "clearText" : "today_date"}>
-                    {listData.writeH}:{listData.writeM}
-                  </p>
+                <p
+                  className={clearState !== false ? "clearText" : "today_date"}
+                >
+                  {listData.writeH}:{listData.writeM}
+                </p>
 
-               <p className={clearState !== false ? 'clearIndent' : "today_txt"} >{listData.write}</p>
-                 <button className={clearState !== false ? "clearBtn " : null}
-                    onClick={(e) => {
-                      successHandler(e);
-                      let copyArray = todolist;
-                      copyArray[index].clear = true;
-                      batch(()=>{
-                        dispatch(TodoPost(...copyArray));
-                        dispatch(reportAction());
-                      })
-                    }}
-                  >
-                    <img src="/img/before_check.svg" alt="check" />
-                  </button>
+                <p
+                  className={clearState !== false ? "clearIndent" : "today_txt"}
+                >
+                  {listData.write}
+                </p>
+                <button
+                  className={clearState !== false ? "clearBtn " : null}
+                  onClick={(e) => {
+                    successHandler(e);
+                    let copyArray = todolist;
+                    copyArray[index].clear = true;
+                    batch(() => {
+                      dispatch(TodoPost(...copyArray));
+                      dispatch(reportAction());
+                    });
+                  }}
+                >
+                  <img src="/img/before_check.svg" alt="check" />
+                </button>
               </div>
             );
           })}

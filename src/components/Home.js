@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Header from "./header";
 import List from "./List";
 import Editor from "./editor";
 import { useSelector } from "react-redux";
@@ -8,8 +7,6 @@ import Notification from "./Notification";
 function Home({ creation, currentUser, dispatch, todolist }) {
   const [plusDay, setplusDay] = useState(1);
   // 시작 한 일수 +
-  const [domReady, setDomReady] = useState(false);
-  // document.ready
   const saveList = "saveList";
   const UserName = currentUser;
   const issueState = useSelector((state) => state.issue);
@@ -18,31 +15,29 @@ function Home({ creation, currentUser, dispatch, todolist }) {
   const ListNum = useSelector((state) => state.num);
   // 클리어된 list 갯수
   const [startClearNum, setStart] = useState(0);
+
   // 불러와진 퍼센트
 
   useEffect(() => {
-    setDomReady(true);
     dayMemo();
   }, []);
 
   // 저장한 할일 리스트 데이터가 있는지 확인 하는 useEffect
 
   useEffect(() => {
-    if (domReady) {
-      const loadList = new Promise(function (res) {
-        const result = JSON.parse(localStorage.getItem(saveList));
-        res(result);
-      });
+    const loadList = new Promise(function (res) {
+      const result = JSON.parse(localStorage.getItem(saveList));
+      if (result !== null) res(result);
+    });
 
-      loadList.then((result) => {
-        if (typeof result === "object" && result != null) {
-          let arr = [...result];
-          dispatch(LoadSaveList(arr));
-          // 로컬스토리지에서 저장된 할 일을 불러와서 state.todo에 저장
-        }
-      });
-    }
-  }, [domReady]);
+    loadList.then((result) => {
+      if (typeof result === "object" && result != null) {
+        let arr = [...result];
+        dispatch(LoadSaveList(arr));
+        // 로컬스토리지에서 저장된 할 일을 불러와서 state.todo에 저장
+      }
+    });
+  }, []);
 
   // 저장한 데이터가 있는지 확인 하는 useEffect
 
@@ -69,7 +64,7 @@ function Home({ creation, currentUser, dispatch, todolist }) {
   // 저장된 데이터 중에 클리어 된 데이터가 있는 지 확인
 
   function loadNum() {
-    if (todolist.length !== 0 && domReady === true) {
+    if (todolist.length !== 0) {
       const onNum = Array.from(document.querySelectorAll(".clearList")).length;
       dispatch(NumAction(onNum));
     }
