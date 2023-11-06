@@ -49,7 +49,7 @@ function Home({ creation, currentUser, dispatch, todolist }) {
   // 시작 한지 몇일이 지났는 지 알려주는 함수 start
 
   const dayMemo = useCallback(() => {
-    const loadCreator = JSON.parse(localStorage.getItem(creation));
+    const loadCreator = JSON.parse(creation);
     //생성 날짜를 불러옴
     if (loadCreator != null) {
       let start = new Date(

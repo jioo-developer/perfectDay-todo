@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "./components/header";
 function App() {
   const USER_ID = "currentUser";
-  const creation = "creationDay";
+  const creation = localStorage.getItem("creationDay");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = localStorage.getItem(USER_ID);
@@ -23,19 +23,17 @@ function App() {
   // 할일 list
 
   useEffect(() => {
-    if (currentUser === null) {
-      navigate("/login");
-    }
+    if (currentUser === null || creation === null) navigate("/login");
   }, []);
 
   function footer() {
-    if (currentUser !== null) {
+    if (currentUser !== null || creation === null) {
       return <MainFooter todolist={todolist} />;
     } else return null;
   }
 
   function header() {
-    if (currentUser !== null) return <Header />;
+    if (currentUser !== null || creation === null) return <Header />;
     else return null;
   }
   return (
@@ -55,9 +53,7 @@ function App() {
         />
         <Route
           path="/login"
-          element={
-            <Login USER_ID={USER_ID} creation={creation} navigate={navigate} />
-          }
+          element={<Login USER_ID={USER_ID} navigate={navigate} />}
         />
         <Route
           path="/mypage"
