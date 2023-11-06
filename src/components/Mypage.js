@@ -32,8 +32,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
 
   return (
     <div>
-      <div className="wrap mypage">
-        <Header />
+      <div className="mypage">
         <section className="section_1  pd-x20">
           <div className="profile_wrap">
             <h3 className="myName">

@@ -158,8 +158,7 @@ function Calendar() {
 
   return (
     <>
-      <div className="wrap calendar">
-        <Header />
+      <div className="calendar">
         <section className="cal_data pd-x20">
           <div className="date_top">
             <div className="date_title">

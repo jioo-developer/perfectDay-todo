@@ -11,6 +11,7 @@ import Profile from "./components/profile";
 import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import { useDispatch, useSelector } from "react-redux";
+import Header from "./components/header";
 function App() {
   const USER_ID = "currentUser";
   const creation = "creationDay";
@@ -26,8 +27,20 @@ function App() {
       navigate("/login");
     }
   }, []);
+
+  function footer() {
+    if (currentUser !== null) {
+      return <MainFooter todolist={todolist} />;
+    } else return null;
+  }
+
+  function header() {
+    if (currentUser !== null) return <Header />;
+    else return null;
+  }
   return (
-    <>
+    <div class="wrap">
+      {header()}
       <Routes>
         <Route
           path="/"
@@ -59,8 +72,8 @@ function App() {
         />
         <Route path="/canlendar" element={<Calendar />} />
       </Routes>
-      <MainFooter todolist={todolist} />
-    </>
+      {footer()}
+    </div>
   );
 }
 

@@ -101,31 +101,28 @@ function Home({ creation, currentUser, dispatch, todolist }) {
 
   return (
     <>
-      <div className="wrap">
-        <Header />
-        <section className="section01 pd-x20">
-          <div className="s1_wrap">
-            <div className="s1_txt_wrap">
-              <p className="today">
-                오늘 <span>{UserName}</span> 님은
-              </p>
-              <p className="parcent">{startClearNum}%</p>
+      <section className="section01 pd-x20">
+        <div className="s1_wrap">
+          <div className="s1_txt_wrap">
+            <p className="today">
+              오늘 <span>{UserName}</span> 님은
+            </p>
+            <p className="parcent">{startClearNum}%</p>
 
-              <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
-            </div>
-            <img src="/img/wow.svg" alt="" />
+            <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
           </div>
-          <div className="race">
-            <p className="member">{UserName}</p>
-            <div className="member_caption">
-              님은 {plusDay}일째 완벽한 하루를 사용중!!
-            </div>
+          <img src="/img/wow.svg" alt="" />
+        </div>
+        <div className="race">
+          <p className="member">{UserName}</p>
+          <div className="member_caption">
+            님은 {plusDay}일째 완벽한 하루를 사용중!!
           </div>
-        </section>
-        <List saveList={saveList} todolist={todolist} />
-        <Editor />
-        {issueState ? <Notification dispatch={dispatch} /> : null}
-      </div>
+        </div>
+      </section>
+      <List saveList={saveList} todolist={todolist} />
+      <Editor />
+      {issueState ? <Notification dispatch={dispatch} /> : null}
     </>
   );
 }
