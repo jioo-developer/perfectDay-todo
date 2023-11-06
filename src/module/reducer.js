@@ -5,8 +5,6 @@ const initialState = {
   // 할일 list state
   successDate: [],
   // 완료한 일정 state
-  loadding: false,
-  // 저장된 자료 불러올 떄 loadidng
   issue: false,
   // 알림창 여닫이 state
   report: false,
@@ -23,23 +21,23 @@ const initialState = {
 //issue = "bell 이미지변경"
 
 const ToggleEditor = "ToggleEditor";
-  // 에디터 여는 state
+// 에디터 여는 state
 const Todo = "Todo";
- // 할일 list state
+// 할일 list state
 const success = "success";
 // 완료한 일정 state
 const loadList = "loadList";
 // 완료한 리스트 저장한거 불러오기
 const issue = "issue";
- // 알림창 여닫이 state
+// 알림창 여닫이 state
 const successCon = "successCon";
-  // 완료한 일정제목 list state
+// 완료한 일정제목 list state
 const rank = "rank";
 // 랭크 여닫이 state
 const profile = "profile";
-  // 프로필 디폴트 index state
+// 프로필 디폴트 index state
 const num = "num";
-  // 할일 퍼센트 state
+// 할일 퍼센트 state
 const report = "report";
 // 벨 이미지 on/off state
 
@@ -70,7 +68,6 @@ export const issueAction = () => ({
   type: issue,
 });
 
-
 export const contentAction = (data) => ({
   type: successCon,
   data,
@@ -92,13 +89,11 @@ export const NumAction = (data) => ({
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-
     case ToggleEditor:
       return {
         ...state,
         editorToggle: !state.editorToggle,
       };
-
 
     case Todo:
       return {
@@ -126,10 +121,9 @@ export default function reducer(state = initialState, action) {
     case loadList:
       return {
         ...state,
-        loadding: (state.loadding = true),
         Todo: [...state.Todo, ...action.data],
       };
-      
+
     case issue:
       return {
         ...state,
@@ -160,7 +154,7 @@ export default function reducer(state = initialState, action) {
         num: action.data,
       };
 
-      case report:
+    case report:
       return {
         ...state,
         report: !state.report,

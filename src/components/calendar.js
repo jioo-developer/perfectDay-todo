@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Header from "./header";
-import MainFooter from "./mainFooter";
 import "../reset.css";
 import "../asset/calendar.scss";
 import UseInput from "../hooks/useInput";
-import {today} from "../module/today"
+import { today } from "../module/today";
 
 function Calendar() {
-  const nowday = {...today}
-  today.day = new Date().getDay()
+  const nowday = { ...today };
+  today.day = new Date().getDay();
 
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const [selectedYear, setSelectedYear] = useState(nowday.year);
@@ -60,7 +59,7 @@ function Calendar() {
   }, []);
 
   //선택된 달의 날짜들 반환 함수
-  const returnDay = (() => {
+  const returnDay = () => {
     let dayArr = [];
     for (const nowDay of week) {
       const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
@@ -78,7 +77,7 @@ function Calendar() {
         <div
           className="day dayDate"
           onClick={(e) => {
-            selectDay(e.target.innerText)
+            selectDay(e.target.innerText);
           }}
         >
           {value}
@@ -86,13 +85,13 @@ function Calendar() {
       ) : null;
     });
     return dayMap;
-  })
+  };
 
   ///선택된 달의 날짜들 반환 함수
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
   function selectDay(params) {
-    return new Promise(function (res,rej) {
+    return new Promise(function (res, rej) {
       let selectDate = new Date(
         selectedYear,
         selectedMonth,
@@ -105,22 +104,22 @@ function Calendar() {
       let ResultDay = selectDate - thisDay;
 
       let TimeResult = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
-      if(TimeResult > 0) {
+      if (TimeResult > 0) {
         res(TimeResult);
       } else {
-        rej(TimeResult)
+        rej(TimeResult);
       }
-      
-    }).then((result) => {
-      let copy = [...propsTime];
-      copy.push(result)
-      setPropTime(copy)
-    }).catch((result)=>{
-      if(!isNaN(result)) {
-        window.alert("이미 지난 날짜입니다.")
-      }
-     
-    });
+    })
+      .then((result) => {
+        let copy = [...propsTime];
+        copy.push(result);
+        setPropTime(copy);
+      })
+      .catch((result) => {
+        if (!isNaN(result)) {
+          window.alert("이미 지난 날짜입니다.");
+        }
+      });
   }
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
@@ -207,7 +206,6 @@ function Calendar() {
             </div>
           </section>
         </section>
-        <MainFooter />
       </div>
     </>
   );

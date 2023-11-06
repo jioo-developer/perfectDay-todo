@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Clock from "./clock";
@@ -28,18 +28,15 @@ function Header() {
             ? "프로필변경"
             : null}
         </p>
-        {
-          location === '/' 
-          ? <img
-            src={ reportState  ? "/img/bell.svg" : "/img/no_bell.svg"} 
+        {location === "/" ? (
+          <img
+            src={reportState ? "/img/bell.svg" : "/img/no_bell.svg"}
             alt="bell"
-            onClick={() =>{
-               dispatch(issueAction())
+            onClick={() => {
+              dispatch(issueAction());
             }}
-          /> 
-           : null
-        }
-
+          />
+        ) : null}
       </div>
     </header>
   );

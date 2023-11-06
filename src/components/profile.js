@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Header from "./header";
-import MainFooter from "./mainFooter";
 import "../reset.css";
 import "../asset/profile.scss";
 import { useSelector } from "react-redux";
@@ -27,7 +26,7 @@ function Profile({ dispatch, navigate }) {
       // 마이 페이지에 몇번째 프로필을 띄워줄지 알려주는 데이터 action
     });
 
-     // 저장된 프로필 값이 있는 지 확인
+    // 저장된 프로필 값이 있는 지 확인
   }, []);
 
   return (
@@ -53,7 +52,7 @@ function Profile({ dispatch, navigate }) {
                   className="select_profile"
                   key={i}
                   onClick={() => dispatch(ProfileAction(i + 1))}
-                  //이미지를 누르면 해당 i + 1(0부터 시작해서)가 dispatch로 보내짐 
+                  //이미지를 누르면 해당 i + 1(0부터 시작해서)가 dispatch로 보내짐
                 >
                   <img src={`/img/profile${i + 1}.svg`} alt="" />
                 </figure>
@@ -70,7 +69,6 @@ function Profile({ dispatch, navigate }) {
           </div>
         </section>
       </div>
-      <MainFooter />
     </div>
   );
 }

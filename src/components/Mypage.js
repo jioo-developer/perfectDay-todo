@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../reset.css";
 import "../asset/mypage.scss";
 import Header from "./header";
-import MainFooter from "./mainFooter";
 import Rank from "./rank";
 import { useSelector } from "react-redux";
 import { ProfileAction, rankAction } from "../module/reducer";
@@ -14,7 +13,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
   const loadSelect = useSelector((state) => state.profile);
   const select = "profile-id";
 
- // 프로필 데이터가 저장 되 있는지 확인하는 함수
+  // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   useEffect(() => {
     const loadCharacter = new Promise(function (res) {
@@ -80,7 +79,6 @@ function MyPage({ USER_ID, navigate, dispatch }) {
           </ul>
         </section>
         {rankState === false ? null : <Rank dispatch={dispatch} />}
-        <MainFooter />
       </div>
     </div>
   );
