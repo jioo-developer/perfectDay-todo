@@ -8,7 +8,7 @@ import {
 } from "../module/reducer";
 import { today } from "../module/today";
 
-function List({ todolist, saveList }) {
+function List({ todoList }) {
   const dispatch = useDispatch();
 
   // 완료시점 만드는 함수
@@ -25,7 +25,7 @@ function List({ todolist, saveList }) {
   // 리스트 저장 함수
   function saveHandler() {
     window.alert("현재까지의 리스트를 저장합니다");
-    localStorage.setItem(saveList, JSON.stringify(todolist));
+    localStorage.setItem("saveList", JSON.stringify(todoList));
   }
 
   // 클리어를 실행하는 함수
@@ -43,7 +43,7 @@ function List({ todolist, saveList }) {
   // 할일 초기화 함수
 
   function deleteHandler() {
-    localStorage.removeItem(saveList);
+    localStorage.removeItem("saveList");
     window.location.reload();
   }
 
@@ -58,8 +58,8 @@ function List({ todolist, saveList }) {
               <span onClick={deleteHandler}>초기화</span>
             </div>
           </div>
-          {todolist.map((listData, index) => {
-            const clearState = todolist[index].clear;
+          {todoList.map((listData, index) => {
+            const clearState = todoList[index].clear;
             return (
               <div
                 className={`list ${
@@ -82,7 +82,7 @@ function List({ todolist, saveList }) {
                   className={clearState !== false ? "clearBtn " : null}
                   onClick={(e) => {
                     successHandler(e);
-                    let copyArray = todolist;
+                    let copyArray = todoList;
                     copyArray[index].clear = true;
                     batch(() => {
                       dispatch(TodoPost(...copyArray));
