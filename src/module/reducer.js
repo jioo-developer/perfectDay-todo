@@ -4,6 +4,7 @@ const initialState = {
   Todo: [],
   // 할일 list state
   successDate: [],
+  mountState: false,
   // 완료한 일정 state
   issue: false,
   // 알림창 여닫이 state
@@ -40,6 +41,7 @@ const num = "num";
 // 할일 퍼센트 state
 const report = "report";
 // 벨 이미지 on/off state
+const Mount = "Mount";
 
 export const EditorAction = () => ({
   type: ToggleEditor,
@@ -87,6 +89,10 @@ export const NumAction = (data) => ({
   data,
 });
 
+export const FirstMount = () => ({
+  type: Mount,
+});
+
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ToggleEditor:
@@ -121,7 +127,17 @@ export default function reducer(state = initialState, action) {
     case loadList:
       return {
         ...state,
-        Todo: [...state.Todo, ...action.data],
+        Todo: [...state.Todo, ...action.data].filter((value, index, arr) => {
+          return (
+            arr.findIndex((item) => {
+              return (
+                item.write === value.write &&
+                item.writeH === value.writeH &&
+                item.writeM === value.writeM
+              );
+            }) === index
+          );
+        }),
       };
 
     case issue:
@@ -158,6 +174,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         report: !state.report,
+      };
+
+    case Mount:
+      return {
+        ...state,
+        mountState: true,
       };
 
     default:

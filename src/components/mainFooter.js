@@ -2,13 +2,14 @@ import React from "react";
 import "../reset.css";
 import "../App.scss";
 import { EditorAction } from "../module/reducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function MainFooter({ todolist }) {
+function MainFooter() {
   const location = window.location.pathname;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const todolist = useSelector((state) => state.Todo);
   return (
     <footer className="footer_bar">
       {location === "/" ? (

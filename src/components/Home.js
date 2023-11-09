@@ -1,49 +1,39 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { useSelector } from "react-redux";
-import { LoadSaveList, NumAction } from "../module/reducer";
+import { LoadSaveList, NumAction, FirstMount } from "../module/reducer";
 import Notification from "./Notification";
-function Home({ creation, currentUser, dispatch, todolist }) {
+function Home({ creation, currentUser, dispatch }) {
   const [plusDay, setplusDay] = useState(1);
   // 시작 한 일수 +
   const saveList = "saveList";
   const UserName = currentUser;
+
+  const initialMount = useSelector((state) => state.mountState);
+
   const issueState = useSelector((state) => state.issue);
   // 알림창 닫혔는지 on / off
 
-  const ListNum = useSelector((state) => state.num);
+  const clearListNum = useSelector((state) => state.num);
   // 클리어된 list 갯수
-  const [startClearNum, setStart] = useState(0);
 
+  const [loadClearParcent, setLoadClear] = useState(0);
   // 불러와진 퍼센트
 
-  useEffect(() => {
-    dayMemo();
-  }, []);
-
-  // 저장한 할일 리스트 데이터가 있는지 확인 하는 useEffect
+  const todolist = useSelector((state) => state.Todo);
+  // todoList
 
   useEffect(() => {
-    const loadList = new Promise(function (res) {
-      const result = JSON.parse(localStorage.getItem(saveList));
-      if (result !== null) res(result);
-    });
-
-    loadList.then((result) => {
-      if (typeof result === "object" && result != null) {
-        let arr = [...result];
-        dispatch(LoadSaveList(arr));
-        // 로컬스토리지에서 저장된 할 일을 불러와서 state.todo에 저장
-      }
-    });
+    if (!initialMount) {
+      dayMemo();
+      loadData();
+    }
   }, []);
-
-  // 저장한 데이터가 있는지 확인 하는 useEffect
 
   // 시작 한지 몇일이 지났는 지 알려주는 함수 start
 
-  const dayMemo = useCallback(() => {
+  const dayMemo = () => {
     const loadCreator = JSON.parse(creation);
     //생성 날짜를 불러옴
     if (loadCreator != null) {
@@ -57,42 +47,75 @@ function Home({ creation, currentUser, dispatch, todolist }) {
       const nowDay = 1000 * 60 * 60 * 24;
       setplusDay(Math.floor(diff / nowDay));
     }
-  }, [plusDay]);
+  };
 
   // 시작 한지 몇일이 지났는 지 알려주는 함수 end
 
-  // 저장된 데이터 중에 클리어 된 데이터가 있는 지 확인
+  // 저장한 할일 리스트 데이터가 있는지 확인 하는 함수
 
-  function loadNum() {
-    if (todolist.length !== 0) {
-      const onNum = Array.from(document.querySelectorAll(".clearList")).length;
-      dispatch(NumAction(onNum));
-    }
-  }
+  const loadData = () => {
+    const loadList = new Promise(function (res) {
+      const result = JSON.parse(localStorage.getItem(saveList));
+      if (result !== null) res(result);
+    });
 
-  // 저장된 데이터 중에 클리어 된 데이터가 있는 지 확인
+    loadList.then((result) => {
+      if (typeof result === "object" && result != null) {
+        let arr = [...result];
+        dispatch(LoadSaveList(arr));
+        // 로컬스토리지에서 저장된 할 일을 불러와서 todoLIst에 저장
+      }
+    });
+  };
 
-  // 할일이 새로 만들 어 질 때 실행되는 useEffect
+  // 저장한 할일 리스트 데이터가 있는지 확인 하는 함수
+
+  // todolist를 불러 온 후 처리 할 useEffect
 
   useEffect(() => {
-    loadNum();
-    const allNum = Array.from(document.querySelectorAll(".list")).length;
-    if (ListNum !== 0) {
-      setStart(Math.floor((ListNum / allNum) * 100));
-      // 클리어 갯수 / 전체 리스트 갯수
+    if (todolist.length !== 0 && !initialMount) {
+      loadNum();
+    } else if (todolist.length !== 0) {
+      loadNum();
+      checkList();
     }
   }, [todolist]);
 
-  // 할일이 새로 만들 어 질 때 실행되는 useEffect
+  // todolist를 불러 온 후 처리 할 useEffect
+
+  // 저장된 데이터 중에 클리어 된 데이터가 있는 지 확인 하는 함수
+
+  function loadNum() {
+    const onNum = Array.from(document.querySelectorAll(".clearList")).length;
+    if (clearListNum === 0) {
+      dispatch(NumAction(onNum));
+    } else if (onNum !== clearListNum) {
+      dispatch(NumAction(onNum));
+    }
+
+    // 클리어 된 데이터가 있는 지 확인 후 clearNum에 저장
+  }
+
+  // 저장된 데이터 중에 클리어 된 데이터가 있는 지 확인 하는 함수
+
+  // 클리어 된 데이터를 불러와서 클리어 갯수 / 전체 갯수 처리 useEffect
 
   useEffect(() => {
-    if (ListNum !== 0) {
-      const allNum = Array.from(document.querySelectorAll(".list")).length;
-      setStart(Math.floor((ListNum / allNum) * 100));
+    if (clearListNum !== 0 && !initialMount) {
+      checkList();
+      dispatch(FirstMount());
+    } else {
+      if (clearListNum !== 0) checkList();
     }
-  }, [ListNum]);
+  }, [clearListNum]);
 
-  // 퍼센트 업데이트 함수
+  // 클리어 된 데이터를 불러와서 클리어 갯수 / 전체 갯수 처리 useEffect
+
+  function checkList() {
+    const allNum = Array.from(document.querySelectorAll(".list")).length;
+    setLoadClear(Math.floor((clearListNum / allNum) * 100));
+    // 클리어 갯수 / 전체 리스트 갯수
+  }
 
   return (
     <>
@@ -102,7 +125,7 @@ function Home({ creation, currentUser, dispatch, todolist }) {
             <p className="today">
               오늘 <span>{UserName}</span> 님은
             </p>
-            <p className="parcent">{startClearNum}%</p>
+            <p className="parcent">{loadClearParcent}%</p>
 
             <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
           </div>

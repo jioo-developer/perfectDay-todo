@@ -18,7 +18,6 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = localStorage.getItem(USER_ID);
-  const todolist = useSelector((state) => state.Todo);
   // 할일 list
 
   useEffect(() => {
@@ -27,7 +26,7 @@ function App() {
 
   function footer() {
     if (currentUser !== null || creation != null) {
-      return <MainFooter todolist={todolist} />;
+      return <MainFooter />;
     } else return null;
   }
 
@@ -46,7 +45,6 @@ function App() {
               currentUser={currentUser}
               creation={creation}
               dispatch={dispatch}
-              todolist={todolist}
             />
           }
         />

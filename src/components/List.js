@@ -9,7 +9,6 @@ import {
 import { today } from "../module/today";
 
 function List({ todolist, saveList }) {
-  console.log(todolist);
   const dispatch = useDispatch();
 
   // 완료시점 만드는 함수
