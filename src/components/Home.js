@@ -74,9 +74,9 @@ function Home({ creation, currentUser, dispatch }) {
 
   useEffect(() => {
     if (todolist.length !== 0 && !initialMount) {
-      loadNum();
+      clearCheck();
     } else if (todolist.length !== 0) {
-      loadNum();
+      clearCheck();
       checkList();
     }
   }, [todolist]);
@@ -85,7 +85,7 @@ function Home({ creation, currentUser, dispatch }) {
 
   // 저장된 데이터 중에 클리어 된 데이터가 있는 지 확인 하는 함수
 
-  function loadNum() {
+  function clearCheck() {
     const onNum = Array.from(document.querySelectorAll(".clearList")).length;
     if (clearListNum === 0) {
       dispatch(NumAction(onNum));
