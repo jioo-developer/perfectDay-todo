@@ -7,34 +7,14 @@ import { ProfileAction } from "../module/reducer";
 function Profile({ dispatch, navigate }) {
   let profileList = [1, 2, 3, 4, 5, 6];
 
-  const loadSelect = useSelector((state) => state.profile);
-
-  const select = "profile-id";
-
-  useEffect(() => {
-    // 저장된 프로필 값이 있는 지 확인
-    const loadCharacter = new Promise(function (res) {
-      const result = localStorage.getItem(select);
-      if (result != null) {
-        res(result);
-      }
-    });
-
-    loadCharacter.then((result) => {
-      dispatch(ProfileAction(result));
-      // 마이 페이지에 몇번째 프로필을 띄워줄지 알려주는 데이터 action
-    });
-
-    // 저장된 프로필 값이 있는 지 확인
-  }, []);
-
   return (
     <div className="profile_wrap">
       <section className="section01">
         <div className="my_profile">
           <figure>
             <img
-              src={`/img/profile${loadSelect === 0 ? 1 : loadSelect}.svg`}
+              // src={`/img/profile${loadSelect === 0 ? 1 : loadSelect}.svg`}
+              src={`/img/profile${1}.svg`}
               alt=""
             />
           </figure>
@@ -48,7 +28,7 @@ function Profile({ dispatch, navigate }) {
               <figure
                 className="select_profile"
                 key={i}
-                onClick={() => dispatch(ProfileAction(i + 1))}
+                // onClick={() => dispatch(ProfileAction(i + 1))}
                 //이미지를 누르면 해당 i + 1(0부터 시작해서)가 dispatch로 보내짐
               >
                 <img src={`/img/profile${i + 1}.svg`} alt="" />
@@ -58,7 +38,7 @@ function Profile({ dispatch, navigate }) {
           <button
             onClick={() => {
               navigate("/Mypage");
-              localStorage.setItem(select, loadSelect);
+              // localStorage.setItem(select, loadSelect);
             }}
           >
             바꾸기

@@ -5,7 +5,6 @@ import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 function Header() {
   const location = window.location.pathname;
-  const reportState = useSelector((state) => state.report);
   const dispatch = useDispatch();
 
   return (
@@ -30,7 +29,8 @@ function Header() {
         </p>
         {location === "/" ? (
           <img
-            src={reportState ? "/img/bell.svg" : "/img/no_bell.svg"}
+            // src={reportState ? "/img/bell.svg" : "/img/no_bell.svg"}
+            src="/img/bell.svg"
             alt="bell"
             onClick={() => {
               dispatch(issueAction());

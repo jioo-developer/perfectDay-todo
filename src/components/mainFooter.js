@@ -1,7 +1,7 @@
 import React from "react";
 import "../reset.css";
 import "../App.scss";
-import { EditorAction } from "../module/reducer";
+import { EditorAction, editorToggle } from "../module/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ function MainFooter() {
             if (todolist.length >= 10) {
               window.alert("생성가능한 갯수를 초과하였습니다");
             } else {
-              dispatch(EditorAction());
+              dispatch(editorToggle());
             }
           }}
         >

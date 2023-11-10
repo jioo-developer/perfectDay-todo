@@ -1,30 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../reset.css";
 import "../asset/mypage.scss";
 import Rank from "./rank";
-import { useSelector } from "react-redux";
-import { ProfileAction, rankAction } from "../module/reducer";
 
 function MyPage({ USER_ID, navigate, dispatch }) {
   const user = localStorage.getItem(USER_ID);
-  const rankState = useSelector((state) => state.rankToggle);
-  const loadSelect = useSelector((state) => state.profile);
-  const select = "profile-id";
-
+  const [profile, setprofile] = useState(0);
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   useEffect(() => {
-    const loadCharacter = new Promise(function (res) {
-      const result = localStorage.getItem(select);
-      if (result != null) {
-        res(result);
-      }
-    });
-
-    loadCharacter.then((result) => {
-      dispatch(ProfileAction(result));
-    });
+    const loadCharacter = localStorage.getItem("profile-id");
+    setprofile(loadCharacter);
   }, []);
 
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
@@ -41,7 +28,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
             <span>MY RANK</span>
           </div>
           <figure className="profile_img">
-            <img src={`/img/profile${loadSelect}.svg`} alt="" />
+            <img src={`/img/profile${profile}.svg`} alt="" />
           </figure>
         </section>
 
@@ -55,7 +42,8 @@ function MyPage({ USER_ID, navigate, dispatch }) {
               프로필이미지변경
               <img src="/img/my_arrow.svg" alt="" />
             </li>
-            <li onClick={() => dispatch(rankAction())}>
+            <li>
+              {/* onClick={() => dispatch(rankAction())} */}
               등급표
               <img src="/img/my_arrow.svg" alt="" />
             </li>
@@ -68,6 +56,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
             <li
               onClick={() => {
                 localStorage.removeItem("currentUser");
+                localStorage.removeItem("creationDay");
                 navigate("/login");
               }}
             >
@@ -76,7 +65,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
             </li>
           </ul>
         </section>
-        {rankState === false ? null : <Rank dispatch={dispatch} />}
+        {/* <Rank dispatch={dispatch} /> */}
       </div>
     </div>
   );

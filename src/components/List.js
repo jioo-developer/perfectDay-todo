@@ -1,11 +1,6 @@
 import React from "react";
 import { batch, useDispatch } from "react-redux";
-import {
-  contentAction,
-  reportAction,
-  successDate,
-  TodoPost,
-} from "../module/reducer";
+import { complete, successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 
 function List({ todoList }) {
@@ -13,10 +8,15 @@ function List({ todoList }) {
 
   // 완료시점 만드는 함수
 
-  function createPost() {
+  function createPost(e) {
     const DateFac = { ...today };
+    const successTitle =
+      e.currentTarget.parentElement.getElementsByClassName("today_txt")[0]
+        .innerHTML;
+    DateFac.title = successTitle;
     DateFac.hour = new Date().getHours();
     DateFac.min = new Date().getMinutes();
+
     return DateFac;
   }
 
@@ -29,14 +29,10 @@ function List({ todoList }) {
   }
 
   // 클리어를 실행하는 함수
-  function successHandler(e) {
-    const successTitle =
-      e.currentTarget.parentElement.getElementsByClassName("today_txt")[0]
-        .innerHTML;
-
+  function successHandler(e, clearArr) {
     batch(() => {
-      dispatch(successDate(createPost()));
-      dispatch(contentAction(successTitle));
+      dispatch(successDate(createPost(e)));
+      dispatch(update(clearArr));
     });
   }
 
@@ -81,13 +77,9 @@ function List({ todoList }) {
                 <button
                   className={clearState !== false ? "clearBtn " : null}
                   onClick={(e) => {
-                    successHandler(e);
                     let copyArray = todoList;
                     copyArray[index].clear = true;
-                    batch(() => {
-                      dispatch(TodoPost(...copyArray));
-                      dispatch(reportAction());
-                    });
+                    successHandler(e, copyArray);
                   }}
                 >
                   <img src="/img/before_check.svg" alt="check" />

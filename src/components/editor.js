@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EditorAction, TodoPost } from "../module/reducer";
+import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";
 import useInput from "../hooks/useInput";
 function Editor() {
@@ -33,10 +33,10 @@ function Editor() {
     let danger = document.querySelector(".text_area").value;
     danger === ""
       ? alert("스케줄을 입력해주세요")
-      : dispatch(TodoPost(logicFac));
+      : dispatch(createPost(logicFac));
     document.querySelector(".hour").value = "";
     document.querySelector(".minute").value = "";
-    dispatch(EditorAction());
+    dispatch(editorToggle());
   }
 
   //  포스트를 만드는 함수
@@ -73,7 +73,7 @@ function Editor() {
           <img
             alt=""
             src="/img/close_FILL0.svg"
-            onClick={() => dispatch(EditorAction())}
+            onClick={() => dispatch(editorToggle())}
           />
           <input
             className="text_area"

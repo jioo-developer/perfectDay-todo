@@ -35,7 +35,7 @@ function App() {
     else return null;
   }
   return (
-    <div class="wrap">
+    <div className="wrap">
       {header()}
       <Routes>
         <Route

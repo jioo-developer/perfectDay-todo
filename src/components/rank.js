@@ -38,7 +38,8 @@ function RankTable({ dispatch }) {
           </figcaption>
         </li>
       </ul>
-      <div className="rankClose" onClick={() => dispatch(rankAction())}>
+      <div className="rankClose">
+        {/* dispatch(rankAction()) */}
         <img src="/img/clear.svg" alt="" />
       </div>
     </div>
