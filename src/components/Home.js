@@ -6,13 +6,13 @@ import { FirstMount } from "../module/reducer";
 import Notification from "./Notification";
 function Home({ creation, currentUser, dispatch }) {
   const initialMount = useSelector((state) => state);
-  console.log(initialMount);
   // 첫 mount 조정 state
   const issueState = useSelector((state) => state.issue);
   // 알림창 닫혔는지 on / off
   const [todoList, setTodoList] = useState([]);
-  const [clearList, setClearList] = useState(0);
   // todoList
+
+  const [clearList, setClearList] = useState(0);
 
   useEffect(() => {
     if (!initialMount) {

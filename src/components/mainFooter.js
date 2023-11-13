@@ -1,7 +1,7 @@
 import React from "react";
 import "../reset.css";
 import "../App.scss";
-import { EditorAction, editorToggle } from "../module/reducer";
+import { editorToggle } from "../module/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

@@ -17,7 +17,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   return (
-    <div>
+    <>
       <div className="mypage">
         <section className="section_1  pd-x20">
           <div className="profile_wrap">
@@ -55,19 +55,35 @@ function MyPage({ USER_ID, navigate, dispatch }) {
             </li>
             <li
               onClick={() => {
-                localStorage.removeItem("currentUser");
-                localStorage.removeItem("creationDay");
-                navigate("/login");
+                if (window.confirm("닉네임을 변경합니다")) {
+                  localStorage.removeItem("currentUser");
+                  navigate("/login");
+                } else {
+                  console.log("---------");
+                }
               }}
             >
               닉네임변경
+              <img src="/img/my_arrow.svg" alt="" />
+            </li>
+            <li
+              onClick={() => {
+                if (window.confirm("리셋을 시작합니다")) {
+                  window.localStorage.clear();
+                  navigate("/login");
+                } else {
+                  console.log("---------");
+                }
+              }}
+            >
+              리셋
               <img src="/img/my_arrow.svg" alt="" />
             </li>
           </ul>
         </section>
         {/* <Rank dispatch={dispatch} /> */}
       </div>
-    </div>
+    </>
   );
 }
 

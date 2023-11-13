@@ -1,4 +1,5 @@
 .calendar {
+  height: 85%;
   .todays {
     position: relative;
     right: 5px;
@@ -203,7 +204,6 @@ hr {
 
 .important_data {
   margin-top: 20px;
-  height: 220px;
   padding-left: 10px;
 
   .title_wrap {

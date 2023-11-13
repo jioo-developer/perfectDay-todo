@@ -5,11 +5,13 @@ import { today } from "../module/today";
 
 function Login({ USER_ID, navigate }) {
   const [nickName, setNickName] = useState("");
-  const userData = USER_ID;
   function signUp(e) {
     e.preventDefault();
-    localStorage.setItem("creationDay", JSON.stringify(today));
-    localStorage.setItem(userData, nickName);
+    const loadDate = localStorage.getItem("creationDay");
+    if (loadDate != null) {
+      localStorage.setItem("creationDay", JSON.stringify(today));
+    }
+    localStorage.setItem(USER_ID, nickName);
     navigate("/");
   }
 
@@ -22,7 +24,6 @@ function Login({ USER_ID, navigate }) {
             placeholder="사용 할 닉네임을 적어주세요."
             onChange={(e) => setNickName(e.target.value)}
           />
-          <p className="resign">(재지정하는 경우 1일째로 다시시작합니다)</p>
         </form>
         <footer>
           <p>오늘도 완벽한 하루를 보내시길 바랄게요</p>

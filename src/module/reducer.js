@@ -104,6 +104,13 @@ export default function reducer(state = initialState, action) {
         ...state,
         successDate: [...state.successDate, action.date],
       };
+
+    case editorSwitch:
+      return {
+        ...state,
+        ...state,
+        editorToggle: !state.editorSwitch,
+      };
     default:
       return state;
   }

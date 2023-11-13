@@ -37,34 +37,43 @@ function App() {
   return (
     <div className="wrap">
       {header()}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              currentUser={currentUser}
-              creation={creation}
-              dispatch={dispatch}
-            />
-          }
-        />
-        <Route
-          path="/login"
-          element={<Login USER_ID={USER_ID} navigate={navigate} />}
-        />
-        <Route
-          path="/mypage"
-          element={
-            <MyPage USER_ID={USER_ID} dispatch={dispatch} navigate={navigate} />
-          }
-        />
-        <Route path="/introduce" element={<Introduce navigate={navigate} />} />
-        <Route
-          path="/profile"
-          element={<Profile dispatch={dispatch} navigate={navigate} />}
-        />
-        <Route path="/canlendar" element={<Calendar />} />
-      </Routes>
+      <div className="de-in-wrap">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                currentUser={currentUser}
+                creation={creation}
+                dispatch={dispatch}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={<Login USER_ID={USER_ID} navigate={navigate} />}
+          />
+          <Route
+            path="/mypage"
+            element={
+              <MyPage
+                USER_ID={USER_ID}
+                dispatch={dispatch}
+                navigate={navigate}
+              />
+            }
+          />
+          <Route
+            path="/introduce"
+            element={<Introduce navigate={navigate} />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile dispatch={dispatch} navigate={navigate} />}
+          />
+          <Route path="/canlendar" element={<Calendar />} />
+        </Routes>
+      </div>
       {footer()}
     </div>
   );
