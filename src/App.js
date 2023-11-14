@@ -11,7 +11,7 @@ import Profile from "./components/profile";
 import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 function App() {
   const USER_ID = "currentUser";
   const creation = localStorage.getItem("creationDay");

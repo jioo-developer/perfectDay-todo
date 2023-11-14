@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { useSelector } from "react-redux";
-import { FirstMount } from "../module/reducer";
+import { FirstMount, createPost } from "../module/reducer";
 import Notification from "./Notification";
 function Home({ creation, currentUser, dispatch }) {
-  const initialMount = useSelector((state) => state);
+  const initialMount = useSelector((state) => state.mountState);
   // 첫 mount 조정 state
   const issueState = useSelector((state) => state.issue);
   // 알림창 닫혔는지 on / off
-  const [todoList, setTodoList] = useState([]);
+  const todoList = useSelector((state) => state.TodoList);
   // todoList
 
   const [clearList, setClearList] = useState(0);
@@ -39,14 +39,14 @@ function Home({ creation, currentUser, dispatch }) {
 
   const loadData = () => {
     const result = JSON.parse(localStorage.getItem("saveList"));
-    setTodoList(result);
+    dispatch(createPost(result));
   };
 
   useEffect(() => {
     if (todoList.length !== 0) {
       clearCheck();
     }
-  }, [setTodoList]);
+  }, [todoList]);
 
   function clearCheck() {
     const onNum = Array.from(document.querySelectorAll(".clearList")).length;

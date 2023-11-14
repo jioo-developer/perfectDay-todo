@@ -8,8 +8,7 @@ function Editor() {
   let [writeH, setwriteH] = useInput("");
   let [writeM, setwriteM] = useInput("");
   const dispatch = useDispatch();
-  const toggleState = useSelector((state) => state.editorToggle);
-
+  const toggleState = useSelector((state) => state.editorSwitch);
   //  포스트를 만드는 함수
 
   function postLogic() {

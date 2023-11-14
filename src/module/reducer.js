@@ -57,8 +57,9 @@ export const complete = () => ({
   type: completeList,
 });
 
-export const createPost = () => ({
+export const createPost = (data) => ({
   type: TodoList,
+  data,
 });
 
 export const update = () => ({
@@ -86,30 +87,29 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         bellToggle: !state.bellToggle,
-        completeList: [...state.completeList, action.data],
+        completeList: [...state.completeList, ...action.data],
       };
     case TodoList:
       return {
         ...state,
-        TodoList: [...state.TodoList, action.data],
+        TodoList: [...state.TodoList, ...action.data],
       };
     case updateTodo:
       return {
         ...state,
-        TodoList: [action.data],
+        TodoList: [...action.data],
       };
 
     case success:
       return {
         ...state,
-        successDate: [...state.successDate, action.date],
+        successDate: [...state.successDate, ...action.date],
       };
 
     case editorSwitch:
       return {
         ...state,
-        ...state,
-        editorToggle: !state.editorSwitch,
+        editorSwitch: !state.editorSwitch,
       };
     default:
       return state;

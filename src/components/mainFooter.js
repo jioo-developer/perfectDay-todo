@@ -9,13 +9,13 @@ function MainFooter() {
   const location = window.location.pathname;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const todolist = useSelector((state) => state.Todo);
+  const todoList = useSelector((state) => state.TodoList);
   return (
     <footer className="footer_bar">
       {location === "/" ? (
         <button
           onClick={() => {
-            if (todolist.length >= 10) {
+            if (todoList.length >= 10) {
               window.alert("생성가능한 갯수를 초과하였습니다");
             } else {
               dispatch(editorToggle());
