@@ -5,7 +5,7 @@ import { issueAction } from "../module/reducer";
 
 function Notification({ dispatch }) {
   const finishData = useSelector((state) => state.successDate);
-
+  const loadFinish = localStorage.getItem("clearDB");
   return (
     <>
       <div className="noti_wrap">
@@ -23,21 +23,23 @@ function Notification({ dispatch }) {
           <ul className="noti_body">
             {
               // 알림들 만드는 map 함수
-              finishData.map((item) => {
-                return (
-                  <li>
-                    <img src="/img/check_btn.svg" alt="" />
-                    <div className="li_txt_wrap">
-                      <p className="li_time">
-                        {`${item.year}년 ${item.month}월 ${item.date}일 ${
-                          item.hour
-                        }:${item.min < 10 ? "0" + item.min : item.min}`}
-                      </p>
-                      <p className="li_title">{item.title}</p>
-                    </div>
-                  </li>
-                );
-              })
+              loadFinish === null
+                ? finishData
+                : loadFinish.map((item) => {
+                    return (
+                      <li>
+                        <img src="/img/check_btn.svg" alt="" />
+                        <div className="li_txt_wrap">
+                          <p className="li_time">
+                            {`${item.year}년 ${item.month}월 ${item.date}일 ${
+                              item.hour
+                            }:${item.min < 10 ? "0" + item.min : item.min}`}
+                          </p>
+                          <p className="li_title">{item.title}</p>
+                        </div>
+                      </li>
+                    );
+                  })
             }
           </ul>
         </aside>

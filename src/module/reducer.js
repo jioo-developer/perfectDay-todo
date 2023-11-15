@@ -87,9 +87,11 @@ export default function reducer(state = initialState, action) {
       };
 
     case success:
+      const result = [...state.successDate, action.date];
+      localStorage.setItem("clearDB", result);
       return {
         ...state,
-        successDate: [...state.successDate, action.date],
+        successDate: result,
       };
 
     case editorSwitch:

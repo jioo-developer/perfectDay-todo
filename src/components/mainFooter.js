@@ -3,7 +3,7 @@ import "../App.scss";
 import { editorToggle } from "../module/reducer";
 import { useSelector } from "react-redux";
 
-function MainFooter() {
+function MainFooter({ dispatch, navigate }) {
   const location = window.location.pathname;
   const todoList = useSelector((state) => state.TodoList);
   return (

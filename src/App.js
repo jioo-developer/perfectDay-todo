@@ -73,7 +73,7 @@ function App() {
           <Route path="/canlendar" element={<Calendar />} />
         </Routes>
       </div>
-      {footer()}
+      {footer(navigate, dispatch)}
     </div>
   );
 }
