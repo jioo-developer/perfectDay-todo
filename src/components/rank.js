@@ -1,9 +1,10 @@
 import React from "react";
-import "../reset.css";
 import "../asset/rank.scss";
-import { rankAction } from "../module/reducer";
 
-function RankTable({ dispatch }) {
+function RankTable({ rankSwitch }) {
+  function toggleFunc() {
+    rankSwitch(false);
+  }
   return (
     <div className="rank_wrap">
       <ul className="table">
@@ -38,8 +39,7 @@ function RankTable({ dispatch }) {
           </figcaption>
         </li>
       </ul>
-      <div className="rankClose">
-        {/* dispatch(rankAction()) */}
+      <div className="rankClose" onClick={toggleFunc}>
         <img src="/img/clear.svg" alt="" />
       </div>
     </div>

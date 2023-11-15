@@ -9,14 +9,9 @@ const initialState = {
   // 첫 마운트 state
   issue: false,
   // 알림창 여닫이 state
-  completeList: [],
-  // 완료한 일정제목 list state
-  rankToggle: false,
-  // 랭크 여닫이 state
+
   profile: 1,
   // 프로필 디폴트 index state
-  parcent: 0,
-  // 할일 퍼센트 state,
   bellToggle: false,
 };
 
@@ -28,14 +23,8 @@ const success = "success";
 // 완료한 일정 state
 const issue = "issue";
 // 알림창 여닫이 state
-const completeList = "completeList";
-// 완료한 일정제목 list state
-const rank = "rank";
-// 랭크 여닫이 state
 const profile = "profile";
 // 프로필 디폴트 index state
-const parcent = "parcent";
-// 할일 퍼센트 state
 const Mount = "Mount";
 // 첫 mount
 const updateTodo = "updateTodo";
@@ -53,10 +42,6 @@ export const issueAction = () => ({
   type: issue,
 });
 
-export const complete = () => ({
-  type: completeList,
-});
-
 export const createPost = (data) => ({
   type: TodoList,
   data,
@@ -72,6 +57,11 @@ export const successDate = (date) => ({
   date,
 });
 
+export const profileUpdate = (data) => ({
+  type: profile,
+  data,
+});
+
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case Mount:
@@ -84,12 +74,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         issue: !state.issue,
       };
-    case completeList:
-      return {
-        ...state,
-        bellToggle: !state.bellToggle,
-        completeList: [...state.completeList, action.data],
-      };
+
     case TodoList:
       return {
         ...state,
@@ -111,6 +96,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         editorSwitch: !state.editorSwitch,
+      };
+
+    case profile:
+      return {
+        ...state,
+        profile: action.data,
       };
     default:
       return state;

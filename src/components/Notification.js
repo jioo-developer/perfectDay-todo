@@ -9,12 +9,11 @@ function Notification({ dispatch }) {
   return (
     <>
       <div className="noti_wrap">
-        <div className="cover"></div>
+        <div className="cover" />
         <aside>
           <div className="aside_header">
             <p className="noti_title">알림함</p>
             <img
-              alt=""
               src="/img/clear.svg"
               onClick={() => {
                 dispatch(issueAction());

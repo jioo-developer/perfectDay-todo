@@ -1,20 +1,17 @@
-import React, { useEffect } from "react";
-import "../reset.css";
+import React from "react";
 import "../asset/profile.scss";
 import { useSelector } from "react-redux";
-import { ProfileAction } from "../module/reducer";
 
 function Profile({ dispatch, navigate }) {
   let profileList = [1, 2, 3, 4, 5, 6];
-
+  const loadSelect = useSelector((state) => state.profile);
   return (
     <div className="profile_wrap">
       <section className="section01">
         <div className="my_profile">
           <figure>
             <img
-              // src={`/img/profile${loadSelect === 0 ? 1 : loadSelect}.svg`}
-              src={`/img/profile${1}.svg`}
+              src={`/img/profile${loadSelect === 0 ? 1 : loadSelect}.svg`}
               alt=""
             />
           </figure>
@@ -28,7 +25,7 @@ function Profile({ dispatch, navigate }) {
               <figure
                 className="select_profile"
                 key={i}
-                // onClick={() => dispatch(ProfileAction(i + 1))}
+                onClick={() => dispatch(profileUpdate(i + 1))}
                 //이미지를 누르면 해당 i + 1(0부터 시작해서)가 dispatch로 보내짐
               >
                 <img src={`/img/profile${i + 1}.svg`} alt="" />

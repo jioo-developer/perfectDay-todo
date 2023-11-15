@@ -1,6 +1,5 @@
 import React from "react";
 import "../asset/loading.scss";
-import "../reset.css";
 
 function Introduce({ navigate }) {
   return (
@@ -14,12 +13,7 @@ function Introduce({ navigate }) {
             <br></br>
             일정을 체크하고 끝냄으로 써 하루를 완벽하게 끝내보세요
           </p>
-          <p
-            className="enter"
-            onClick={() => {
-              navigate("/");
-            }}
-          >
+          <p className="enter" onClick={() => navigate("/")}>
             확인
           </p>
         </div>

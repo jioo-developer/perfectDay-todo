@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-
 import "./reset.css";
 import "./App.scss";
 import Login from "./components/Login";
@@ -24,9 +23,9 @@ function App() {
     if (currentUser === null || creation === null) navigate("/login");
   }, []);
 
-  function footer() {
+  function footer(navigate, dispatch) {
     if (currentUser !== null || creation != null) {
-      return <MainFooter />;
+      return <MainFooter navigate={navigate} dispatch={dispatch} />;
     } else return null;
   }
 

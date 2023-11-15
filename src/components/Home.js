@@ -11,7 +11,6 @@ function Home({ creation, currentUser, dispatch }) {
   // 알림창 닫혔는지 on / off
   const todoList = useSelector((state) => state.TodoList);
   // todoList
-
   const [clearList, setClearList] = useState(0);
 
   useEffect(() => {
@@ -53,9 +52,7 @@ function Home({ creation, currentUser, dispatch }) {
   }
 
   useEffect(() => {
-    if (clearList.length !== 0 && !initialMount) {
-      dispatch(FirstMount());
-    }
+    if (clearList.length !== 0 && !initialMount) dispatch(FirstMount());
   }, [clearList]);
   return (
     <>
@@ -78,8 +75,8 @@ function Home({ creation, currentUser, dispatch }) {
           </div>
         </div>
       </section>
-      <List todoList={todoList} />
-      <Editor />
+      <List todoList={todoList} dispatch={dispatch} />
+      <Editor dispatch={dispatch} />
       {issueState ? <Notification dispatch={dispatch} /> : null}
     </>
   );

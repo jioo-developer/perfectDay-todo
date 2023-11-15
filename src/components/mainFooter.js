@@ -1,14 +1,10 @@
 import React from "react";
-import "../reset.css";
 import "../App.scss";
 import { editorToggle } from "../module/reducer";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function MainFooter() {
   const location = window.location.pathname;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const todoList = useSelector((state) => state.TodoList);
   return (
     <footer className="footer_bar">
@@ -25,21 +21,11 @@ function MainFooter() {
           <img src="/img/adds.svg" alt="add" />
         </button>
       ) : null}
-      <div
-        className="home f-con"
-        onClick={() => {
-          navigate("/");
-        }}
-      >
+      <div className="home f-con" onClick={() => navigate("/")}>
         <img src="/img/home.svg" alt="home" />
         <p>홈</p>
       </div>
-      <div
-        className="calendar f-con"
-        onClick={() => {
-          navigate("/canlendar");
-        }}
-      >
+      <div className="calendar f-con" onClick={() => navigate("/canlendar")}>
         <img src="/img/calendar.svg" alt="calendar" />
         <p>캘린더</p>
       </div>

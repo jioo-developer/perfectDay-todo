@@ -17,7 +17,7 @@ function Login({ USER_ID, navigate }) {
 
   return (
     <div className="center_wrap">
-      <div>
+      <>
         <form className="js-form form" onSubmit={signUp}>
           <input
             type="text"
@@ -29,7 +29,7 @@ function Login({ USER_ID, navigate }) {
           <p>오늘도 완벽한 하루를 보내시길 바랄게요</p>
           <p>Copyright 2021 ⓒ jioo-designer </p>
         </footer>
-      </div>
+      </>
     </div>
   );
 }

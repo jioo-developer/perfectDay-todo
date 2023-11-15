@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";
 import useInput from "../hooks/useInput";
-function Editor() {
+function Editor({ dispatch }) {
   let [write, setwrite] = useInput("");
   let [writeH, setwriteH] = useInput("");
   let [writeM, setwriteM] = useInput("");
-  const dispatch = useDispatch();
+
   const toggleState = useSelector((state) => state.editorSwitch);
   //  포스트를 만드는 함수
 

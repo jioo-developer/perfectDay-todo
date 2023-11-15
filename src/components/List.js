@@ -1,19 +1,17 @@
 import React from "react";
-import { batch, useDispatch } from "react-redux";
-import { complete, successDate, update } from "../module/reducer";
+import { batch } from "react-redux";
+import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 
-function List({ todoList }) {
-  const dispatch = useDispatch();
-
+function List({ todoList, dispatch }) {
   // 완료시점 만드는 함수
 
   function createPost(e) {
     const DateFac = { ...today };
-    const successTitle =
-      e.currentTarget.parentElement.getElementsByClassName("today_txt")[0]
-        .innerHTML;
-    DateFac.title = successTitle;
+    DateFac.title =
+      e.currentTarget.parentElement.getElementsByClassName(
+        "today_txt"
+      )[0].innerHTML;
     DateFac.hour = new Date().getHours();
     DateFac.min = new Date().getMinutes();
 
