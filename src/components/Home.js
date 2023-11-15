@@ -39,13 +39,11 @@ function Home({ creation, currentUser, dispatch }) {
 
   const loadData = () => {
     const result = JSON.parse(localStorage.getItem("saveList"));
-    dispatch(createPost(result));
+    dispatch(createPost(result !== null ? result : []));
   };
 
   useEffect(() => {
-    if (todoList.length !== 0) {
-      clearCheck();
-    }
+    if (todoList.length !== 0) clearCheck();
   }, [todoList]);
 
   function clearCheck() {

@@ -1,6 +1,7 @@
 import React from "react";
-import { batch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "../asset/notification.scss";
+import { issueAction } from "../module/reducer";
 
 function Notification({ dispatch }) {
   const finishData = useSelector((state) => state.successDate);
@@ -15,13 +16,9 @@ function Notification({ dispatch }) {
             <img
               alt=""
               src="/img/clear.svg"
-              // onClick={() => {
-              //   batch(() => {
-              //     dispatch(issueAction());
-              //     dispatch(reportAction());
-              //     // 벨과 알림창 on / off 설정
-              //   });
-              // }}
+              onClick={() => {
+                dispatch(issueAction());
+              }}
             />
           </div>
           <ul className="noti_body">

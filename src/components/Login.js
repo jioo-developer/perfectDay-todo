@@ -8,7 +8,7 @@ function Login({ USER_ID, navigate }) {
   function signUp(e) {
     e.preventDefault();
     const loadDate = localStorage.getItem("creationDay");
-    if (loadDate != null) {
+    if (loadDate === null) {
       localStorage.setItem("creationDay", JSON.stringify(today));
     }
     localStorage.setItem(USER_ID, nickName);

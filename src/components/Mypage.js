@@ -34,24 +34,17 @@ function MyPage({ USER_ID, navigate, dispatch }) {
 
         <section className="section_2">
           <ul className="tab_menu">
-            <li
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
+            <li onClick={() => navigate("/profile")}>
               프로필이미지변경
               <img src="/img/my_arrow.svg" alt="" />
             </li>
             <li>
-              {/* onClick={() => dispatch(rankAction())} */}
               등급표
               <img src="/img/my_arrow.svg" alt="" />
             </li>
-            <li>
-              <Link to="/introduce">
-                개발자인사
-                <img src="/img/my_arrow.svg" alt="" />
-              </Link>
+            <li onClick={() => navigate("/introduce")}>
+              개발자인사
+              <img src="/img/my_arrow.svg" alt="" />
             </li>
             <li
               onClick={() => {
@@ -81,7 +74,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
             </li>
           </ul>
         </section>
-        {/* <Rank dispatch={dispatch} /> */}
+        <Rank dispatch={dispatch} />
       </div>
     </>
   );

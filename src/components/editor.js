@@ -12,22 +12,24 @@ function Editor() {
   //  포스트를 만드는 함수
 
   function postLogic() {
-    let logicFac = {
-      write: write,
-      writeH:
-        writeH === ""
-          ? "00"
-          : parseInt(writeH) < 10
-          ? `0${parseInt(writeH)}`
-          : writeH,
-      writeM:
-        writeM === ""
-          ? "00"
-          : parseInt(writeM) < 10
-          ? `0${parseInt(writeM)}`
-          : writeM,
-      clear: false,
-    };
+    let logicFac = [
+      {
+        write: write,
+        writeH:
+          writeH === ""
+            ? "00"
+            : parseInt(writeH) < 10
+            ? `0${parseInt(writeH)}`
+            : writeH,
+        writeM:
+          writeM === ""
+            ? "00"
+            : parseInt(writeM) < 10
+            ? `0${parseInt(writeM)}`
+            : writeM,
+        clear: false,
+      },
+    ];
 
     let danger = document.querySelector(".text_area").value;
     danger === ""
@@ -102,7 +104,7 @@ function Editor() {
                 placeholder="00"
                 onChange={onChangeMinute}
               />
-              <input className="time_txt" placeholder="00" disabled />
+              <input className="time_txt" placeholder="00" readOnly />
             </form>
           </div>
           <button onClick={postLogic}>등록하기</button>
