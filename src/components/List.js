@@ -73,7 +73,7 @@ function List({ todoList, dispatch }) {
                   {listData.write}
                 </p>
                 <button
-                  className={clearState !== false ? "clearBtn " : null}
+                  className={clearState !== false ? "clearBtn" : null}
                   onClick={(e) => {
                     let copyArray = todoList;
                     copyArray[index].clear = true;

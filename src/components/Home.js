@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { useSelector } from "react-redux";
-import { FirstMount, createPost } from "../module/reducer";
+import { FirstMount, createPost, successDate } from "../module/reducer";
 import Notification from "./Notification";
 function Home({ creation, currentUser, dispatch }) {
   const initialMount = useSelector((state) => state.mountState);
@@ -38,7 +38,10 @@ function Home({ creation, currentUser, dispatch }) {
 
   const loadData = () => {
     const result = JSON.parse(localStorage.getItem("saveList"));
-    dispatch(createPost(result !== null ? result : []));
+
+    if (result !== null) {
+      dispatch(createPost(result));
+    }
   };
 
   useEffect(() => {

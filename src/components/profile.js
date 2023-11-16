@@ -6,7 +6,6 @@ import { profileUpdate } from "../module/reducer";
 function Profile({ dispatch, navigate }) {
   let profileList = [1, 2, 3, 4, 5, 6];
   const loadSelect = useSelector((state) => state.profile);
-  console.log(loadSelect);
   return (
     <div className="profile_wrap">
       <section className="section01">
@@ -37,7 +36,6 @@ function Profile({ dispatch, navigate }) {
           <button
             onClick={() => {
               navigate("/Mypage");
-              // localStorage.setItem(select, loadSelect);
             }}
           >
             바꾸기

@@ -9,7 +9,6 @@ const initialState = {
   // 첫 마운트 state
   issue: false,
   // 알림창 여닫이 state
-
   profile: 1,
   // 프로필 디폴트 index state
   bellToggle: false,
@@ -87,11 +86,9 @@ export default function reducer(state = initialState, action) {
       };
 
     case success:
-      const result = [...state.successDate, action.date];
-      localStorage.setItem("clearDB", result);
       return {
         ...state,
-        successDate: result,
+        successDate: [...state.successDate, action.date],
       };
 
     case editorSwitch:
