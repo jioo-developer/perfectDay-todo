@@ -22,8 +22,9 @@ function List({ todoList, dispatch }) {
 
   // 리스트 저장 함수
   function saveHandler() {
-    window.alert("현재까지의 리스트를 저장합니다");
-    localStorage.setItem("saveList", JSON.stringify(todoList));
+    if (window.confirm("현재까지의 리스트를 저장합니다")) {
+      localStorage.setItem("saveList", JSON.stringify(todoList));
+    }
   }
 
   // 클리어를 실행하는 함수

@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 function Header() {
   const location = window.location.pathname;
-  const dispatch = useDispatch();
 
   return (
     <header className="main_header pd-x20">
@@ -30,7 +28,7 @@ function Header() {
         {location === "/" ? (
           <img
             // src={reportState ? "/img/bell.svg" : "/img/no_bell.svg"}
-            src="/img/bell.svg"
+            src="/img/no_bell.svg"
             alt="bell"
             onClick={() => {
               dispatch(issueAction());

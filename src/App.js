@@ -29,13 +29,14 @@ function App() {
     } else return null;
   }
 
-  function header() {
-    if (currentUser !== null || creation != null) return <Header />;
+  function header(dispatch) {
+    if (currentUser !== null || creation != null)
+      return <Header dispatch={dispatch} />;
     else return null;
   }
   return (
     <div className="wrap">
-      {header()}
+      {header(dispatch)}
       <div className="de-in-wrap">
         <Routes>
           <Route

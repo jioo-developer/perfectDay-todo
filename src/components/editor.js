@@ -42,29 +42,23 @@ function Editor({ dispatch }) {
 
   //  포스트를 만드는 함수
 
-  const onChangeHour = useCallback(
-    (e) => {
-      if (e.target.value >= 24) {
-        alert("시간을 정확히 설정하세요.");
-        e.target.value = "";
-      } else {
-        setwriteH(e);
-      }
-    },
-    [writeH]
-  );
+  function onChangeHour(e) {
+    if (e.target.value >= 24) {
+      alert("시간을 정확히 설정하세요.");
+      e.target.value = "";
+    } else {
+      setwriteH(e);
+    }
+  }
 
-  const onChangeMinute = useCallback(
-    (e) => {
-      if (e.target.value >= 60) {
-        alert("시간을 정확히 설정하세요.");
-        e.target.value = "";
-      } else {
-        setwriteM(e);
-      }
-    },
-    [writeM]
-  );
+  function onChangeMinute(e) {
+    if (e.target.value >= 60) {
+      alert("시간을 정확히 설정하세요.");
+      e.target.value = "";
+    } else {
+      setwriteM(e);
+    }
+  }
 
   return (
     <>
