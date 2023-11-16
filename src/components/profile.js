@@ -33,13 +33,7 @@ function Profile({ dispatch, navigate }) {
               </figure>
             );
           })}
-          <button
-            onClick={() => {
-              navigate("/Mypage");
-            }}
-          >
-            바꾸기
-          </button>
+          <button onClick={() => navigate("/Mypage")}>바꾸기</button>
         </div>
       </section>
     </div>

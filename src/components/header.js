@@ -2,9 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
-function Header() {
+function Header({ dispatch }) {
   const location = window.location.pathname;
-
   return (
     <header className="main_header pd-x20">
       <Clock />

@@ -97,6 +97,11 @@ function Editor({ dispatch }) {
                 maxLength="2"
                 placeholder="00"
                 onChange={onChangeMinute}
+                onKeyPress={(e) => {
+                  if (!/[0-9]/.test(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
               <input className="time_txt" placeholder="00" readOnly />
             </form>
