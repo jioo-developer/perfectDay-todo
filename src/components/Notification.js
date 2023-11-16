@@ -5,6 +5,7 @@ import { issueAction } from "../module/reducer";
 
 function Notification({ dispatch }) {
   const finishData = useSelector((state) => state.successDate);
+  console.log(finishData);
   return (
     <>
       <div className="noti_wrap">

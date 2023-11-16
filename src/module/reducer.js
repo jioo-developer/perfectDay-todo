@@ -86,9 +86,17 @@ export default function reducer(state = initialState, action) {
       };
 
     case success:
+      let calcData;
+      if (Array.isArray(action.date)) {
+        calcData = action.date;
+      } else {
+        calcData = [action.date];
+      }
+      const result = [...state.successDate, ...calcData];
+      localStorage.setItem("clearDB", JSON.stringify(result));
       return {
         ...state,
-        successDate: [...state.successDate, action.date],
+        successDate: result,
       };
 
     case editorSwitch:
