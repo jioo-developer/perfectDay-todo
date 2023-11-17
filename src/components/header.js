@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 function Header({ dispatch }) {
@@ -9,9 +8,9 @@ function Header({ dispatch }) {
       <Clock />
       <div className="title_header">
         {location === "/" ? (
-          <Link to="/Mypage" className="main_nav">
+          <figure className="main_nav" onClick={() => navigate("/Mypage")}>
             <img src="./img/nav.svg" alt="nav" />
-          </Link>
+          </figure>
         ) : null}
         <p className="main_titles">
           {location === "/"
