@@ -38,7 +38,7 @@ function App() {
   }
   return (
     <div className="wrap">
-      {header(dispatch)}
+      {header(dispatch, navigate)}
       <div className="de-in-wrap">
         <Routes>
           <Route
