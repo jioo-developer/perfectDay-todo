@@ -63,6 +63,7 @@ function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
                 if (window.confirm("리셋을 시작합니다")) {
                   window.localStorage.clear();
                   navigate("/login");
+                  window.location.reload();
                 }
               }}
             >

@@ -238,7 +238,21 @@ hr {
   margin-top: 10px;
 }
 
-.dayDate:hover {
+.day-inputs + label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #999;
+  height: 40px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 5px;
+  font-family: "AppleSDGothicNeoSB";
+  cursor: pointer;
+}
+
+.day-inputs:checked + label {
   background: #80c4fd;
   color: #fff !important;
 }

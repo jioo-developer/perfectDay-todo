@@ -72,13 +72,19 @@ function Calendar() {
 
     const dayMap = dayArr.map((value, index) => {
       return index < 35 ? (
-        <div
-          className="day dayDate"
-          onClick={(e) => {
-            selectDay(e.target.innerText);
-          }}
-        >
-          {value}
+        <div className="day dayDate">
+          <input
+            id={`day-input-${index}`}
+            className="day-inputs"
+            style={{ display: "none" }}
+            name="date-radio"
+            key={index}
+            type="radio"
+            onChange={(e) => {
+              selectDay(e.target.nextElementSibling.innerHTML);
+            }}
+          />
+          <label htmlFor={`day-input-${index}`}>{value}</label>
         </div>
       ) : null;
     });
@@ -112,6 +118,7 @@ function Calendar() {
         let copy = [...propsTime];
         copy.push(result);
         setPropTime(copy);
+        console.log(propsTime);
       })
       .catch((result) => {
         if (!isNaN(result)) {
@@ -143,11 +150,16 @@ function Calendar() {
 
   // 일정 제작 함수
   function postPromise() {
+    let danger = document.querySelector("#d_day_txt").value;
+    danger === "" ? alert("일정을 입력해주세요") : postPromiseFunc();
+  }
+
+  function postPromiseFunc() {
     let copyArray = [...text];
     copyArray.push(promiseText);
     setText(copyArray);
+    document.querySelector("#d_day_txt").value = "";
   }
-
   // 일정 제작 함수
 
   useEffect(() => {
@@ -193,7 +205,7 @@ function Calendar() {
                   })
                 : null}
               <div className="input_wrap">
-                <input id="d_day_txt" onChange={(e) => setPromise(e)}></input>
+                <input id="d_day_txt" onChange={(e) => setPromise(e)} />
                 <div className="button_wrap">
                   <button className="d_days" onClick={postPromise}>
                     작성
