@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../asset/mypage.scss";
 import Rank from "./rank";
 
-function MyPage({ navigate, dispatch, loadCharacter }) {
+function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
   const [rankToggle, setRank] = useState(false);
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
@@ -22,7 +22,7 @@ function MyPage({ navigate, dispatch, loadCharacter }) {
         <section className="section_1  pd-x20">
           <div className="profile_wrap">
             <h3 className="myName">
-              <b>{user}</b>님은
+              <b>{currentUser}</b>님은
             </h3>
             <p className="myRank">초보완벽러 이십니다!</p>
             <span>MY RANK</span>

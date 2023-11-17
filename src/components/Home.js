@@ -40,9 +40,12 @@ function Home({ creation, currentUser, dispatch }) {
   const loadData = () => {
     const result = JSON.parse(localStorage.getItem("saveList"));
     const clearResult = JSON.parse(localStorage.getItem("clearDB"));
-    if (clearResult.length) {
-      dispatch(successDate(clearResult));
+    if (clearResult !== null) {
+      if (clearResult.length) {
+        dispatch(successDate(clearResult));
+      }
     }
+
     if (result !== null) {
       dispatch(createPost(result));
     }

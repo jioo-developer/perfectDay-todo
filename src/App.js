@@ -10,26 +10,19 @@ import Profile from "./components/profile";
 import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 function App() {
   const USER_ID = "currentUser";
   const creation = localStorage.getItem("creationDay");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = localStorage.getItem(USER_ID);
-  let loadCharacter;
+  const stateCharacter = useSelector((state) => state.Profile);
+  const localCharacter = localStorage.getItem("profile");
   // 할일 list
 
   useEffect(() => {
     if (currentUser === null || creation === null) navigate("/login");
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem("profile-id") === null) {
-      loadCharacter = useSelector((state) => state.profile);
-    } else {
-      loadCharacter = localStorage.getItem("profile-id");
-    }
   }, []);
 
   function footer(navigate, dispatch) {
@@ -66,7 +59,9 @@ function App() {
                 currentUser={currentUser}
                 dispatch={dispatch}
                 navigate={navigate}
-                loadCharacter={loadCharacter}
+                loadCharacter={
+                  localCharacter === null ? stateCharacter : localCharacter
+                }
               />
             }
           />
@@ -80,7 +75,9 @@ function App() {
               <Profile
                 dispatch={dispatch}
                 navigate={navigate}
-                loadCharacter={loadCharacter}
+                loadCharacter={
+                  localCharacter === null ? stateCharacter : localCharacter
+                }
               />
             }
           />
