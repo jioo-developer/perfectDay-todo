@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../asset/mypage.scss";
 import Rank from "./rank";
 
-function MyPage({ USER_ID, navigate, dispatch }) {
-  const user = localStorage.getItem(USER_ID);
-  const [profile, setprofile] = useState(0);
+function MyPage({ navigate, dispatch, loadCharacter }) {
   const [rankToggle, setRank] = useState(false);
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
-
-  useEffect(() => {
-    const loadCharacter = localStorage.getItem("profile-id");
-    setprofile(loadCharacter);
-  }, []);
 
   function rankToggleFunc() {
     setRank(!rankToggle);
@@ -35,7 +28,7 @@ function MyPage({ USER_ID, navigate, dispatch }) {
             <span>MY RANK</span>
           </div>
           <figure className="profile_img">
-            <img src={`/img/profile${profile}.svg`} alt="" />
+            <img src={`/img/profile${loadCharacter}.svg`} alt="" />
           </figure>
         </section>
 

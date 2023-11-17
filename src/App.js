@@ -17,10 +17,19 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = localStorage.getItem(USER_ID);
+  let loadCharacter;
   // 할일 list
 
   useEffect(() => {
     if (currentUser === null || creation === null) navigate("/login");
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("profile-id") === null) {
+      loadCharacter = useSelector((state) => state.profile);
+    } else {
+      loadCharacter = localStorage.getItem("profile-id");
+    }
   }, []);
 
   function footer(navigate, dispatch) {
@@ -49,17 +58,15 @@ function App() {
               />
             }
           />
-          <Route
-            path="/login"
-            element={<Login USER_ID={USER_ID} navigate={navigate} />}
-          />
+          <Route path="/login" element={<Login navigate={navigate} />} />
           <Route
             path="/mypage"
             element={
               <MyPage
-                USER_ID={USER_ID}
+                currentUser={currentUser}
                 dispatch={dispatch}
                 navigate={navigate}
+                loadCharacter={loadCharacter}
               />
             }
           />
@@ -69,7 +76,13 @@ function App() {
           />
           <Route
             path="/profile"
-            element={<Profile dispatch={dispatch} navigate={navigate} />}
+            element={
+              <Profile
+                dispatch={dispatch}
+                navigate={navigate}
+                loadCharacter={loadCharacter}
+              />
+            }
           />
           <Route path="/canlendar" element={<Calendar />} />
         </Routes>

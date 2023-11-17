@@ -19,8 +19,10 @@ function RankTable({ rankSwitch }) {
               <figure>
                 <img src={`/img/${item.level}.svg`} alt={item.title} />
               </figure>
-              <h6>{item.title}</h6>
-              <p>준비중</p>
+              <figcaption>
+                <h6>{item.title}</h6>
+                <p>준비중</p>
+              </figcaption>
             </li>
           );
         })}

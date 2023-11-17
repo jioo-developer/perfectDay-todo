@@ -3,14 +3,14 @@ import "../reset.css";
 import "../asset/login.scss";
 import { today } from "../module/today";
 
-function Login({ USER_ID, navigate }) {
+function Login({ navigate }) {
   const [nickName, setNickName] = useState("");
   function signUp(e) {
     e.preventDefault();
     const loadDate = localStorage.getItem("creationDay");
     if (loadDate === null)
       localStorage.setItem("creationDay", JSON.stringify(today));
-    localStorage.setItem(USER_ID, nickName);
+    localStorage.setItem("currentUser", nickName);
     navigate("/");
   }
 

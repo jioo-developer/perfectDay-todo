@@ -17,6 +17,7 @@ function Home({ creation, currentUser, dispatch }) {
     if (!initialMount) {
       dayMemo();
       loadData();
+      dispatch(FirstMount());
     }
   }, []);
 
@@ -57,9 +58,6 @@ function Home({ creation, currentUser, dispatch }) {
     setClearList(Math.floor((onNum / allNum) * 100));
   }
 
-  useEffect(() => {
-    if (clearList.length !== 0 && !initialMount) dispatch(FirstMount());
-  }, [clearList]);
   return (
     <>
       <section className="section01 pd-x20">

@@ -54,7 +54,7 @@ function Calendar() {
       );
     });
     return result;
-  }, []);
+  }, [week]);
 
   //선택된 달의 날짜들 반환 함수
   const returnDay = () => {

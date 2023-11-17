@@ -1,20 +1,16 @@
 import React from "react";
 import "../asset/profile.scss";
-import { useSelector } from "react-redux";
 import { profileUpdate } from "../module/reducer";
 
-function Profile({ dispatch, navigate }) {
+function Profile({ dispatch, navigate, loadCharacter }) {
   let profileList = [1, 2, 3, 4, 5, 6];
-  const loadSelect = useSelector((state) => state.profile);
+
   return (
     <div className="profile_wrap">
       <section className="section01">
         <div className="my_profile">
           <figure>
-            <img
-              src={`/img/profile${loadSelect === 0 ? 1 : loadSelect}.svg`}
-              alt=""
-            />
+            <img src={`/img/profile${loadCharacter}.svg`} alt="" />
           </figure>
           <figcaption>현재프로필</figcaption>
         </div>

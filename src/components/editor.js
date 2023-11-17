@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";

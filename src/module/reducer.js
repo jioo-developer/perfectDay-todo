@@ -106,6 +106,7 @@ export default function reducer(state = initialState, action) {
       };
 
     case profile:
+      localStorage.setItem("profile", JSON.stringify(action.data));
       return {
         ...state,
         profile: action.data,
