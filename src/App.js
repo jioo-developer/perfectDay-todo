@@ -31,9 +31,9 @@ function App() {
     } else return null;
   }
 
-  function header(dispatch) {
+  function header(dispatch, navigate) {
     if (currentUser !== null || creation != null)
-      return <Header dispatch={dispatch} />;
+      return <Header dispatch={dispatch} navigate={navigate} />;
     else return null;
   }
   return (
