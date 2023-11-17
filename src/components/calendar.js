@@ -17,6 +17,7 @@ function Calendar() {
   const [propsTime, setPropTime] = useState([]);
   const [promiseText, setPromise] = UseInput("");
   const [text, setText] = useState([]);
+  const dayArr = [];
 
   //선택한 년>달의 마지막 날짜
 
@@ -58,7 +59,6 @@ function Calendar() {
 
   //선택된 달의 날짜들 반환 함수
   const returnDay = () => {
-    let dayArr = [];
     for (const nowDay of week) {
       const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
       if (week[day] === nowDay) {
@@ -70,7 +70,7 @@ function Calendar() {
       }
     }
 
-    let dayMap = dayArr.map((value, index) => {
+    const dayMap = dayArr.map((value, index) => {
       return index < 35 ? (
         <div
           className="day dayDate"
