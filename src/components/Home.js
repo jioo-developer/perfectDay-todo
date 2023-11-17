@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { useSelector } from "react-redux";
-import { FirstMount, createPost, successDate } from "../module/reducer";
+import {
+  FirstMount,
+  calendarFunc,
+  createPost,
+  successDate,
+} from "../module/reducer";
 import Notification from "./Notification";
 function Home({ creation, currentUser, dispatch }) {
   const initialMount = useSelector((state) => state.mountState);
@@ -40,14 +45,17 @@ function Home({ creation, currentUser, dispatch }) {
   const loadData = () => {
     const result = JSON.parse(localStorage.getItem("saveList"));
     const clearResult = JSON.parse(localStorage.getItem("clearDB"));
-    if (clearResult !== null) {
-      if (clearResult.length) {
-        dispatch(successDate(clearResult));
-      }
+    const calendarResult = JSON.parse(localStorage.getItem("calendarList"));
+    if (clearResult !== null && clearResult.length) {
+      dispatch(successDate(clearResult));
     }
 
-    if (result !== null) {
+    if (result !== null && result.length) {
       dispatch(createPost(result));
+    }
+
+    if (calendarResult !== null && calendarResult.length) {
+      dispatch(calendarFunc(calendarResult));
     }
   };
 

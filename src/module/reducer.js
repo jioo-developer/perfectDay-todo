@@ -12,6 +12,7 @@ const initialState = {
   profile: 1,
   // 프로필 디폴트 index state
   bellToggle: false,
+  calendarArr: [],
 };
 
 const editorSwitch = "editorSwitch";
@@ -28,6 +29,7 @@ const Mount = "Mount";
 // 첫 mount
 const updateTodo = "updateTodo";
 // todoList 업데이트
+const calendarArr = "calendarArr";
 
 export const editorToggle = () => ({
   type: editorSwitch,
@@ -58,6 +60,11 @@ export const successDate = (date) => ({
 
 export const profileUpdate = (data) => ({
   type: profile,
+  data,
+});
+
+export const calendarFunc = (data) => ({
+  type: calendarArr,
   data,
 });
 
@@ -110,6 +117,20 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         profile: action.data,
+      };
+
+    case calendarArr:
+      let calresult;
+      if (Array.isArray(action.data)) {
+        calresult = action.data;
+      } else {
+        calresult = [action.data];
+      }
+      const result2 = [...state.calendarArr, ...calresult];
+      localStorage.setItem("calendarList", JSON.stringify(result2));
+      return {
+        ...state,
+        calendarArr: result2,
       };
     default:
       return state;

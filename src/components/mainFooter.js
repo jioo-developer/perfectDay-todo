@@ -3,8 +3,7 @@ import "../App.scss";
 import { editorToggle } from "../module/reducer";
 import { useSelector } from "react-redux";
 
-function MainFooter({ dispatch, navigate }) {
-  const location = window.location.pathname;
+function MainFooter({ dispatch, navigate, location }) {
   const todoList = useSelector((state) => state.TodoList);
   return (
     <footer className="footer_bar">

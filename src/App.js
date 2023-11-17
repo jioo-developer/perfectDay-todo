@@ -19,26 +19,42 @@ function App() {
   const currentUser = localStorage.getItem(USER_ID);
   const stateCharacter = useSelector((state) => state.Profile);
   const localCharacter = localStorage.getItem("profile");
+  const location = window.location.pathname;
+  const initialMount = useSelector((state) => state.mountState);
   // 할일 list
 
   useEffect(() => {
-    if (currentUser === null || creation === null) navigate("/login");
+    if (currentUser === null || creation === null) {
+      navigate("/login");
+    } else {
+      if (!initialMount && location !== "/") {
+        navigate("/");
+      }
+    }
   }, []);
 
-  function footer(navigate, dispatch) {
+  function footer(navigate, dispatch, location) {
     if (currentUser !== null || creation != null) {
-      return <MainFooter navigate={navigate} dispatch={dispatch} />;
+      return (
+        <MainFooter
+          navigate={navigate}
+          dispatch={dispatch}
+          location={location}
+        />
+      );
     } else return null;
   }
 
-  function header(dispatch, navigate) {
+  function header(dispatch, navigate, location) {
     if (currentUser !== null || creation != null)
-      return <Header dispatch={dispatch} navigate={navigate} />;
+      return (
+        <Header dispatch={dispatch} navigate={navigate} location={location} />
+      );
     else return null;
   }
   return (
     <div className="wrap">
-      {header(dispatch, navigate)}
+      {header(dispatch, navigate, location)}
       <div className="de-in-wrap">
         <Routes>
           <Route
@@ -81,10 +97,10 @@ function App() {
               />
             }
           />
-          <Route path="/canlendar" element={<Calendar />} />
+          <Route path="/canlendar" element={<Calendar dispatch={dispatch} />} />
         </Routes>
       </div>
-      {footer(navigate, dispatch)}
+      {footer(navigate, dispatch, location)}
     </div>
   );
 }

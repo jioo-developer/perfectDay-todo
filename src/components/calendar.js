@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import "../asset/calendar.scss";
 import UseInput from "../hooks/useInput";
 import { today } from "../module/today";
+import { calendarFunc } from "../module/reducer";
+import { useSelector } from "react-redux";
 
-function Calendar() {
+function Calendar({ dispatch }) {
   const nowday = { ...today };
   today.day = new Date().getDay();
 
@@ -17,8 +19,11 @@ function Calendar() {
   const [select, setSelect] = useState(0);
   // 일정을 잡기위해 선택 한 날짜
   const [promiseText, setPromise] = UseInput("");
-  const [text, setText] = useState([]);
+
   const dayArr = [];
+
+  const calendarReducer = useSelector((state) => state.calendarArr);
+  console.log(calendarReducer);
 
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
@@ -160,9 +165,7 @@ function Calendar() {
     const object = {};
     object.title = promiseText;
     object.calcDay = value;
-    const copyArr = [...text];
-    copyArr.push(object);
-    setText(copyArr);
+    dispatch(calendarFunc(object));
     // 날짜랑 텍스트를 객체로 잘 만들어서 배열 안으로 넣어야함
     document.querySelector("#d_day_txt").value = "";
   }
@@ -196,8 +199,8 @@ function Calendar() {
           <section className="important_data">
             <div className="title_wrap">
               <div className="date_title">일정예약</div>
-              {text.length !== 0
-                ? text.map((value, index) => {
+              {calendarReducer.length !== 0
+                ? calendarReducer.map((value, index) => {
                     return (
                       <div className="date_txt">
                         <p className="txt" key={index}>
