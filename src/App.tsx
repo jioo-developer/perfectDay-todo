@@ -11,16 +11,19 @@ import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
 import { useDispatch, useSelector } from "react-redux";
-function App() {
+
+const App = () => {
   const USER_ID = "currentUser";
-  const creation = localStorage.getItem("creationDay");
+  const creation: string | null = localStorage.getItem("creationDay");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentUser = localStorage.getItem(USER_ID);
-  const stateCharacter = useSelector((state) => state.Profile);
-  const localCharacter = localStorage.getItem("profile");
-  const location = window.location.pathname;
-  const initialMount = useSelector((state) => state.mountState);
+  const currentUser: string | null = localStorage.getItem(USER_ID);
+  const stateCharacter: string | number = useSelector(
+    (state: RootState) => state.Profile
+  );
+  const localCharacter: string | null = localStorage.getItem("profile");
+  const location: string = window.location.pathname;
+  const initialMount = useSelector((state: RootState) => state.mountState);
   // 할일 list
 
   useEffect(() => {
@@ -33,7 +36,7 @@ function App() {
     }
   }, []);
 
-  function footer(navigate, dispatch, location) {
+  function footer({ navigate, dispatch, location }: functionProps) {
     if (currentUser !== null || creation != null) {
       return (
         <MainFooter
@@ -45,7 +48,7 @@ function App() {
     } else return null;
   }
 
-  function header(dispatch, navigate, location) {
+  function header({ navigate, dispatch, location }: functionProps) {
     if (currentUser !== null || creation != null)
       return (
         <Header dispatch={dispatch} navigate={navigate} location={location} />
@@ -54,7 +57,7 @@ function App() {
   }
   return (
     <div className="wrap">
-      {header(dispatch, navigate, location)}
+      {header({ dispatch, navigate, location })}
       <div className="de-in-wrap">
         <Routes>
           <Route
@@ -100,9 +103,9 @@ function App() {
           <Route path="/canlendar" element={<Calendar dispatch={dispatch} />} />
         </Routes>
       </div>
-      {footer(navigate, dispatch, location)}
+      {footer({ navigate, dispatch, location })}
     </div>
   );
-}
+};
 
 export default App;

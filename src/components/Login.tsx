@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, FC, ChangeEvent, FormEvent } from "react";
 import "../reset.css";
 import "../asset/login.scss";
 import { today } from "../module/today";
 
-function Login({ navigate }) {
-  const [nickName, setNickName] = useState("");
-  function signUp(e) {
+const Login = ({ navigate }: any) => {
+  const [nickName, setNickName] = useState<string>("");
+
+  function signUp(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const loadDate = localStorage.getItem("creationDay");
     if (loadDate === null)
       localStorage.setItem("creationDay", JSON.stringify(today));
     localStorage.setItem("currentUser", nickName);
-    navigate("/");
+    navigate();
   }
 
   return (
@@ -21,7 +22,9 @@ function Login({ navigate }) {
           <input
             type="text"
             placeholder="사용 할 닉네임을 적어주세요."
-            onChange={(e) => setNickName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setNickName(e.target.value)
+            }
           />
         </form>
         <footer>
@@ -31,6 +34,6 @@ function Login({ navigate }) {
       </>
     </div>
   );
-}
+};
 
 export default Login;
