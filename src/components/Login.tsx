@@ -9,10 +9,11 @@ const Login = ({ navigate }: any) => {
   function signUp(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const loadDate = localStorage.getItem("creationDay");
-    if (loadDate === null)
+    if (loadDate === null) {
       localStorage.setItem("creationDay", JSON.stringify(today));
-    localStorage.setItem("currentUser", nickName);
-    navigate();
+      localStorage.setItem("currentUser", nickName);
+      navigate();
+    }
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./reset.css";
 import "./App.scss";
@@ -13,15 +13,17 @@ import Header from "./components/header";
 import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
-  const USER_ID = "currentUser";
-  const creation: string | null = localStorage.getItem("creationDay");
+  const creation: string | null = localStorage.getItem("creationDay") || null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentUser: string | null = localStorage.getItem(USER_ID);
-  const stateCharacter: string | number = useSelector(
+  const currentUser: string | null =
+    localStorage.getItem("currentUser") || null;
+  const stateCharacter: number = useSelector(
     (state: RootState) => state.Profile
   );
-  const localCharacter: string | null = localStorage.getItem("profile");
+  const localCharacter: number = parseInt(
+    localStorage.getItem("profile") || "{}"
+  );
   const location: string = window.location.pathname;
   const initialMount = useSelector((state: RootState) => state.mountState);
   // 할일 list
@@ -37,7 +39,7 @@ const App = () => {
   }, []);
 
   function footer({ navigate, dispatch, location }: functionProps) {
-    if (currentUser !== null || creation != null) {
+    if (currentUser !== null || creation !== null) {
       return (
         <MainFooter
           navigate={navigate}
@@ -49,7 +51,7 @@ const App = () => {
   }
 
   function header({ navigate, dispatch, location }: functionProps) {
-    if (currentUser !== null || creation != null)
+    if (currentUser !== null || creation !== null)
       return (
         <Header dispatch={dispatch} navigate={navigate} location={location} />
       );

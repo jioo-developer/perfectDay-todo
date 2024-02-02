@@ -3,12 +3,18 @@ import { useSelector } from "react-redux";
 import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";
 import useInput from "../hooks/useInput";
-function Editor({ dispatch }) {
-  let [write, setwrite] = useInput("");
-  let [writeH, setwriteH] = useInput("");
-  let [writeM, setwriteM] = useInput("");
+function Editor({ dispatch }: any) {
+  let [write, setwrite] = useInput(0);
+  let [writeH, setwriteH] = useInput(0);
+  let [writeM, setwriteM] = useInput(0);
 
-  const toggleState = useSelector((state) => state.editorSwitch);
+  type toggleStateType = {
+    editorSwitch: boolean;
+  };
+
+  const toggleState = useSelector(
+    (state: toggleStateType) => state.editorSwitch
+  );
   //  포스트를 만드는 함수
 
   function postLogic() {
@@ -17,7 +23,7 @@ function Editor({ dispatch }) {
         write: write,
         writeH:
           writeH === ""
-            ? "00"
+            ? write + write
             : parseInt(writeH) < 10
             ? `0${parseInt(writeH)}`
             : writeH,

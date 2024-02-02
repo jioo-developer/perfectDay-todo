@@ -1,5 +1,5 @@
 interface RootState {
-  Profile: string | number;
+  Profile: number;
   mountState: boolean;
 }
 
@@ -9,8 +9,27 @@ interface functionProps {
   location: string;
 }
 
-interface HomeProps {
-  creation: string | null;
+type HomeProps = {
   currentUser: string | null;
+  creation: string | null;
   dispatch: any;
+};
+
+type dateType = {
+  year: number;
+  month: number;
+  date: number;
+  day: number;
+};
+
+interface HomeRootState extends RootState {
+  issue: boolean;
+  TodoList: todoItem[];
 }
+
+type todoItem = {
+  write: string;
+  writeH: number;
+  writeM: number;
+  clear: boolean;
+};
