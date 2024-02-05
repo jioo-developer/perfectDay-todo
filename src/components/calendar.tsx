@@ -23,12 +23,11 @@ function Calendar(dispatch: Dispatch) {
   // 일정을 잡기위해 선택 한 날짜
   const [promiseText, setPromise] = useState<string>("");
 
-  const dayArr: any[] = [];
+  let dayArr: (string | number)[] = [];
 
   const calendarReducer = useSelector(
     (state: calendarProps) => state.calendarArr
   );
-  console.log(calendarReducer);
 
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
@@ -110,7 +109,7 @@ function Calendar(dispatch: Dispatch) {
   // 오늘 날짜 체크하는 함수
   function todayCheck() {
     const thisMonth = new Date().getMonth() + 1;
-    const todayOn: any[] = Array.from(
+    const todayOn: HTMLElement[] = Array.prototype.slice.call(
       document.getElementsByClassName("dayDate")
     );
     if (todayOn.length > 0) {
