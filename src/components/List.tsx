@@ -8,12 +8,6 @@ type ListProps = {
   dispatch: any;
 };
 
-interface DateFac extends dateType {
-  title: string;
-  hour: string | number;
-  min: string | number;
-}
-
 function List({ TodoList, dispatch }: ListProps) {
   // 완료시점 만드는 함수
   function createPost(e: HTMLElement): any {
