@@ -9,6 +9,14 @@ import {
   successDate,
 } from "../module/reducer";
 import Notification from "./Notification";
+import { Dispatch } from "redux";
+
+type HomeProps = {
+  currentUser: string | null;
+  creation: string | null;
+  dispatch: Dispatch;
+};
+
 function Home({ currentUser, creation, dispatch }: HomeProps) {
   const initialMount = useSelector((state: HomeRootState) => state.mountState);
   // 첫 mount 조정 state
@@ -64,7 +72,7 @@ function Home({ currentUser, creation, dispatch }: HomeProps) {
   };
 
   useEffect(() => {
-    if (TodoList.length !== 0) clearCheck();
+    if (TodoList.length > 0) clearCheck();
   }, [TodoList]);
 
   function clearCheck() {

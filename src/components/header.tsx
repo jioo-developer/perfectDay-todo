@@ -1,7 +1,6 @@
 import React from "react";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
-
 import { Dispatch } from "redux";
 import { NavigateFunction } from "react-router-dom";
 

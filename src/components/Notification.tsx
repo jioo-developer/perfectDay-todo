@@ -2,12 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "../asset/notification.scss";
 import { finishReset, issueAction } from "../module/reducer";
-import { Dispatch } from "redux";
 type finishDataType = {
   successDate: any[];
-  dispatch: Dispatch;
 };
-function Notification({ dispatch }: finishDataType) {
+function Notification({ dispatch }: any) {
   const finishData = useSelector((state: finishDataType) => state.successDate);
   const getFinish: string | null = localStorage.getItem("clearDB");
   return (

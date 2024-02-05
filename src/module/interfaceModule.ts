@@ -3,12 +3,6 @@ interface RootState {
   mountState: boolean;
 }
 
-type HomeProps = {
-  currentUser: string | null;
-  creation: string | null;
-  dispatch: any;
-};
-
 type dateType = {
   year: number;
   month: number;
