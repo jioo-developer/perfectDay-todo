@@ -1,13 +1,12 @@
-import React from "react";
 import "../asset/rank.scss";
 
-function RankTable({ rankSwitch }: any) {
+function RankTable(rankSwitch: any) {
   const RankArr = [
     { level: "brown", title: "초보완벽러" },
     { level: "silver", title: "끈기완벽러" },
     { level: "gold", title: "프로완벽러" },
   ];
-  function toggleFunc() {
+  function toggleFunc(): void {
     rankSwitch(false);
   }
   return (

@@ -1,11 +1,11 @@
-import React, { MouseEvent } from "react";
 import { batch } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
+import { Dispatch } from "redux";
 
 type ListProps = {
   TodoList: todoItem[];
-  dispatch: any;
+  dispatch: Dispatch;
 };
 
 function List({ TodoList, dispatch }: ListProps) {

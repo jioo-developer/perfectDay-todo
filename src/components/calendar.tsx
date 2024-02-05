@@ -3,11 +3,12 @@ import "../asset/calendar.scss";
 import { today } from "../module/today";
 import { calendarFunc } from "../module/reducer";
 import { useSelector } from "react-redux";
+import { Dispatch } from "redux";
 interface calendarProps {
   calendarArr: any[];
 }
 
-function Calendar({ dispatch }: any) {
+function Calendar(dispatch: Dispatch) {
   const nowday = { ...today };
   today.day = new Date().getDay();
 
@@ -161,7 +162,7 @@ function Calendar({ dispatch }: any) {
         rej(TimeResult);
       }
     })
-      .then((result: any) => {
+      .then((result:any) => {
         postPromiseFunc(result);
       })
       .catch((result) => {
