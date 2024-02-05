@@ -16,11 +16,10 @@ interface DateFac extends dateType {
 
 function List({ TodoList, dispatch }: ListProps) {
   // 완료시점 만드는 함수
-  console.log(TodoList);
-  console.log("mounted--------------------");
-  function createPost(e: MouseEvent): DateFac {
+  function createPost(e: HTMLElement): any {
     const DateFac: any = { ...today };
-    DateFac.title = "";
+    DateFac.title =
+      e.parentElement?.getElementsByClassName("today_txt")[0].innerHTML;
     DateFac.hour = new Date().getHours();
     DateFac.min = new Date().getMinutes();
     return DateFac;
@@ -36,9 +35,9 @@ function List({ TodoList, dispatch }: ListProps) {
   }
 
   // 클리어를 실행하는 함수
-  function successHandler(e: MouseEvent, clearArr: HomeRootState) {
+  function successHandler(e: HTMLElement, clearArr: []) {
     batch(() => {
-      dispatch(successDate(createPost(e)));
+      dispatch(successDate(createPost(e as HTMLElement)));
       dispatch(update(clearArr));
     });
   }
@@ -81,11 +80,8 @@ function List({ TodoList, dispatch }: ListProps) {
                   className={clearState ? "clearBtn" : ""}
                   onClick={(e) => {
                     const copyArray: any = [...TodoList];
-                    console.log(copyArray);
-                    console.log("-----------------------++");
-                    // const copyArray: HomeRootState = [...TodoList];
-                    // copyArray[index].clear = true;
-                    successHandler(e, copyArray);
+                    copyArray[index].clear = true;
+                    successHandler(e.currentTarget, copyArray);
                   }}
                 >
                   <img src="/img/before_check.svg" alt="check" />
