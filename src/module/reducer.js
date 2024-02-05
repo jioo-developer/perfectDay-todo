@@ -31,6 +31,8 @@ const updateTodo = "updateTodo";
 // todoList 업데이트
 const calendarArr = "calendarArr";
 
+const reset = "finishReset";
+
 export const editorToggle = () => ({
   type: editorSwitch,
 });
@@ -66,6 +68,10 @@ export const profileUpdate = (data) => ({
 export const calendarFunc = (data) => ({
   type: calendarArr,
   data,
+});
+
+export const finishReset = () => ({
+  type: reset,
 });
 
 export default function reducer(state = initialState, action) {
@@ -104,6 +110,13 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         successDate: result,
+      };
+
+    case reset:
+      localStorage.removeItem("clearDB");
+      return {
+        ...state,
+        successDate: [],
       };
 
     case editorSwitch:
