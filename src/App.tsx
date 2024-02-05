@@ -22,7 +22,7 @@ interface functionProps {
 
 const App = () => {
   const creation: string | null = localStorage.getItem("creationDay") || null;
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const dispatch: Dispatch = useDispatch();
   const currentUser: string | null =
     localStorage.getItem("currentUser") || null;

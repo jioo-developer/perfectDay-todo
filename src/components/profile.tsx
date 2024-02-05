@@ -1,8 +1,14 @@
 import React from "react";
 import "../asset/profile.scss";
 import { profileUpdate } from "../module/reducer";
-
-function Profile({ dispatch, navigate, loadCharacter }) {
+import { Dispatch } from "redux";
+import { NavigateFunction } from "react-router-dom";
+interface myProps {
+  navigate: NavigateFunction;
+  dispatch: Dispatch;
+  loadCharacter: number;
+}
+function Profile({ dispatch, navigate, loadCharacter }: myProps) {
   let profileList = [1, 2, 3, 4, 5, 6];
 
   return (

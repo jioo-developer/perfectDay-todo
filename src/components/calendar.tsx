@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "../asset/calendar.scss";
-import UseInput from "../hooks/useInput";
 import { today } from "../module/today";
 import { calendarFunc } from "../module/reducer";
 import { useSelector } from "react-redux";
+interface calendarProps {
+  calendarArr: any[];
+}
 
-function Calendar({ dispatch }) {
+function Calendar({ dispatch }: any) {
   const nowday = { ...today };
   today.day = new Date().getDay();
 
@@ -18,11 +20,13 @@ function Calendar({ dispatch }) {
   // 선택년 월 일 state
   const [select, setSelect] = useState(0);
   // 일정을 잡기위해 선택 한 날짜
-  const [promiseText, setPromise] = UseInput("");
+  const [promiseText, setPromise] = useState<string>("");
 
-  const dayArr = [];
+  const dayArr: any[] = [];
 
-  const calendarReducer = useSelector((state) => state.calendarArr);
+  const calendarReducer = useSelector(
+    (state: calendarProps) => state.calendarArr
+  );
   console.log(calendarReducer);
 
   //이전 달 보기 버튼
@@ -85,7 +89,12 @@ function Calendar({ dispatch }) {
             key={index}
             type="radio"
             onChange={(e) => {
-              setSelect(parseInt(e.target.nextElementSibling.innerHTML));
+              if (e.target.nextElementSibling) {
+                const transNumer = parseInt(
+                  e.target.nextElementSibling.innerHTML
+                );
+                setSelect(transNumer);
+              }
             }}
           />
           <label htmlFor={`day-input-${index}`}>{value}</label>
@@ -99,18 +108,22 @@ function Calendar({ dispatch }) {
 
   // 오늘 날짜 체크하는 함수
   function todayCheck() {
-    let thisMonth = new Date().getMonth() + 1;
-    let todayOn = Array.from(document.getElementsByClassName("dayDate"));
-    if (thisMonth === selectedMonth) {
-      for (var i = 0; i < todayOn.length; i++) {
-        if (todayOn[i].innerText === "") {
-          todayOn.splice(i, 1);
-          i--;
+    const thisMonth = new Date().getMonth() + 1;
+    const todayOn: any[] = Array.from(
+      document.getElementsByClassName("dayDate")
+    );
+    if (todayOn.length > 0) {
+      if (thisMonth === selectedMonth) {
+        for (var i = 0; i < todayOn.length; i++) {
+          if (todayOn[i].innerText === "") {
+            todayOn.splice(i, 1);
+            i--;
+          }
         }
+        todayOn[nowday.date - 1].classList.add("today");
+      } else {
+        todayOn[nowday.date - 1].classList.remove("today");
       }
-      todayOn[nowday.date - 1].classList.add("today");
-    } else {
-      todayOn[nowday.date - 1].classList.remove("today");
     }
   }
 
@@ -118,8 +131,7 @@ function Calendar({ dispatch }) {
 
   // 일정 제작 함수
   function postPromise() {
-    let danger = document.querySelector("#d_day_txt").value;
-    if (danger !== "" && selectDay !== 0) {
+    if (promiseText !== "" && selectDay !== (0 as any)) {
       selectDay(select);
     } else {
       window.alert("일정 또는 날짜를 올바르게 사용해주세요.");
@@ -129,27 +141,27 @@ function Calendar({ dispatch }) {
   // 일정 제작 함수
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
-  function selectDay(params) {
+  function selectDay(params: number) {
     return new Promise(function (res, rej) {
       let selectDate = new Date(
         selectedYear,
         selectedMonth,
-        parseInt(params)
+        params
         //params는 선택된 날짜의 텍스트를 숫자로 변환
       );
 
       let thisDay = new Date(nowday.year, nowday.month, nowday.date);
 
-      let ResultDay = selectDate - thisDay;
+      let ResultDay = +selectDate - +thisDay;
 
-      let TimeResult = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
+      let TimeResult: number = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
       if (TimeResult > 0) {
         res(TimeResult);
       } else {
         rej(TimeResult);
       }
     })
-      .then((result) => {
+      .then((result: any) => {
         postPromiseFunc(result);
       })
       .catch((result) => {
@@ -160,14 +172,20 @@ function Calendar({ dispatch }) {
   }
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
-
-  function postPromiseFunc(value) {
-    const object = {};
+  type PostPromiseType = {
+    title?: string;
+    calcDay?: number;
+  };
+  function postPromiseFunc(value: number) {
+    const object: PostPromiseType = {};
     object.title = promiseText;
     object.calcDay = value;
     dispatch(calendarFunc(object));
     // 날짜랑 텍스트를 객체로 잘 만들어서 배열 안으로 넣어야함
-    document.querySelector("#d_day_txt").value = "";
+    const target = document.querySelector(
+      "#d_day_txt"
+    ) as HTMLInputElement | null;
+    if (target) target.value = "";
   }
 
   useEffect(() => {
@@ -213,7 +231,10 @@ function Calendar({ dispatch }) {
                   })
                 : null}
               <div className="input_wrap">
-                <input id="d_day_txt" onChange={(e) => setPromise(e)} />
+                <input
+                  id="d_day_txt"
+                  onChange={(e) => setPromise(e.target.value)}
+                />
                 <div className="button_wrap">
                   <button className="d_days" onClick={postPromise}>
                     작성

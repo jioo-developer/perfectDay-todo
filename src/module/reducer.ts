@@ -66,7 +66,7 @@ export const profileUpdate = (data: number) => ({
   data,
 });
 
-export const calendarFunc = (data: []) => ({
+export const calendarFunc = (data: [] | {}) => ({
   type: calendarArr,
   data,
 });
