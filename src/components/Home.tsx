@@ -102,7 +102,7 @@ function Home({ currentUser, creation, dispatch }: HomeProps) {
           </div>
         </div>
       </section>
-      <List TodoList={TodoList} dispatch={dispatch} />
+      {/* <List TodoList={TodoList} dispatch={dispatch} /> */}
       <Editor dispatch={dispatch} />
       {issueState ? <Notification dispatch={dispatch} /> : null}
     </>

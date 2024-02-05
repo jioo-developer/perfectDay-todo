@@ -5,7 +5,7 @@ import { calendarFunc } from "../module/reducer";
 import { useSelector } from "react-redux";
 import { Dispatch } from "redux";
 interface calendarProps {
-  calendarArr: any[];
+  calendarArr: [{ title: string; calcDay: number }];
 }
 
 function Calendar(dispatch: Dispatch) {
@@ -142,8 +142,8 @@ function Calendar(dispatch: Dispatch) {
   // 일정 제작 함수
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
-  function selectDay(params: number) {
-    return new Promise(function (res, rej) {
+  function selectDay(params: number): Promise<void> {
+    return new Promise<void>(function (res, rej) {
       let selectDate = new Date(
         selectedYear,
         selectedMonth,
@@ -157,15 +157,17 @@ function Calendar(dispatch: Dispatch) {
 
       let TimeResult: number = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
       if (TimeResult > 0) {
-        res(TimeResult);
+        res();
       } else {
         rej(TimeResult);
       }
     })
-      .then((result:any) => {
-        postPromiseFunc(result);
+      .then((result) => {
+        if (typeof result === "number") {
+          postPromiseFunc(result);
+        }
       })
-      .catch((result) => {
+      .catch((result: number) => {
         if (!isNaN(result)) {
           window.alert("이미 지난 날짜입니다.");
         }
@@ -218,7 +220,7 @@ function Calendar(dispatch: Dispatch) {
           <section className="important_data">
             <div className="title_wrap">
               <div className="date_title">일정예약</div>
-              {calendarReducer.length !== 0
+              {calendarReducer.length > 0
                 ? calendarReducer.map((value, index) => {
                     return (
                       <div className="date_txt">

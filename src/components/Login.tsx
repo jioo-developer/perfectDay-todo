@@ -2,8 +2,9 @@ import React, { useState, FC, ChangeEvent, FormEvent } from "react";
 import "../reset.css";
 import "../asset/login.scss";
 import { today } from "../module/today";
+import { NavigateFunction } from "react-router-dom";
 
-const Login = ({ navigate }: any) => {
+const Login = (navigate: NavigateFunction) => {
   const [nickName, setNickName] = useState<string>("");
 
   function signUp(e: FormEvent<HTMLFormElement>) {
@@ -12,7 +13,7 @@ const Login = ({ navigate }: any) => {
     if (loadDate === null) {
       localStorage.setItem("creationDay", JSON.stringify(today));
       localStorage.setItem("currentUser", nickName);
-      navigate();
+      navigate("/");
     }
   }
 
