@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-const UseInput = (initialValue) => {
+const UseInput = (initialValue: string | number) => {
   //initialValue = onChange={setState}가 파라미터로 들어옴
   const [value, setValue] = useState(initialValue);
   //그대로 공용으로 사용 할 state (value)에 저장

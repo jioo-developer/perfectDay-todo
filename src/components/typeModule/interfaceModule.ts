@@ -3,12 +3,6 @@ interface RootState {
   mountState: boolean;
 }
 
-interface functionProps {
-  navigate: any;
-  dispatch: any;
-  location: string;
-}
-
 type HomeProps = {
   currentUser: string | null;
   creation: string | null;

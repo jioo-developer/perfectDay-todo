@@ -11,11 +11,19 @@ import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
 import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { NavigateFunction } from "react-router-dom";
+
+interface functionProps {
+  navigate: NavigateFunction;
+  dispatch: Dispatch;
+  location: string;
+}
 
 const App = () => {
   const creation: string | null = localStorage.getItem("creationDay") || null;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: Dispatch = useDispatch();
   const currentUser: string | null =
     localStorage.getItem("currentUser") || null;
   const stateCharacter: number = useSelector(
@@ -81,7 +89,9 @@ const App = () => {
                 dispatch={dispatch}
                 navigate={navigate}
                 loadCharacter={
-                  localCharacter === null ? stateCharacter : localCharacter
+                  Object.entries(localCharacter).length === 0
+                    ? stateCharacter
+                    : localCharacter
                 }
               />
             }

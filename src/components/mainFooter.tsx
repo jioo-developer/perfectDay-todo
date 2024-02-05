@@ -2,9 +2,17 @@ import React from "react";
 import "../App.scss";
 import { editorToggle } from "../module/reducer";
 import { useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { NavigateFunction } from "react-router-dom";
 
-function MainFooter({ dispatch, navigate, location }) {
-  const todoList = useSelector((state) => state.TodoList);
+interface functionProps {
+  navigate: NavigateFunction;
+  dispatch: Dispatch;
+  location: string;
+}
+
+function MainFooter({ dispatch, navigate, location }: functionProps) {
+  const todoList = useSelector((state: HomeRootState) => state.TodoList);
   return (
     <footer className="footer_bar">
       {location === "/" ? (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 function Clock() {
-  let [time, setTime] = useState(moment());
+  const [time, setTime] = useState(moment());
   useEffect(() => {
     const momentClock = setInterval(() => {
       setTime(moment());

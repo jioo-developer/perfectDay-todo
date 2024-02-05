@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import "../asset/mypage.scss";
 import Rank from "./rank";
+import { Dispatch } from "redux";
+import { NavigateFunction } from "react-router-dom";
+interface myProps {
+  navigate: NavigateFunction;
+  dispatch: Dispatch;
+  loadCharacter: number;
+  currentUser: string | null;
+}
 
-function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
+function MyPage({ navigate, dispatch, loadCharacter, currentUser }: myProps) {
   const [rankToggle, setRank] = useState(false);
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
@@ -10,7 +18,7 @@ function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
     setRank(!rankToggle);
   }
 
-  function rankSwitch(value) {
+  function rankSwitch(value: boolean) {
     setRank(value);
   }
 
@@ -72,9 +80,7 @@ function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
             </li>
           </ul>
         </section>
-        {rankToggle ? (
-          <Rank dispatch={dispatch} rankSwitch={rankSwitch} />
-        ) : null}
+        {rankToggle ? <Rank rankSwitch={rankSwitch} /> : null}
       </div>
     </>
   );

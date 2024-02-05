@@ -12,6 +12,7 @@ const initialState = {
   profile: 1,
   // 프로필 디폴트 index state
   bellToggle: false,
+
   calendarArr: [],
 };
 
@@ -31,6 +32,8 @@ const updateTodo = "updateTodo";
 // todoList 업데이트
 const calendarArr = "calendarArr";
 
+const reset = "finishReset";
+
 export const editorToggle = () => ({
   type: editorSwitch,
 });
@@ -43,32 +46,36 @@ export const issueAction = () => ({
   type: issue,
 });
 
-export const createPost = (data) => ({
+export const createPost = (data: object) => ({
   type: TodoList,
   data,
 });
 
-export const update = (data) => ({
+export const update = (data: []) => ({
   type: updateTodo,
   data,
 });
 
-export const successDate = (date) => ({
+export const successDate = (date: []) => ({
   type: success,
   date,
 });
 
-export const profileUpdate = (data) => ({
+export const profileUpdate = (data: number) => ({
   type: profile,
   data,
 });
 
-export const calendarFunc = (data) => ({
+export const calendarFunc = (data: []) => ({
   type: calendarArr,
   data,
 });
 
-export default function reducer(state = initialState, action) {
+export const finishReset = () => ({
+  type: reset,
+});
+
+export default function reducer(state = initialState, action: any) {
   switch (action.type) {
     case Mount:
       return {
@@ -104,6 +111,13 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         successDate: result,
+      };
+
+    case reset:
+      localStorage.removeItem("clearDB");
+      return {
+        ...state,
+        successDate: [],
       };
 
     case editorSwitch:

@@ -1,7 +1,17 @@
 import React from "react";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
-function Header({ dispatch, navigate, location }) {
+
+import { Dispatch } from "redux";
+import { NavigateFunction } from "react-router-dom";
+
+interface functionProps {
+  navigate: NavigateFunction;
+  dispatch: Dispatch;
+  location: string;
+}
+
+function Header({ dispatch, navigate, location }: functionProps) {
   return (
     <header className="main_header pd-x20">
       <Clock />
@@ -24,7 +34,6 @@ function Header({ dispatch, navigate, location }) {
         </p>
         {location === "/" ? (
           <img
-            // src={reportState ? "/img/bell.svg" : "/img/no_bell.svg"}
             src="/img/no_bell.svg"
             alt="bell"
             onClick={() => {
