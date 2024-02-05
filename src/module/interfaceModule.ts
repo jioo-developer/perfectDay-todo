@@ -17,8 +17,8 @@ interface HomeRootState extends RootState {
 
 type todoItem = {
   write: string;
-  writeH: number;
-  writeM: number;
+  writeH: number | string;
+  writeM: number | string;
   clear: boolean;
 };
 

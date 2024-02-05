@@ -2,20 +2,29 @@ import { batch } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 import { Dispatch } from "redux";
-
 type ListProps = {
-  TodoList: todoItem[];
   dispatch: Dispatch;
+  TodoList: todoItem[];
 };
 
+interface DateFac extends dateType {
+  title: string | undefined;
+  hour: number;
+  min: number;
+}
 function List({ TodoList, dispatch }: ListProps) {
   // 완료시점 만드는 함수
+
   function createPost(e: HTMLElement): any {
-    const DateFac: any = { ...today };
-    DateFac.title =
-      e.parentElement?.getElementsByClassName("today_txt")[0].innerHTML;
-    DateFac.hour = new Date().getHours();
-    DateFac.min = new Date().getMinutes();
+    const DateFac: DateFac = {
+      ...today,
+      title:
+        e.parentElement?.getElementsByClassName("today_txt")[0]?.innerHTML ||
+        "",
+      hour: new Date().getHours(),
+      min: new Date().getMinutes(),
+    };
+
     return DateFac;
   }
 
@@ -29,9 +38,12 @@ function List({ TodoList, dispatch }: ListProps) {
   }
 
   // 클리어를 실행하는 함수
-  function successHandler(e: HTMLElement, clearArr: []) {
+  function successHandler(
+    e: React.MouseEvent<HTMLButtonElement>,
+    clearArr: any
+  ): void {
     batch(() => {
-      dispatch(successDate(createPost(e as HTMLElement)));
+      dispatch(successDate(createPost(e.currentTarget)));
       dispatch(update(clearArr));
     });
   }
@@ -73,9 +85,9 @@ function List({ TodoList, dispatch }: ListProps) {
                 <button
                   className={clearState ? "clearBtn" : ""}
                   onClick={(e) => {
-                    const copyArray: any = [...TodoList];
+                    let copyArray = [...TodoList];
                     copyArray[index].clear = true;
-                    successHandler(e.currentTarget, copyArray);
+                    successHandler(e, copyArray);
                   }}
                 >
                   <img src="/img/before_check.svg" alt="check" />
