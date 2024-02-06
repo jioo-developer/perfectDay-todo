@@ -1,5 +1,5 @@
 interface RootState {
-  Profile: number;
+  profile: number;
   mountState: boolean;
 }
 

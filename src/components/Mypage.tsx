@@ -5,12 +5,12 @@ import { Dispatch } from "redux";
 import { NavigateFunction } from "react-router-dom";
 interface myProps {
   navigate: NavigateFunction;
-  dispatch: Dispatch;
   loadCharacter: number;
   currentUser: string | null;
 }
 
-function MyPage({ navigate, dispatch, loadCharacter, currentUser }: myProps) {
+function MyPage({ navigate, loadCharacter, currentUser }: myProps) {
+  const rankSystem = localStorage.getItem("rank");
   const [rankToggle, setRank] = useState(false);
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
@@ -22,6 +22,24 @@ function MyPage({ navigate, dispatch, loadCharacter, currentUser }: myProps) {
     setRank(value);
   }
 
+  function rankLogic(rankSystem: any): [string, string] | undefined {
+    if (rankSystem) {
+      const num = parseInt(rankSystem, 10);
+      let rankColor: string;
+      if (num >= 100) {
+        rankColor = "goldenrod";
+        return ["프로완벽러", rankColor];
+      } else if (num >= 50) {
+        rankColor = "#8f8f8f";
+        return ["끈기완벽러", rankColor];
+      } else {
+        rankColor = "brown";
+        return ["초보완벽러", rankColor];
+      }
+    }
+  }
+
+  const rankData = rankLogic(rankSystem);
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   return (
@@ -32,8 +50,18 @@ function MyPage({ navigate, dispatch, loadCharacter, currentUser }: myProps) {
             <h3 className="myName">
               <b>{currentUser}</b>님은
             </h3>
-            <p className="myRank">초보완벽러 이십니다!</p>
-            <span>MY RANK</span>
+            <p className="myRank">
+              {rankData ? rankData[0] : "초보완벽러"}이십니다.
+            </p>
+            <div className="rank-txt">
+              <b className="rank-T">MY RANK :</b>
+              <b
+                className="rank-T"
+                style={{ color: rankData ? rankData[1] : "brown" }}
+              >
+                {rankData ? rankData[0] : "초보완벽러"}
+              </b>
+            </div>
           </div>
           <figure className="profile_img">
             <img src={`/img/profile${loadCharacter}.svg`} alt="" />

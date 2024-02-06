@@ -1,10 +1,12 @@
-import React, { useState, FC, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import "../reset.css";
 import "../asset/login.scss";
 import { today } from "../module/today";
 import { NavigateFunction } from "react-router-dom";
-
-const Login = (navigate: NavigateFunction) => {
+type loginProps = {
+  navigate: NavigateFunction;
+};
+const Login = ({ navigate }: loginProps) => {
   const [nickName, setNickName] = useState<string>("");
 
   function signUp(e: FormEvent<HTMLFormElement>) {

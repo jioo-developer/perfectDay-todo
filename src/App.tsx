@@ -27,7 +27,7 @@ const App = () => {
   const currentUser: string | null =
     localStorage.getItem("currentUser") || null;
   const stateCharacter: number = useSelector(
-    (state: RootState) => state.Profile
+    (state: RootState) => state.profile
   );
   const localCharacter: number = parseInt(
     localStorage.getItem("profile") || "{}"
@@ -86,7 +86,6 @@ const App = () => {
             element={
               <MyPage
                 currentUser={currentUser}
-                dispatch={dispatch}
                 navigate={navigate}
                 loadCharacter={
                   Object.entries(localCharacter).length === 0

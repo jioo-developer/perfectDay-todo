@@ -4,11 +4,14 @@ import { today } from "../module/today";
 import { calendarFunc } from "../module/reducer";
 import { useSelector } from "react-redux";
 import { Dispatch } from "redux";
-interface calendarProps {
+type calendarState = {
   calendarArr: [{ title: string; calcDay: number }];
-}
+};
+type calendarProps = {
+  dispatch: Dispatch;
+};
 
-function Calendar(dispatch: Dispatch) {
+function Calendar({ dispatch }: calendarProps) {
   const nowday = { ...today };
   today.day = new Date().getDay();
 
@@ -26,7 +29,7 @@ function Calendar(dispatch: Dispatch) {
   const dayArr: (string | number)[] = [];
 
   const calendarReducer = useSelector(
-    (state: calendarProps) => state.calendarArr
+    (state: calendarState) => state.calendarArr
   );
 
   //이전 달 보기 버튼

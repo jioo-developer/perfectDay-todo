@@ -14,7 +14,7 @@ interface DateFac extends dateType {
 }
 function List({ TodoList, dispatch }: ListProps) {
   // 완료시점 만드는 함수
-
+  const rankSystem: string | null = localStorage.getItem("rank");
   function createPost(e: HTMLElement): any {
     const DateFac: DateFac = {
       ...today,
@@ -42,6 +42,12 @@ function List({ TodoList, dispatch }: ListProps) {
     e: React.MouseEvent<HTMLButtonElement>,
     clearArr: any
   ): void {
+    if (rankSystem === null) {
+      localStorage.setItem("rank", "1");
+    } else {
+      const result = parseInt(rankSystem) + 1;
+      localStorage.setItem("rank", `${rankSystem}`);
+    }
     batch(() => {
       dispatch(successDate(createPost(e.currentTarget)));
       dispatch(update(clearArr));
