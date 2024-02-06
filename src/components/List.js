@@ -4,7 +4,7 @@ import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 
 function List({ todoList, dispatch }) {
-  let rankSystem = localStorage.getItem("rank");
+  const rankSystem = localStorage.getItem("rank");
   // 완료시점 만드는 함수
   function createPost(e) {
     const DateFac = { ...today };
@@ -28,10 +28,10 @@ function List({ todoList, dispatch }) {
   // 클리어를 실행하는 함수
   function successHandler(e, clearArr) {
     if (rankSystem === null) {
-      localStorage.setItem("rank", 1);
+      localStorage.setItem("rank", "1");
     } else {
-      rankSystem = parseInt(rankSystem);
-      localStorage.setItem("rank", parseInt(rankSystem) + 1);
+      const result = parseInt(rankSystem) + 1;
+      localStorage.setItem("rank", rankSystem);
     }
     batch(() => {
       dispatch(successDate(createPost(e)));
