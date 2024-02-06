@@ -5,13 +5,10 @@ import { today } from "../module/today";
 
 function List({ todoList, dispatch }) {
   // 완료시점 만드는 함수
-
   function createPost(e) {
     const DateFac = { ...today };
     DateFac.title =
-      e.currentTarget.parentElement.getElementsByClassName(
-        "today_txt"
-      )[0].innerHTML;
+      e.parentElement.getElementsByClassName("today_txt")[0].innerHTML;
     DateFac.hour = new Date().getHours();
     DateFac.min = new Date().getMinutes();
 
@@ -77,8 +74,9 @@ function List({ todoList, dispatch }) {
                   className={clearState !== false ? "clearBtn" : null}
                   onClick={(e) => {
                     let copyArray = todoList;
+                    console.log(typeof parseInt(copyArray[index].writeH));
                     copyArray[index].clear = true;
-                    successHandler(e, copyArray);
+                    successHandler(e.currentTarget, copyArray);
                   }}
                 >
                   <img src="/img/before_check.svg" alt="check" />

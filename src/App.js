@@ -17,7 +17,7 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentUser = localStorage.getItem(USER_ID);
-  const stateCharacter = useSelector((state) => state.Profile);
+  const stateCharacter = useSelector((state) => state.profile);
   const localCharacter = localStorage.getItem("profile");
   const location = window.location.pathname;
   const initialMount = useSelector((state) => state.mountState);
