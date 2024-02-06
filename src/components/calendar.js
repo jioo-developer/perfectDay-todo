@@ -23,7 +23,6 @@ function Calendar({ dispatch }) {
   const dayArr = [];
 
   const calendarReducer = useSelector((state) => state.calendarArr);
-  console.log(calendarReducer);
 
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
