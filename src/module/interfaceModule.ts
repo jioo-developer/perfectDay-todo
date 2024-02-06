@@ -1,8 +1,3 @@
-interface RootState {
-  profile: number;
-  mountState: boolean;
-}
-
 type dateType = {
   year: number;
   month: number;
@@ -10,10 +5,11 @@ type dateType = {
   day: number;
 };
 
-interface HomeRootState extends RootState {
+type HomeRootState = {
+  mountState: boolean;
   issue: boolean;
   TodoList: todoItem[];
-}
+};
 
 type todoItem = {
   write: string;
@@ -21,5 +17,6 @@ type todoItem = {
   writeM: number | string;
   clear: boolean;
 };
-
-//테스트
+type props = {
+  location: string;
+};

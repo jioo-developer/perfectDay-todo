@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../asset/mypage.scss";
 import Rank from "./rank";
-import { Dispatch } from "redux";
-import { NavigateFunction } from "react-router-dom";
-interface myProps {
-  navigate: NavigateFunction;
-  loadCharacter: number;
-  currentUser: string | null;
-}
+import { useMyContext } from "../module/MyContext";
 
-function MyPage({ navigate, loadCharacter, currentUser }: myProps) {
+type props = {
+  currentUser: string | null;
+};
+
+function MyPage({ currentUser }: props) {
+  const { navigate } = useMyContext();
   const rankSystem = localStorage.getItem("rank");
   const [rankToggle, setRank] = useState(false);
+  const localCharacter: number = parseInt(
+    localStorage.getItem("profile") || "{}"
+  );
+
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   function rankToggleFunc() {
@@ -64,7 +67,12 @@ function MyPage({ navigate, loadCharacter, currentUser }: myProps) {
             </div>
           </div>
           <figure className="profile_img">
-            <img src={`/img/profile${loadCharacter}.svg`} alt="" />
+            <img
+              src={`/img/profile${
+                Object.entries(localCharacter).length > 0 ? localCharacter : 1
+              }.svg`}
+              alt=""
+            />
           </figure>
         </section>
 

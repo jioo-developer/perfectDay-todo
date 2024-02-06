@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { useSelector } from "react-redux";
@@ -9,22 +9,20 @@ import {
   successDate,
 } from "../module/reducer";
 import Notification from "./Notification";
-import { Dispatch } from "redux";
+import { useMyContext } from "../module/MyContext";
 
 type HomeProps = {
   currentUser: string | null;
   creation: string | null;
-  dispatch: Dispatch;
 };
 
-function Home({ currentUser, creation, dispatch }: HomeProps) {
+function Home({ currentUser, creation }: HomeProps) {
+  const { dispatch } = useMyContext();
+  const [clearList, setClearList] = useState<number>(0);
   const initialMount = useSelector((state: HomeRootState) => state.mountState);
   // 첫 mount 조정 state
   const issueState = useSelector((state: HomeRootState) => state.issue);
   // 알림창 닫혔는지 on / off
-  const TodoList = useSelector((state: HomeRootState) => state.TodoList);
-  // todoList
-  const [clearList, setClearList] = useState(0);
 
   useEffect(() => {
     if (!initialMount) {
@@ -71,14 +69,8 @@ function Home({ currentUser, creation, dispatch }: HomeProps) {
     }
   };
 
-  useEffect(() => {
-    if (TodoList.length > 0) clearCheck();
-  }, [TodoList]);
-
-  function clearCheck() {
-    const onNum = Array.from(document.querySelectorAll(".clearList")).length;
-    const allNum = Array.from(document.querySelectorAll(".list")).length;
-    setClearList(Math.floor((onNum / allNum) * 100));
+  function getParcent(value: number): void {
+    setClearList(value);
   }
 
   return (
@@ -102,9 +94,9 @@ function Home({ currentUser, creation, dispatch }: HomeProps) {
           </div>
         </div>
       </section>
-      <List TodoList={TodoList} dispatch={dispatch} />
-      <Editor dispatch={dispatch} />
-      {issueState ? <Notification dispatch={dispatch} /> : null}
+      <List getParcent={getParcent} />
+      <Editor />
+      {issueState ? <Notification /> : null}
     </>
   );
 }

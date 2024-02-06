@@ -1,16 +1,9 @@
-import React from "react";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
-import { Dispatch } from "redux";
-import { NavigateFunction } from "react-router-dom";
+import { useMyContext } from "../module/MyContext";
 
-interface functionProps {
-  navigate: NavigateFunction;
-  dispatch: Dispatch;
-  location: string;
-}
-
-function Header({ dispatch, navigate, location }: functionProps) {
+function Header({ location }: props) {
+  const { navigate, dispatch } = useMyContext();
   return (
     <header className="main_header pd-x20">
       <Clock />

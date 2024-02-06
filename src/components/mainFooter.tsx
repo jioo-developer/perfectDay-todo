@@ -1,17 +1,10 @@
-import React from "react";
 import "../App.scss";
 import { editorToggle } from "../module/reducer";
 import { useSelector } from "react-redux";
-import { Dispatch } from "redux";
-import { NavigateFunction } from "react-router-dom";
+import { useMyContext } from "../module/MyContext";
 
-interface functionProps {
-  navigate: NavigateFunction;
-  dispatch: Dispatch;
-  location: string;
-}
-
-function MainFooter({ dispatch, navigate, location }: functionProps) {
+function MainFooter({ location }: props) {
+  const { dispatch, navigate } = useMyContext();
   const todoList = useSelector((state: HomeRootState) => state.TodoList);
   return (
     <footer className="footer_bar">

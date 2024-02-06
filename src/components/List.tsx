@@ -1,20 +1,38 @@
-import { batch } from "react-redux";
+import { batch, useSelector } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
-import { Dispatch } from "redux";
-type ListProps = {
-  dispatch: Dispatch;
-  TodoList: todoItem[];
-};
+import { useMyContext } from "../module/MyContext";
+import { useEffect, useState } from "react";
 
 interface DateFac extends dateType {
   title: string | undefined;
   hour: number;
   min: number;
 }
-function List({ TodoList, dispatch }: ListProps) {
+type props = {
+  getParcent: (params: number) => void;
+};
+function List({ getParcent }: props) {
+  const { dispatch } = useMyContext();
+  const [clear, setClearList] = useState(0);
+  const TodoList = useSelector((state: HomeRootState) => state.TodoList);
+  // todoList
+
+  useEffect(() => {
+    if (TodoList.length > 0) clearCheck();
+  }, [TodoList]);
+
+  if (clear > 100000) console.log(clear);
+
+  function clearCheck() {
+    const onNum = Array.from(document.querySelectorAll(".clearList")).length;
+    const allNum = Array.from(document.querySelectorAll(".list")).length;
+    const result: number = Math.floor((onNum / allNum) * 100);
+    getParcent(result);
+    setClearList(result);
+  }
+
   // 완료시점 만드는 함수
-  const rankSystem: string | null = localStorage.getItem("rank");
   function createPost(e: HTMLElement): any {
     const DateFac: DateFac = {
       ...today,
@@ -38,6 +56,8 @@ function List({ TodoList, dispatch }: ListProps) {
   }
 
   // 클리어를 실행하는 함수
+  const rankSystem: string | null = localStorage.getItem("rank");
+
   function successHandler(
     e: React.MouseEvent<HTMLButtonElement>,
     clearArr: any

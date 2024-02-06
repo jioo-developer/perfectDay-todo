@@ -1,17 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "../asset/calendar.scss";
 import { today } from "../module/today";
 import { calendarFunc } from "../module/reducer";
 import { useSelector } from "react-redux";
-import { Dispatch } from "redux";
+import { useMyContext } from "../module/MyContext";
+
 type calendarState = {
   calendarArr: [{ title: string; calcDay: number }];
 };
-type calendarProps = {
-  dispatch: Dispatch;
-};
 
-function Calendar({ dispatch }: calendarProps) {
+function Calendar() {
+  const { dispatch } = useMyContext();
   const nowday = { ...today };
   today.day = new Date().getDay();
 

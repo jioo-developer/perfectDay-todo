@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./reset.css";
 import "./App.scss";
 import Login from "./components/Login";
@@ -10,28 +10,18 @@ import Profile from "./components/profile";
 import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
-import { NavigateFunction } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { MyContextProvider, useMyContext } from "./module/MyContext";
 
-interface functionProps {
-  navigate: NavigateFunction;
-  dispatch: Dispatch;
-  location: string;
-}
+type RootState = {
+  mountState: boolean;
+};
 
 const App = () => {
+  const { navigate } = useMyContext();
   const creation: string | null = localStorage.getItem("creationDay") || null;
-  const navigate: NavigateFunction = useNavigate();
-  const dispatch: Dispatch = useDispatch();
   const currentUser: string | null =
     localStorage.getItem("currentUser") || null;
-  const stateCharacter: number = useSelector(
-    (state: RootState) => state.profile
-  );
-  const localCharacter: number = parseInt(
-    localStorage.getItem("profile") || "{}"
-  );
   const location: string = window.location.pathname;
   const initialMount = useSelector((state: RootState) => state.mountState);
   // 할일 list
@@ -46,76 +36,33 @@ const App = () => {
     }
   }, []);
 
-  function footer({ navigate, dispatch, location }: functionProps) {
-    if (currentUser !== null || creation !== null) {
-      return (
-        <MainFooter
-          navigate={navigate}
-          dispatch={dispatch}
-          location={location}
-        />
-      );
-    } else return null;
-  }
-
-  function header({ navigate, dispatch, location }: functionProps) {
-    if (currentUser !== null || creation !== null)
-      return (
-        <Header dispatch={dispatch} navigate={navigate} location={location} />
-      );
-    else return null;
-  }
   return (
-    <div className="wrap">
-      {header({ dispatch, navigate, location })}
-      <div className="de-in-wrap">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                currentUser={currentUser}
-                creation={creation}
-                dispatch={dispatch}
-              />
-            }
-          />
-          <Route path="/login" element={<Login navigate={navigate} />} />
-          <Route
-            path="/mypage"
-            element={
-              <MyPage
-                currentUser={currentUser}
-                navigate={navigate}
-                loadCharacter={
-                  Object.entries(localCharacter).length === 0
-                    ? stateCharacter
-                    : localCharacter
-                }
-              />
-            }
-          />
-          <Route
-            path="/introduce"
-            element={<Introduce navigate={navigate} />}
-          />
-          <Route
-            path="/profile"
-            element={
-              <Profile
-                dispatch={dispatch}
-                navigate={navigate}
-                loadCharacter={
-                  localCharacter === null ? stateCharacter : localCharacter
-                }
-              />
-            }
-          />
-          <Route path="/canlendar" element={<Calendar dispatch={dispatch} />} />
-        </Routes>
+    <MyContextProvider>
+      <div className="wrap">
+        {currentUser !== null || creation !== null ? (
+          <Header location={location} />
+        ) : null}
+        <div className="de-in-wrap">
+          <Routes>
+            <Route
+              path="/"
+              element={<Home currentUser={currentUser} creation={creation} />}
+            />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/mypage"
+              element={<MyPage currentUser={currentUser} />}
+            />
+            <Route path="/introduce" element={<Introduce />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/canlendar" element={<Calendar />} />
+          </Routes>
+        </div>
+        {currentUser !== null || creation !== null ? (
+          <MainFooter location={location} />
+        ) : null}
       </div>
-      {footer({ navigate, dispatch, location })}
-    </div>
+    </MyContextProvider>
   );
 };
 

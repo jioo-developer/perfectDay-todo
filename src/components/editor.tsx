@@ -2,11 +2,10 @@ import { useSelector } from "react-redux";
 import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";
 import { ChangeEvent, useState } from "react";
-import { Dispatch } from "redux";
-type editorProps = {
-  dispatch: Dispatch;
-};
-function Editor({ dispatch }: editorProps) {
+import { useMyContext } from "../module/MyContext";
+
+function Editor() {
+  const { dispatch } = useMyContext();
   const [write, setwrite] = useState<string>("");
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
