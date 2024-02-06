@@ -1,8 +1,5 @@
 import "../asset/profile.scss";
 import { profileUpdate } from "../module/reducer";
-import { Dispatch } from "redux";
-import { NavigateFunction } from "react-router-dom";
-
 import { useMyContext } from "../module/MyContext";
 
 function Profile() {

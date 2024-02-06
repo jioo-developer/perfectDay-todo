@@ -17,6 +17,7 @@ type todoItem = {
   writeM: number | string;
   clear: boolean;
 };
+
 type props = {
   location: string;
 };
