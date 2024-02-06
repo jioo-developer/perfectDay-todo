@@ -28,7 +28,6 @@ function Home({ currentUser, creation }: HomeProps) {
     if (!initialMount) {
       dayMemo();
       loadData();
-      dispatch(FirstMount());
     }
   }, []);
 

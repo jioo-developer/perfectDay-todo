@@ -11,14 +11,18 @@ import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
 import { useSelector } from "react-redux";
-import { MyContextProvider, useMyContext } from "./module/MyContext";
+import { MyContextProvider } from "./module/MyContext";
+import { FirstMount } from "./module/reducer";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 type RootState = {
   mountState: boolean;
 };
 
 const App = () => {
-  const { navigate } = useMyContext();
+  const appNavigate = useNavigate();
+  const appDispatch = useDispatch();
   const creation: string | null = localStorage.getItem("creationDay") || null;
   const currentUser: string | null =
     localStorage.getItem("currentUser") || null;
@@ -26,12 +30,29 @@ const App = () => {
   const initialMount = useSelector((state: RootState) => state.mountState);
   // 할일 list
 
+  const dataCheck = setInterval(() => {
+    const date = localStorage.getItem("creationDay");
+    const name = localStorage.getItem("currentUser");
+    if (date === null || name === null) {
+      localStorage.clear();
+      appNavigate("/login");
+    } else {
+    }
+  }, 60000);
+
+  if (location === "/login") {
+    clearInterval(dataCheck);
+  }
+
   useEffect(() => {
+    if (!initialMount) {
+      appDispatch(FirstMount());
+    }
     if (currentUser === null || creation === null) {
-      navigate("/login");
+      appNavigate("/login");
     } else {
       if (!initialMount && location !== "/") {
-        navigate("/");
+        appNavigate("/");
       }
     }
   }, []);

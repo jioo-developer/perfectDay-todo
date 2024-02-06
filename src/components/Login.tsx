@@ -11,11 +11,19 @@ const Login = () => {
   function signUp(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const loadDate = localStorage.getItem("creationDay");
-    if (loadDate === null) {
-      localStorage.setItem("creationDay", JSON.stringify(today));
-      localStorage.setItem("currentUser", nickName);
-      navigate("/");
+    const loadUser = localStorage.getItem("currentUser");
+    if (loadDate === null && loadUser === null) {
+      settingFunc();
+    } else if (loadDate === null || loadUser === null) {
+      localStorage.clear();
+      settingFunc();
     }
+  }
+
+  function settingFunc() {
+    localStorage.setItem("creationDay", JSON.stringify(today));
+    localStorage.setItem("currentUser", nickName);
+    navigate("/");
   }
 
   return (
