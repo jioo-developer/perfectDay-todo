@@ -2,6 +2,7 @@ import React from "react";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 function Header({ dispatch, navigate, location }) {
+  console.log(typeof location);
   return (
     <header className="main_header pd-x20">
       <Clock />

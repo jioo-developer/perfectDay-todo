@@ -9,7 +9,9 @@ import {
   successDate,
 } from "../module/reducer";
 import Notification from "./Notification";
-function Home({ creation, currentUser, dispatch }) {
+import { useMyContext } from "../module/MyContext";
+function Home({ currentUser, creation }) {
+  const { dispatch } = useMyContext();
   const initialMount = useSelector((state) => state.mountState);
   // 첫 mount 조정 state
   const issueState = useSelector((state) => state.issue);
