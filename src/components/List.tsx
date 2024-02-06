@@ -5,7 +5,7 @@ import { useMyContext } from "../module/MyContext";
 import { useEffect, useState } from "react";
 
 interface DateFac extends dateType {
-  title: string | undefined;
+  title: string;
   hour: number;
   min: number;
 }
@@ -34,11 +34,11 @@ function List({ getParcent }: props) {
 
   // 완료시점 만드는 함수
   function createPost(e: HTMLElement): any {
+    const titleContent =
+      e.parentElement?.getElementsByClassName("today_txt")[0]?.innerHTML;
     const DateFac: DateFac = {
       ...today,
-      title:
-        e.parentElement?.getElementsByClassName("today_txt")[0]?.innerHTML ||
-        "",
+      title: titleContent ? titleContent : "자료를 찾지 못했습니다.",
       hour: new Date().getHours(),
       min: new Date().getMinutes(),
     };
@@ -66,7 +66,7 @@ function List({ getParcent }: props) {
       localStorage.setItem("rank", "1");
     } else {
       const result = parseInt(rankSystem) + 1;
-      localStorage.setItem("rank", `${rankSystem}`);
+      localStorage.setItem("rank", `${result}`);
     }
     batch(() => {
       dispatch(successDate(createPost(e.currentTarget)));
@@ -109,7 +109,7 @@ function List({ getParcent }: props) {
                 <button
                   className={clearState ? "clearBtn" : ""}
                   onClick={(e) => {
-                    let copyArray = [...TodoList];
+                    const copyArray = [...TodoList];
                     copyArray[index].clear = true;
                     successHandler(e, copyArray);
                   }}
