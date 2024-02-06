@@ -39,7 +39,7 @@ function Home({ currentUser, creation, dispatch }: HomeProps) {
       const parseCreation = JSON.parse(creation || "{}");
       //생성 날짜를 불러옴
       if (Object.entries(parseCreation).length > 0) {
-        let start = new Date(
+        const start = new Date(
           `${parseCreation.year},${parseCreation.month},
             ${parseCreation.date - 1}`
         );
@@ -102,7 +102,7 @@ function Home({ currentUser, creation, dispatch }: HomeProps) {
           </div>
         </div>
       </section>
-      {/* <List TodoList={TodoList} dispatch={dispatch} /> */}
+      <List TodoList={TodoList} dispatch={dispatch} />
       <Editor dispatch={dispatch} />
       {issueState ? <Notification dispatch={dispatch} /> : null}
     </>

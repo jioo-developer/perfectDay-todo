@@ -22,7 +22,7 @@ function Editor({ dispatch }: editorProps) {
   //  포스트를 만드는 함수
 
   function postLogic() {
-    let logicFac = [
+    const logicFac = [
       {
         write: write,
         writeH:

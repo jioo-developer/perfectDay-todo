@@ -70,9 +70,7 @@ function List({ TodoList, dispatch }: ListProps) {
             const clearState = TodoList[index].clear;
             return (
               <div
-                className={`list ${
-                  clearState === true ? "clearList" : "going"
-                }`}
+                className={`list ${clearState ? "clearList" : "going"}`}
                 key={index}
               >
                 <p className={clearState ? "clearText" : "today_date"}>

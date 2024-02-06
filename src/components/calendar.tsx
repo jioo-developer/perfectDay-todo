@@ -23,7 +23,7 @@ function Calendar(dispatch: Dispatch) {
   // 일정을 잡기위해 선택 한 날짜
   const [promiseText, setPromise] = useState<string>("");
 
-  let dayArr: (string | number)[] = [];
+  const dayArr: (string | number)[] = [];
 
   const calendarReducer = useSelector(
     (state: calendarProps) => state.calendarArr
@@ -143,18 +143,18 @@ function Calendar(dispatch: Dispatch) {
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
   function selectDay(params: number): Promise<void> {
     return new Promise<void>(function (res, rej) {
-      let selectDate = new Date(
+      const selectDate = new Date(
         selectedYear,
         selectedMonth,
         params
         //params는 선택된 날짜의 텍스트를 숫자로 변환
       );
 
-      let thisDay = new Date(nowday.year, nowday.month, nowday.date);
+      const thisDay = new Date(nowday.year, nowday.month, nowday.date);
 
-      let ResultDay = +selectDate - +thisDay;
+      const ResultDay = +selectDate - +thisDay;
 
-      let TimeResult: number = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
+      const TimeResult: number = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
       if (TimeResult > 0) {
         res();
       } else {

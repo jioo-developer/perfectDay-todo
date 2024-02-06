@@ -9,7 +9,7 @@ interface myProps {
   loadCharacter: number;
 }
 function Profile({ dispatch, navigate, loadCharacter }: myProps) {
-  let profileList = [1, 2, 3, 4, 5, 6];
+  const profileList = [1, 2, 3, 4, 5, 6];
 
   return (
     <div className="profile_wrap">
