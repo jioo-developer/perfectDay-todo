@@ -4,6 +4,7 @@ import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 
 function List({ todoList, dispatch }) {
+  let rankSystem = localStorage.getItem("rank");
   // 완료시점 만드는 함수
   function createPost(e) {
     const DateFac = { ...today };
@@ -26,6 +27,12 @@ function List({ todoList, dispatch }) {
 
   // 클리어를 실행하는 함수
   function successHandler(e, clearArr) {
+    if (rankSystem === null) {
+      localStorage.setItem("rank", 1);
+    } else {
+      rankSystem = parseInt(rankSystem);
+      localStorage.setItem("rank", parseInt(rankSystem) + 1);
+    }
     batch(() => {
       dispatch(successDate(createPost(e)));
       dispatch(update(clearArr));
@@ -54,24 +61,18 @@ function List({ todoList, dispatch }) {
             const clearState = todoList[index].clear;
             return (
               <div
-                className={`list ${
-                  clearState === true ? "clearList" : "going"
-                }`}
+                className={`list ${clearState ? "clearList" : "going"}`}
                 key={index}
               >
-                <p
-                  className={clearState !== false ? "clearText" : "today_date"}
-                >
+                <p className={clearState ? "clearText" : "today_date"}>
                   {listData.writeH}:{listData.writeM}
                 </p>
 
-                <p
-                  className={clearState !== false ? "clearIndent" : "today_txt"}
-                >
+                <p className={clearState ? "clearIndent" : "today_txt"}>
                   {listData.write}
                 </p>
                 <button
-                  className={clearState !== false ? "clearBtn" : null}
+                  className={clearState ? "clearBtn" : null}
                   onClick={(e) => {
                     let copyArray = todoList;
                     console.log(typeof parseInt(copyArray[index].writeH));

@@ -4,6 +4,8 @@ import Rank from "./rank";
 
 function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
   const [rankToggle, setRank] = useState(false);
+  let rankSystem = localStorage.getItem("rank");
+  let rankData = "";
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   function rankToggleFunc() {
@@ -13,6 +15,23 @@ function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
   function rankSwitch(value) {
     setRank(value);
   }
+
+  function rankLogic() {
+    rankSystem = parseInt(rankSystem);
+    let rankColor;
+    if (rankSystem >= 100) {
+      rankColor = "goldenrod";
+      return ["프로완벽러", rankColor];
+    } else if (rankSystem >= 50) {
+      rankColor = "#8f8f8f";
+      return ["끈기완벽러", rankColor];
+    } else {
+      rankColor = "brown";
+      return ["초보완벽러", rankColor];
+    }
+  }
+
+  rankData = rankLogic();
 
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
@@ -24,8 +43,14 @@ function MyPage({ navigate, dispatch, loadCharacter, currentUser }) {
             <h3 className="myName">
               <b>{currentUser}</b>님은
             </h3>
-            <p className="myRank">초보완벽러 이십니다!</p>
-            <span>MY RANK</span>
+            <p className="myRank">{rankData[0]}이십니다.</p>
+
+            <div className="rank-txt">
+              <b className="rank-T">MY RANK :</b>
+              <b className="rank-T" style={{ color: rankData[1] }}>
+                {rankData[0]}
+              </b>
+            </div>
           </div>
           <figure className="profile_img">
             <img src={`/img/profile${loadCharacter}.svg`} alt="" />
