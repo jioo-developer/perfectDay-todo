@@ -91,3 +91,9 @@
     border-right: 0;
   }
 }
+
+button[disabled] {
+  background: #919191;
+  pointer-events: none; /* 클릭과 같은 이벤트를 비활성화할 때 */
+  opacity: 0.5; /* 투명도를 조절하여 비활성화된 것처럼 표시 */
+}

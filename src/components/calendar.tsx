@@ -1,13 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "../asset/calendar.scss";
 import { today } from "../module/today";
 import { calendarFunc } from "../module/reducer";
 import { useSelector } from "react-redux";
-interface calendarProps {
-  calendarArr: any[];
-}
+import { useMyContext } from "../module/MyContext";
 
-function Calendar({ dispatch }: any) {
+type calendarState = {
+  calendarArr: [{ title: string; calcDay: number }];
+};
+
+function Calendar() {
+  const { dispatch } = useMyContext();
   const nowday = { ...today };
   today.day = new Date().getDay();
 
@@ -22,12 +25,11 @@ function Calendar({ dispatch }: any) {
   // 일정을 잡기위해 선택 한 날짜
   const [promiseText, setPromise] = useState<string>("");
 
-  const dayArr: any[] = [];
+  const dayArr: (string | number)[] = [];
 
   const calendarReducer = useSelector(
-    (state: calendarProps) => state.calendarArr
+    (state: calendarState) => state.calendarArr
   );
-  console.log(calendarReducer);
 
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
@@ -109,7 +111,7 @@ function Calendar({ dispatch }: any) {
   // 오늘 날짜 체크하는 함수
   function todayCheck() {
     const thisMonth = new Date().getMonth() + 1;
-    const todayOn: any[] = Array.from(
+    const todayOn: HTMLElement[] = Array.prototype.slice.call(
       document.getElementsByClassName("dayDate")
     );
     if (todayOn.length > 0) {
@@ -131,7 +133,7 @@ function Calendar({ dispatch }: any) {
 
   // 일정 제작 함수
   function postPromise() {
-    if (promiseText !== "" && selectDay !== (0 as any)) {
+    if (promiseText !== "" && select !== 0) {
       selectDay(select);
     } else {
       window.alert("일정 또는 날짜를 올바르게 사용해주세요.");
@@ -154,15 +156,15 @@ function Calendar({ dispatch }: any) {
 
       let ResultDay = +selectDate - +thisDay;
 
-      let TimeResult: number = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
+      let TimeResult = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
       if (TimeResult > 0) {
         res(TimeResult);
       } else {
         rej(TimeResult);
       }
     })
-      .then((result: any) => {
-        postPromiseFunc(result);
+      .then((result) => {
+        if (typeof result === "number") postPromiseFunc(result);
       })
       .catch((result) => {
         if (!isNaN(result)) {
@@ -186,6 +188,7 @@ function Calendar({ dispatch }: any) {
       "#d_day_txt"
     ) as HTMLInputElement | null;
     if (target) target.value = "";
+    setPromise("");
   }
 
   useEffect(() => {
@@ -217,7 +220,7 @@ function Calendar({ dispatch }: any) {
           <section className="important_data">
             <div className="title_wrap">
               <div className="date_title">일정예약</div>
-              {calendarReducer.length !== 0
+              {calendarReducer.length > 0
                 ? calendarReducer.map((value, index) => {
                     return (
                       <div className="date_txt">

@@ -1,22 +1,20 @@
-import React from "react";
 import "../asset/profile.scss";
 import { profileUpdate } from "../module/reducer";
-import { Dispatch } from "redux";
-import { NavigateFunction } from "react-router-dom";
-interface myProps {
-  navigate: NavigateFunction;
-  dispatch: Dispatch;
-  loadCharacter: number;
-}
-function Profile({ dispatch, navigate, loadCharacter }: myProps) {
-  let profileList = [1, 2, 3, 4, 5, 6];
+import { useMyContext } from "../module/MyContext";
+
+function Profile() {
+  const { dispatch, navigate } = useMyContext();
+  const localCharacter: number = parseInt(
+    localStorage.getItem("profile") || "1"
+  );
+  const profileList = [1, 2, 3, 4, 5, 6];
 
   return (
     <div className="profile_wrap">
       <section className="section01">
         <div className="my_profile">
           <figure>
-            <img src={`/img/profile${loadCharacter}.svg`} alt="" />
+            <img src={`/img/profile${localCharacter}.svg`} alt="" />
           </figure>
           <figcaption>현재프로필</figcaption>
         </div>

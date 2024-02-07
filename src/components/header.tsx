@@ -1,17 +1,37 @@
-import React from "react";
 import Clock from "./clock";
 import { issueAction } from "../module/reducer";
+import { useMyContext } from "../module/MyContext";
 
-import { Dispatch } from "redux";
-import { NavigateFunction } from "react-router-dom";
-
-interface functionProps {
-  navigate: NavigateFunction;
-  dispatch: Dispatch;
-  location: string;
+interface headerProps extends props {
+  finishBoolean: boolean;
 }
 
-function Header({ dispatch, navigate, location }: functionProps) {
+function Header({ location, finishBoolean }: headerProps) {
+  const { navigate, dispatch } = useMyContext();
+
+  function bellFunc() {
+    if (finishBoolean) {
+      return (
+        <img
+          src="/img/bell.svg"
+          alt="bell"
+          onClick={() => {
+            dispatch(issueAction());
+          }}
+        />
+      );
+    }
+    return (
+      <img
+        src="/img/no_bell.svg"
+        alt="bell"
+        onClick={() => {
+          dispatch(issueAction());
+        }}
+      />
+    );
+  }
+
   return (
     <header className="main_header pd-x20">
       <Clock />
@@ -32,15 +52,7 @@ function Header({ dispatch, navigate, location }: functionProps) {
             ? "프로필변경"
             : null}
         </p>
-        {location === "/" ? (
-          <img
-            src="/img/no_bell.svg"
-            alt="bell"
-            onClick={() => {
-              dispatch(issueAction());
-            }}
-          />
-        ) : null}
+        {location === "/" ? bellFunc() : null}
       </div>
     </header>
   );

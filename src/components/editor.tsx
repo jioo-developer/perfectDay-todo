@@ -2,7 +2,10 @@ import { useSelector } from "react-redux";
 import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";
 import { ChangeEvent, useState } from "react";
-function Editor({ dispatch }: any) {
+import { useMyContext } from "../module/MyContext";
+
+function Editor() {
+  const { dispatch } = useMyContext();
   const [write, setwrite] = useState<string>("");
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
@@ -18,31 +21,33 @@ function Editor({ dispatch }: any) {
   //  포스트를 만드는 함수
 
   function postLogic() {
-    let logicFac = [
+    const logicFac = [
       {
         write: write,
         writeH:
           writeH === 0
             ? window.alert("시간을 입력하세요")
             : writeH < 10
-            ? `0 + ${writeH}`
+            ? `0${writeH}`
             : writeH,
-        writeM: writeM === 0 ? "00" : writeM < 10 ? `0 + ${writeM}` : writeM,
+        writeM: writeM === 0 ? "00" : writeM < 10 ? `0${writeM}` : writeM,
         clear: false,
       },
     ];
 
     const danger = document.querySelector(".text_area") as HTMLInputElement;
-    if (danger) {
-      danger.value === ""
-        ? alert("스케줄을 입력해주세요")
-        : dispatch(createPost(logicFac));
+    if (danger && danger.value === "") {
+      alert("입력값을 확인해주세요.");
+    } else {
+      dispatch(createPost(logicFac));
     }
     const hour = document.querySelector(".hour") as HTMLInputElement;
     const minute = document.querySelector(".minute") as HTMLInputElement;
     if (hour && minute) {
       hour.value = "";
       minute.value = "";
+      setwriteH(0);
+      setwriteM(0);
     }
     dispatch(editorToggle());
   }
@@ -57,6 +62,7 @@ function Editor({ dispatch }: any) {
     if (parseInt(e.target.value) >= 24) {
       alert("시간을 정확히 설정하세요.");
       e.target.value = "";
+      setwriteH(0);
     } else {
       setwriteH(parseInt(e.target.value));
     }
@@ -66,8 +72,17 @@ function Editor({ dispatch }: any) {
     if (parseInt(e.target.value) >= 60) {
       alert("시간을 정확히 설정하세요.");
       e.target.value = "";
+      setwriteM(0);
     } else {
       setwriteM(parseInt(e.target.value));
+    }
+  }
+
+  function disabledCheck() {
+    if (write !== "" && writeH !== 0) {
+      return false;
+    } else {
+      return true;
     }
   }
   return (
@@ -116,7 +131,9 @@ function Editor({ dispatch }: any) {
               <input className="time_txt" placeholder="00" readOnly />
             </form>
           </div>
-          <button onClick={postLogic}>등록하기</button>
+          <button onClick={postLogic} disabled={disabledCheck()}>
+            등록하기
+          </button>
         </div>
       )}
     </>

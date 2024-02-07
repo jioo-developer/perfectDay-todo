@@ -1,9 +1,8 @@
 import "../asset/loading.scss";
-import { NavigateFunction } from "react-router-dom";
-type introProps = {
-  navigate: NavigateFunction;
-};
-function Introduce({ navigate }: introProps) {
+import { useMyContext } from "../module/MyContext";
+
+function Introduce() {
+  const { navigate } = useMyContext();
   return (
     <div>
       <div className="center_wrap">

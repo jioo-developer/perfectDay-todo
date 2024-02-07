@@ -1,19 +1,29 @@
-import React, { useState, FC, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import "../reset.css";
 import "../asset/login.scss";
 import { today } from "../module/today";
+import { useMyContext } from "../module/MyContext";
 
-const Login = ({ navigate }: any) => {
+const Login = () => {
+  const { navigate } = useMyContext();
   const [nickName, setNickName] = useState<string>("");
 
   function signUp(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const loadDate = localStorage.getItem("creationDay");
-    if (loadDate === null) {
-      localStorage.setItem("creationDay", JSON.stringify(today));
-      localStorage.setItem("currentUser", nickName);
-      navigate();
+    const loadUser = localStorage.getItem("currentUser");
+    if (loadDate === null && loadUser === null) {
+      settingFunc();
+    } else if (loadDate === null || loadUser === null) {
+      localStorage.clear();
+      settingFunc();
     }
+  }
+
+  function settingFunc() {
+    localStorage.setItem("creationDay", JSON.stringify(today));
+    localStorage.setItem("currentUser", nickName);
+    navigate("/");
   }
 
   return (

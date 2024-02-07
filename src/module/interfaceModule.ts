@@ -1,14 +1,3 @@
-interface RootState {
-  Profile: number;
-  mountState: boolean;
-}
-
-type HomeProps = {
-  currentUser: string | null;
-  creation: string | null;
-  dispatch: any;
-};
-
 type dateType = {
   year: number;
   month: number;
@@ -16,16 +5,33 @@ type dateType = {
   day: number;
 };
 
-interface HomeRootState extends RootState {
+type HomeRootState = {
+  mountState: boolean;
   issue: boolean;
   TodoList: todoItem[];
-}
+};
 
 type todoItem = {
   write: string;
-  writeH: number;
-  writeM: number;
+  writeH: number | string;
+  writeM: number | string;
   clear: boolean;
 };
 
-//테스트
+type props = {
+  location: string;
+};
+
+type finishDataType = {
+  successDate: [
+    {
+      year: number;
+      month: number;
+      date: number;
+      day: number;
+      title: string;
+      hour: number;
+      min: number;
+    }
+  ];
+};

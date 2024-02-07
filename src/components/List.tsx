@@ -1,28 +1,48 @@
-import React, { MouseEvent } from "react";
-import { batch } from "react-redux";
+import { batch, useSelector } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
-
-type ListProps = {
-  TodoList: todoItem[];
-  dispatch: any;
-};
+import { useMyContext } from "../module/MyContext";
+import { useEffect, useState } from "react";
 
 interface DateFac extends dateType {
   title: string;
-  hour: string | number;
-  min: string | number;
+  hour: number;
+  min: number;
 }
+type props = {
+  getParcent: (params: number) => void;
+};
+function List({ getParcent }: props) {
+  const { dispatch } = useMyContext();
+  const [clear, setClearList] = useState(0);
+  const TodoList = useSelector((state: HomeRootState) => state.TodoList);
+  // todoList
 
-function List({ TodoList, dispatch }: ListProps) {
+  useEffect(() => {
+    if (TodoList.length > 0) clearCheck();
+  }, [TodoList]);
+
+  if (clear > 100000) console.log(clear);
+
+  function clearCheck() {
+    const onNum = Array.from(document.querySelectorAll(".clearList")).length;
+    const allNum = Array.from(document.querySelectorAll(".list")).length;
+    const result: number = Math.floor((onNum / allNum) * 100);
+    getParcent(result);
+    setClearList(result);
+  }
+
   // 완료시점 만드는 함수
-  console.log(TodoList);
-  console.log("mounted--------------------");
-  function createPost(e: MouseEvent): DateFac {
-    const DateFac: any = { ...today };
-    DateFac.title = "";
-    DateFac.hour = new Date().getHours();
-    DateFac.min = new Date().getMinutes();
+  function createPost(e: HTMLElement): any {
+    const titleContent =
+      e.parentElement?.getElementsByClassName("today_txt")[0]?.innerHTML;
+    const DateFac: DateFac = {
+      ...today,
+      title: titleContent ? titleContent : "자료를 찾지 못했습니다.",
+      hour: new Date().getHours(),
+      min: new Date().getMinutes(),
+    };
+
     return DateFac;
   }
 
@@ -36,9 +56,20 @@ function List({ TodoList, dispatch }: ListProps) {
   }
 
   // 클리어를 실행하는 함수
-  function successHandler(e: MouseEvent, clearArr: HomeRootState) {
+  const rankSystem: string | null = localStorage.getItem("rank");
+
+  function successHandler(
+    e: React.MouseEvent<HTMLButtonElement>,
+    clearArr: any
+  ): void {
+    if (rankSystem === null) {
+      localStorage.setItem("rank", "1");
+    } else {
+      const result = parseInt(rankSystem) + 1;
+      localStorage.setItem("rank", `${result}`);
+    }
     batch(() => {
-      dispatch(successDate(createPost(e)));
+      dispatch(successDate(createPost(e.currentTarget)));
       dispatch(update(clearArr));
     });
   }
@@ -65,9 +96,7 @@ function List({ TodoList, dispatch }: ListProps) {
             const clearState = TodoList[index].clear;
             return (
               <div
-                className={`list ${
-                  clearState === true ? "clearList" : "going"
-                }`}
+                className={`list ${clearState ? "clearList" : "going"}`}
                 key={index}
               >
                 <p className={clearState ? "clearText" : "today_date"}>
@@ -80,11 +109,8 @@ function List({ TodoList, dispatch }: ListProps) {
                 <button
                   className={clearState ? "clearBtn" : ""}
                   onClick={(e) => {
-                    const copyArray: any = [...TodoList];
-                    console.log(copyArray);
-                    console.log("-----------------------++");
-                    // const copyArray: HomeRootState = [...TodoList];
-                    // copyArray[index].clear = true;
+                    const copyArray = [...TodoList];
+                    copyArray[index].clear = true;
                     successHandler(e, copyArray);
                   }}
                 >

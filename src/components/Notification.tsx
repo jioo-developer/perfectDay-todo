@@ -1,15 +1,21 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import "../asset/notification.scss";
 import { finishReset, issueAction } from "../module/reducer";
-import { Dispatch } from "redux";
-type finishDataType = {
-  successDate: any[];
-  dispatch: Dispatch;
+import { useMyContext } from "../module/MyContext";
+
+type props = {
+  finishData: any[];
+  emitFunc: (parmas: boolean) => void;
 };
-function Notification({ dispatch }: finishDataType) {
-  const finishData = useSelector((state: finishDataType) => state.successDate);
-  const getFinish: string | null = localStorage.getItem("clearDB");
+
+function Notification({ finishData, emitFunc }: props) {
+  const getFinish = localStorage.getItem("clearDB");
+  const sliceData = finishData.slice(0, 10);
+  const { dispatch } = useMyContext();
+
+  function notiToggle() {
+    emitFunc(false);
+  }
   return (
     <>
       <div className="noti_wrap">
@@ -29,6 +35,7 @@ function Notification({ dispatch }: finishDataType) {
                 src="/img/clear.svg"
                 onClick={() => {
                   dispatch(issueAction());
+                  notiToggle();
                 }}
               />
             </div>
@@ -36,8 +43,8 @@ function Notification({ dispatch }: finishDataType) {
           <ul className="noti_body">
             {
               // 알림들 만드는 map 함수
-              finishData.length > 0
-                ? finishData.map((item, index) => {
+              sliceData.length > 0
+                ? sliceData.map((item, index) => {
                     return (
                       <li key={index}>
                         <img src="/img/check_btn.svg" alt="" />
