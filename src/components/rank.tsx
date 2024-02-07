@@ -1,6 +1,6 @@
 import "../asset/rank.scss";
 
-function RankTable(rankSwitch: any) {
+function RankTable({ rankSwitch }: any) {
   const RankArr = [
     { level: "brown", title: "초보완벽러", condition: "할일 클리어 20회 미만" },
     {

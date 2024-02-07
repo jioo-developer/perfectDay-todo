@@ -28,18 +28,18 @@ function Editor() {
           writeH === 0
             ? window.alert("시간을 입력하세요")
             : writeH < 10
-            ? `0 + ${writeH}`
+            ? `0${writeH}`
             : writeH,
-        writeM: writeM === 0 ? "00" : writeM < 10 ? `0 + ${writeM}` : writeM,
+        writeM: writeM === 0 ? "00" : writeM < 10 ? `0${writeM}` : writeM,
         clear: false,
       },
     ];
 
     const danger = document.querySelector(".text_area") as HTMLInputElement;
-    if (danger) {
-      danger.value === ""
-        ? alert("스케줄을 입력해주세요")
-        : dispatch(createPost(logicFac));
+    if (danger && danger.value === "") {
+      alert("입력값을 확인해주세요.");
+    } else {
+      dispatch(createPost(logicFac));
     }
     const hour = document.querySelector(".hour") as HTMLInputElement;
     const minute = document.querySelector(".minute") as HTMLInputElement;
@@ -60,6 +60,7 @@ function Editor() {
     if (parseInt(e.target.value) >= 24) {
       alert("시간을 정확히 설정하세요.");
       e.target.value = "";
+      setwriteH(0);
     } else {
       setwriteH(parseInt(e.target.value));
     }
@@ -69,8 +70,17 @@ function Editor() {
     if (parseInt(e.target.value) >= 60) {
       alert("시간을 정확히 설정하세요.");
       e.target.value = "";
+      setwriteM(0);
     } else {
       setwriteM(parseInt(e.target.value));
+    }
+  }
+
+  function disabledCheck() {
+    if (write !== "" && writeH !== 0) {
+      return false;
+    } else {
+      return true;
     }
   }
   return (
@@ -119,7 +129,9 @@ function Editor() {
               <input className="time_txt" placeholder="00" readOnly />
             </form>
           </div>
-          <button onClick={postLogic}>등록하기</button>
+          <button onClick={postLogic} disabled={disabledCheck()}>
+            등록하기
+          </button>
         </div>
       )}
     </>

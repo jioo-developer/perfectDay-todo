@@ -21,3 +21,17 @@ type todoItem = {
 type props = {
   location: string;
 };
+
+type finishDataType = {
+  successDate: [
+    {
+      year: number;
+      month: number;
+      date: number;
+      day: number;
+      title: string;
+      hour: number;
+      min: number;
+    }
+  ];
+};

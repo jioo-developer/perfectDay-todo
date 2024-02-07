@@ -4,6 +4,7 @@ import { useMyContext } from "../module/MyContext";
 
 function Header({ location }: props) {
   const { navigate, dispatch } = useMyContext();
+
   return (
     <header className="main_header pd-x20">
       <Clock />

@@ -3,23 +3,13 @@ import "../asset/notification.scss";
 import { finishReset, issueAction } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
 
-type finishDataType = {
-  successDate: [
-    {
-      year: number;
-      month: number;
-      date: number;
-      day: number;
-      title: string;
-      hour: number;
-      min: number;
-    }
-  ];
+type props = {
+  finishData: any[];
 };
-function Notification() {
+
+function Notification({ finishData }: props) {
+  const getFinish = localStorage.getItem("clearDB");
   const { dispatch } = useMyContext();
-  const finishData = useSelector((state: finishDataType) => state.successDate);
-  const getFinish: string | null = localStorage.getItem("clearDB");
   return (
     <>
       <div className="noti_wrap">

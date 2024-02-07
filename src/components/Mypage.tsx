@@ -18,7 +18,7 @@ function MyPage({ currentUser }: props) {
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   function rankToggleFunc() {
-    setRank(!rankToggle);
+    setRank((prev) => !prev);
   }
 
   function rankSwitch(value: boolean) {
@@ -93,9 +93,12 @@ function MyPage({ currentUser }: props) {
 
             <li
               onClick={() => {
-                if (window.confirm("닉네임을 변경합니다")) {
+                const nickChange =
+                  window.prompt("변경 할 닉네임을 입력해주세요");
+                if (nickChange) {
                   localStorage.removeItem("currentUser");
-                  navigate("/login");
+                  localStorage.setItem("currentUser", nickChange);
+                  window.location.reload();
                 }
               }}
             >

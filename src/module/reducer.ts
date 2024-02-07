@@ -106,7 +106,20 @@ export default function reducer(state = initialState, action: any) {
       } else {
         calcData = [action.date];
       }
-      const result = [...state.successDate, ...calcData];
+      const result = [...state.successDate, ...calcData].filter(
+        (value, index, arr) => {
+          return (
+            arr.findIndex((item) => {
+              return (
+                item.year === value.year &&
+                item.month === value.month &&
+                item.date === value.date &&
+                item.title === value.title
+              );
+            }) === index
+          );
+        }
+      );
       localStorage.setItem("clearDB", JSON.stringify(result));
       return {
         ...state,
