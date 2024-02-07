@@ -133,7 +133,7 @@ function Calendar() {
 
   // 일정 제작 함수
   function postPromise() {
-    if (promiseText !== "" && selectDay !== (0 as any)) {
+    if (promiseText !== "" && select !== 0) {
       selectDay(select);
     } else {
       window.alert("일정 또는 날짜를 올바르게 사용해주세요.");
@@ -143,32 +143,30 @@ function Calendar() {
   // 일정 제작 함수
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
-  function selectDay(params: number): Promise<void> {
-    return new Promise<void>(function (res, rej) {
-      const selectDate = new Date(
+  function selectDay(params: number) {
+    return new Promise(function (res, rej) {
+      let selectDate = new Date(
         selectedYear,
         selectedMonth,
         params
         //params는 선택된 날짜의 텍스트를 숫자로 변환
       );
 
-      const thisDay = new Date(nowday.year, nowday.month, nowday.date);
+      let thisDay = new Date(nowday.year, nowday.month, nowday.date);
 
-      const ResultDay = +selectDate - +thisDay;
+      let ResultDay = +selectDate - +thisDay;
 
-      const TimeResult: number = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
+      let TimeResult = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
       if (TimeResult > 0) {
-        res();
+        res(TimeResult);
       } else {
         rej(TimeResult);
       }
     })
       .then((result) => {
-        if (typeof result === "number") {
-          postPromiseFunc(result);
-        }
+        if (typeof result === "number") postPromiseFunc(result);
       })
-      .catch((result: number) => {
+      .catch((result) => {
         if (!isNaN(result)) {
           window.alert("이미 지난 날짜입니다.");
         }
@@ -190,6 +188,7 @@ function Calendar() {
       "#d_day_txt"
     ) as HTMLInputElement | null;
     if (target) target.value = "";
+    setPromise("");
   }
 
   useEffect(() => {

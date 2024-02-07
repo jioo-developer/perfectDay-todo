@@ -5,11 +5,17 @@ import { useMyContext } from "../module/MyContext";
 
 type props = {
   finishData: any[];
+  emitFunc: (parmas: boolean) => void;
 };
 
-function Notification({ finishData }: props) {
+function Notification({ finishData, emitFunc }: props) {
   const getFinish = localStorage.getItem("clearDB");
+  const sliceData = finishData.slice(0, 10);
   const { dispatch } = useMyContext();
+
+  function notiToggle() {
+    emitFunc(false);
+  }
   return (
     <>
       <div className="noti_wrap">
@@ -29,6 +35,7 @@ function Notification({ finishData }: props) {
                 src="/img/clear.svg"
                 onClick={() => {
                   dispatch(issueAction());
+                  notiToggle();
                 }}
               />
             </div>
@@ -36,8 +43,8 @@ function Notification({ finishData }: props) {
           <ul className="noti_body">
             {
               // 알림들 만드는 map 함수
-              finishData.length > 0
-                ? finishData.map((item, index) => {
+              sliceData.length > 0
+                ? sliceData.map((item, index) => {
                     return (
                       <li key={index}>
                         <img src="/img/check_btn.svg" alt="" />

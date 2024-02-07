@@ -2,8 +2,35 @@ import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
 
-function Header({ location }: props) {
+interface headerProps extends props {
+  finishBoolean: boolean;
+}
+
+function Header({ location, finishBoolean }: headerProps) {
   const { navigate, dispatch } = useMyContext();
+
+  function bellFunc() {
+    if (finishBoolean) {
+      return (
+        <img
+          src="/img/bell.svg"
+          alt="bell"
+          onClick={() => {
+            dispatch(issueAction());
+          }}
+        />
+      );
+    }
+    return (
+      <img
+        src="/img/no_bell.svg"
+        alt="bell"
+        onClick={() => {
+          dispatch(issueAction());
+        }}
+      />
+    );
+  }
 
   return (
     <header className="main_header pd-x20">
@@ -25,15 +52,7 @@ function Header({ location }: props) {
             ? "프로필변경"
             : null}
         </p>
-        {location === "/" ? (
-          <img
-            src="/img/no_bell.svg"
-            alt="bell"
-            onClick={() => {
-              dispatch(issueAction());
-            }}
-          />
-        ) : null}
+        {location === "/" ? bellFunc() : null}
       </div>
     </header>
   );

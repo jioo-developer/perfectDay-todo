@@ -12,8 +12,9 @@ function MyPage({ currentUser }: props) {
   const rankSystem = localStorage.getItem("rank");
   const [rankToggle, setRank] = useState(false);
   const localCharacter: number = parseInt(
-    localStorage.getItem("profile") || "{}"
+    localStorage.getItem("profile") || "1"
   );
+  console.log(Object.entries(localCharacter).length);
 
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
@@ -67,12 +68,7 @@ function MyPage({ currentUser }: props) {
             </div>
           </div>
           <figure className="profile_img">
-            <img
-              src={`/img/profile${
-                Object.entries(localCharacter).length > 0 ? localCharacter : 1
-              }.svg`}
-              alt=""
-            />
+            <img src={`/img/profile${localCharacter}.svg`} alt="" />
           </figure>
         </section>
 

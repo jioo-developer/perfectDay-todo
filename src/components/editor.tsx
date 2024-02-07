@@ -46,6 +46,8 @@ function Editor() {
     if (hour && minute) {
       hour.value = "";
       minute.value = "";
+      setwriteH(0);
+      setwriteM(0);
     }
     dispatch(editorToggle());
   }

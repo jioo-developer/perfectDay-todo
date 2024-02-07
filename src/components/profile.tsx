@@ -5,7 +5,7 @@ import { useMyContext } from "../module/MyContext";
 function Profile() {
   const { dispatch, navigate } = useMyContext();
   const localCharacter: number = parseInt(
-    localStorage.getItem("profile") || "{}"
+    localStorage.getItem("profile") || "1"
   );
   const profileList = [1, 2, 3, 4, 5, 6];
 
@@ -14,12 +14,7 @@ function Profile() {
       <section className="section01">
         <div className="my_profile">
           <figure>
-            <img
-              src={`/img/profile${
-                Object.entries(localCharacter).length > 0 ? localCharacter : 1
-              }.svg`}
-              alt=""
-            />
+            <img src={`/img/profile${localCharacter}.svg`} alt="" />
           </figure>
           <figcaption>현재프로필</figcaption>
         </div>

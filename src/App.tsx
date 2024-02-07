@@ -36,8 +36,8 @@ const App = () => {
   const initialMount = useSelector((state: RootState) => state.mountState);
   const finishData = useSelector((state: finishDataType) => state.successDate);
   const issueState = useSelector((state: HomeRootState) => state.issue);
-
-  // 할일 list
+  const [prevData, setPrev] = useState<any>(null);
+  const [finishBoolean, setboolean] = useState(false);
 
   const dataCheck = setInterval(() => {
     const date = localStorage.getItem("creationDay");
@@ -91,6 +91,10 @@ const App = () => {
     }
   };
 
+  function emitFunc(value: boolean) {
+    setboolean(value);
+  }
+
   useEffect(() => {
     if (!initialMount) {
       appDispatch(FirstMount());
@@ -106,11 +110,25 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setPrev(finishData);
+  }, [finishData]);
+
+  useEffect(() => {
+    if (prevData !== null) {
+      const prevString = JSON.stringify(prevData);
+      const currentString = JSON.stringify(finishData);
+      if (JSON.parse(prevString).length !== 0 && prevString !== currentString) {
+        setboolean((prev) => !prev);
+      }
+    }
+  }, [finishData, prevData]);
+
   return (
     <MyContextProvider>
       <div className="wrap">
         {currentUser !== null && creation !== null ? (
-          <Header location={location} />
+          <Header location={location} finishBoolean={finishBoolean} />
         ) : null}
         <div className="de-in-wrap">
           <Routes>
@@ -131,7 +149,9 @@ const App = () => {
         {currentUser !== null && creation !== null ? (
           <MainFooter location={location} />
         ) : null}
-        {issueState ? <Notification finishData={finishData} /> : null}
+        {issueState ? (
+          <Notification finishData={finishData} emitFunc={emitFunc} />
+        ) : null}
       </div>
     </MyContextProvider>
   );
