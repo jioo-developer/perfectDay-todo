@@ -1,7 +1,7 @@
 const initialState = {
   editorSwitch: false,
   // 에디터 여는 state
-  TodoList: [],
+  todoList: [],
   // 할일 list state
   successDate: [],
   // 완료한 시점 state
@@ -18,7 +18,7 @@ const initialState = {
 
 const editorSwitch = "editorSwitch";
 // 에디터 여는 state
-const TodoList = "TodoList";
+const todoList = "todoList";
 // 할일 list state
 const success = "success";
 // 완료한 일정 state
@@ -46,17 +46,17 @@ export const issueAction = () => ({
   type: issue,
 });
 
-export const createPost = (data: object) => ({
-  type: TodoList,
+export const createPost = (data: DateFac) => ({
+  type: todoList,
   data,
 });
 
-export const update = (data: [] | {}) => ({
+export const update = (data: todoItem[]) => ({
   type: updateTodo,
   data,
 });
 
-export const successDate = (date: [] | {}) => ({
+export const successDate = (date: DateFac[] | DateFac) => ({
   type: success,
   date,
 });
@@ -66,7 +66,7 @@ export const profileUpdate = (data: number) => ({
   data,
 });
 
-export const calendarFunc = (data: [] | {}) => ({
+export const calendarFunc = (data: PostPromiseType | PostPromiseType[]) => ({
   type: calendarArr,
   data,
 });
@@ -88,15 +88,15 @@ export default function reducer(state = initialState, action: any) {
         issue: !state.issue,
       };
 
-    case TodoList:
+    case todoList:
       return {
         ...state,
-        TodoList: [...state.TodoList, ...action.data],
+        todoList: [...state.todoList, ...action.data],
       };
     case updateTodo:
       return {
         ...state,
-        TodoList: [...action.data],
+        todoList: [...action.data],
       };
 
     case success:

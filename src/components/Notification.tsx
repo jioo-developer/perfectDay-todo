@@ -46,7 +46,7 @@ function Notification({ finishData, emitFunc }: finishStateprops) {
                         <div className="li_txt_wrap">
                           <p className="li_time">
                             {`${item.year}년 ${item.month}월 ${item.date}일 ${
-                              item.hour
+                              item.hour < 10 ? "0" + item.hour : item.hour
                             }:${item.min < 10 ? "0" + item.min : item.min}`}
                           </p>
                           <p className="li_title">{item.title}</p>

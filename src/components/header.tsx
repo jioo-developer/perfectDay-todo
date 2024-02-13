@@ -2,9 +2,10 @@ import Clock from "./clock";
 import { issueAction } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
 
-interface headerProps extends props {
+type headerProps = {
   finishBoolean: boolean;
-}
+  location: string;
+};
 
 function Header({ location, finishBoolean }: headerProps) {
   const { navigate, dispatch } = useMyContext();
@@ -20,16 +21,17 @@ function Header({ location, finishBoolean }: headerProps) {
           }}
         />
       );
+    } else {
+      return (
+        <img
+          src="/img/no_bell.svg"
+          alt="bell"
+          onClick={() => {
+            dispatch(issueAction());
+          }}
+        />
+      );
     }
-    return (
-      <img
-        src="/img/no_bell.svg"
-        alt="bell"
-        onClick={() => {
-          dispatch(issueAction());
-        }}
-      />
-    );
   }
 
   return (

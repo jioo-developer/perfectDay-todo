@@ -9,8 +9,6 @@ type HomeProps = {
 
 function Home({ currentUser, dayMemo }: HomeProps) {
   const [clearList, setClearList] = useState<number>(0);
-  // 첫 mount 조정 state
-  // 알림창 닫혔는지 on / off
 
   function getParcent(value: number): void {
     setClearList(value);

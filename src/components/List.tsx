@@ -2,42 +2,31 @@ import { batch, useSelector } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 import { useMyContext } from "../module/MyContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-interface DateFac extends dateType {
-  year: number;
-  month: number;
-  date: number;
-  day: number;
-  title: string;
-  hour: number;
-  min: number;
-}
 type props = {
   getParcent: (params: number) => void;
 };
+
 function List({ getParcent }: props) {
   const { dispatch } = useMyContext();
-  const [clear, setClearList] = useState(0);
-  const TodoList = useSelector((state: HomeRootState) => state.TodoList);
-  // todoList
+  const todoList = useSelector((state: RootState) => state.todoList);
 
   useEffect(() => {
-    if (TodoList.length > 0) clearCheck();
-  }, [TodoList]);
-
-  if (clear > 100000) console.log(clear);
+    if (todoList.length > 0) {
+      clearCheck();
+    }
+  }, [todoList]);
 
   function clearCheck() {
     const onNum = Array.from(document.querySelectorAll(".clearList")).length;
     const allNum = Array.from(document.querySelectorAll(".list")).length;
     const result: number = Math.floor((onNum / allNum) * 100);
     getParcent(result);
-    setClearList(result);
   }
 
   // 완료시점 만드는 함수
-  function createPost(e: HTMLElement, clearArr: todoItem) {
+  function createPost(e: HTMLElement, clearArr: todoItem[]) {
     const titleContent =
       e.parentElement?.getElementsByClassName("today_txt")[0]?.innerHTML;
     const DateFac: DateFac = {
@@ -58,7 +47,7 @@ function List({ getParcent }: props) {
   // 리스트 저장 함수
   function saveHandler(): void {
     if (window.confirm("현재까지의 리스트를 저장합니다")) {
-      localStorage.setItem("saveList", JSON.stringify(TodoList));
+      localStorage.setItem("saveList", JSON.stringify(todoList));
     }
   }
 
@@ -66,8 +55,9 @@ function List({ getParcent }: props) {
   const rankSystem: string | null = localStorage.getItem("rank");
 
   function successHandler(
+    //여기선 랭크 숫자 카운트만 올림
     e: React.MouseEvent<HTMLButtonElement>,
-    clearArr: todoItem
+    clearArr: todoItem[]
   ): void {
     if (rankSystem === null) {
       localStorage.setItem("rank", "1");
@@ -96,25 +86,25 @@ function List({ getParcent }: props) {
               <span onClick={deleteHandler}>초기화</span>
             </div>
           </div>
-          {TodoList.map((listData, index) => {
-            const clearState = TodoList[index].clear;
+          {todoList.map((value, index) => {
+            const clearState = todoList[index].clear;
             return (
               <div
                 className={`list ${clearState ? "clearList" : "going"}`}
                 key={index}
               >
                 <p className={clearState ? "clearText" : "today_date"}>
-                  {listData.writeH}:{listData.writeM}
+                  {value.writeH}:{value.writeM}
                 </p>
 
                 <p className={clearState ? "clearIndent" : "today_txt"}>
-                  {listData.write}
+                  {value.write}
                 </p>
                 <button
                   className={clearState ? "clearBtn" : ""}
                   onClick={(e) => {
-                    const copyArray: any = [...TodoList];
-                    copyArray[index].clear = true;
+                    const copyArray: todoItem[] = [...todoList];
+                    copyArray[index] = { ...copyArray[index], clear: true };
                     successHandler(e, copyArray);
                   }}
                 >

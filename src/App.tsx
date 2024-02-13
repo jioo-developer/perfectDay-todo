@@ -22,10 +22,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Notification from "./components/Notification";
 
-type RootState = {
-  mountState: boolean;
-};
-
 const App = () => {
   const appNavigate = useNavigate();
   const appDispatch = useDispatch();
@@ -35,7 +31,8 @@ const App = () => {
   const location: string = window.location.pathname;
   const initialMount = useSelector((state: RootState) => state.mountState);
   const finishData = useSelector((state: finishDataType) => state.successDate);
-  const issueState = useSelector((state: HomeRootState) => state.issue);
+  const issueState = useSelector((state: RootState) => state.issue);
+  const todoList = useSelector((state: RootState) => state.todoList);
   const [prevData, setPrev] = useState<any>(null);
   const [finishBoolean, setboolean] = useState(false);
 
@@ -45,7 +42,6 @@ const App = () => {
     if (date === null || name === null) {
       localStorage.clear();
       appNavigate("/login");
-    } else {
     }
   }, 60000);
 
@@ -116,11 +112,11 @@ const App = () => {
 
   useEffect(() => {
     if (prevData !== null) {
-      const prevString = JSON.stringify(prevData);
-      const currentString = JSON.stringify(finishData);
-      if (JSON.parse(prevString).length !== 0 && prevString !== currentString) {
+      if (Object.entries(prevData).length > 0 && prevData !== finishData) {
         setboolean((prev) => !prev);
       }
+    } else if (prevData === null) {
+      setPrev({});
     }
   }, [finishData, prevData]);
 
@@ -147,7 +143,7 @@ const App = () => {
           </Routes>
         </div>
         {currentUser !== null && creation !== null ? (
-          <MainFooter location={location} />
+          <MainFooter location={location} todoList={todoList} />
         ) : null}
         {issueState ? (
           <Notification finishData={finishData} emitFunc={emitFunc} />

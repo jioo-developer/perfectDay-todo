@@ -24,12 +24,7 @@ function Editor() {
     const logicFac = [
       {
         write: write,
-        writeH:
-          writeH === 0
-            ? window.alert("시간을 입력하세요")
-            : writeH < 10
-            ? `0${writeH}`
-            : writeH,
+        writeH: writeH < 10 ? `0${writeH}` : writeH,
         writeM: writeM === 0 ? "00" : writeM < 10 ? `0${writeM}` : writeM,
         clear: false,
       },

@@ -2,10 +2,12 @@ import "../App.scss";
 import { editorToggle } from "../module/reducer";
 import { useSelector } from "react-redux";
 import { useMyContext } from "../module/MyContext";
-
-function MainFooter({ location }: props) {
+type props = {
+  location: string;
+  todoList: todoItem[];
+};
+function MainFooter({ location, todoList }: props) {
   const { dispatch, navigate } = useMyContext();
-  const todoList = useSelector((state: HomeRootState) => state.TodoList);
   return (
     <footer className="footer_bar">
       {location === "/" ? (

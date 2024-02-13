@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useMyContext } from "../module/MyContext";
 
 type calendarState = {
-  calendarArr: [{ title: string; calcDay: number }];
+  calendarArr: [{ title?: string; calcDay?: number }];
 };
 
 function Calendar() {
@@ -92,10 +92,10 @@ function Calendar() {
             type="radio"
             onChange={(e) => {
               if (e.target.nextElementSibling) {
-                const transNumer = parseInt(
+                const transNumber = parseInt(
                   e.target.nextElementSibling.innerHTML
                 );
-                setSelect(transNumer);
+                setSelect(transNumber);
               }
             }}
           />
@@ -174,10 +174,7 @@ function Calendar() {
   }
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
-  type PostPromiseType = {
-    title?: string;
-    calcDay?: number;
-  };
+
   function postPromiseFunc(value: number) {
     const object: PostPromiseType = {};
     object.title = promiseText;
