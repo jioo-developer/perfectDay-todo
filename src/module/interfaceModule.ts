@@ -35,3 +35,18 @@ type finishDataType = {
     }
   ];
 };
+
+type finishStateprops = {
+  finishData: [
+    {
+      year: number;
+      month: number;
+      date: number;
+      day: number;
+      title: string;
+      hour: number;
+      min: number;
+    }
+  ];
+  emitFunc: (parmas: boolean) => void;
+};

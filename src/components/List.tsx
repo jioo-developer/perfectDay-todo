@@ -5,6 +5,10 @@ import { useMyContext } from "../module/MyContext";
 import { useEffect, useState } from "react";
 
 interface DateFac extends dateType {
+  year: number;
+  month: number;
+  date: number;
+  day: number;
   title: string;
   hour: number;
   min: number;
@@ -33,7 +37,7 @@ function List({ getParcent }: props) {
   }
 
   // 완료시점 만드는 함수
-  function createPost(e: HTMLElement): any {
+  function createPost(e: HTMLElement, clearArr: todoItem) {
     const titleContent =
       e.parentElement?.getElementsByClassName("today_txt")[0]?.innerHTML;
     const DateFac: DateFac = {
@@ -43,7 +47,10 @@ function List({ getParcent }: props) {
       min: new Date().getMinutes(),
     };
 
-    return DateFac;
+    batch(() => {
+      dispatch(successDate(DateFac));
+      dispatch(update(clearArr));
+    });
   }
 
   // 완료시점 만드는 함수
@@ -60,7 +67,7 @@ function List({ getParcent }: props) {
 
   function successHandler(
     e: React.MouseEvent<HTMLButtonElement>,
-    clearArr: any
+    clearArr: todoItem
   ): void {
     if (rankSystem === null) {
       localStorage.setItem("rank", "1");
@@ -68,10 +75,7 @@ function List({ getParcent }: props) {
       const result = parseInt(rankSystem) + 1;
       localStorage.setItem("rank", `${result}`);
     }
-    batch(() => {
-      dispatch(successDate(createPost(e.currentTarget)));
-      dispatch(update(clearArr));
-    });
+    createPost(e.currentTarget, clearArr);
   }
 
   // 할일 초기화 함수
@@ -109,7 +113,7 @@ function List({ getParcent }: props) {
                 <button
                   className={clearState ? "clearBtn" : ""}
                   onClick={(e) => {
-                    const copyArray = [...TodoList];
+                    const copyArray: any = [...TodoList];
                     copyArray[index].clear = true;
                     successHandler(e, copyArray);
                   }}

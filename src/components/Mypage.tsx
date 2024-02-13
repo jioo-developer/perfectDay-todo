@@ -22,11 +22,11 @@ function MyPage({ currentUser }: props) {
     setRank((prev) => !prev);
   }
 
-  function rankSwitch(value: boolean) {
+  function rankSwitch(value: boolean): void {
     setRank(value);
   }
 
-  function rankLogic(rankSystem: any): [string, string] | undefined {
+  function rankLogic(rankSystem: string | null): [string, string] | undefined {
     if (rankSystem) {
       const num = parseInt(rankSystem, 10);
       let rankColor: string;

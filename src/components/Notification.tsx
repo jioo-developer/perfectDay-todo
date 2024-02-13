@@ -3,12 +3,7 @@ import "../asset/notification.scss";
 import { finishReset, issueAction } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
 
-type props = {
-  finishData: any[];
-  emitFunc: (parmas: boolean) => void;
-};
-
-function Notification({ finishData, emitFunc }: props) {
+function Notification({ finishData, emitFunc }: finishStateprops) {
   const getFinish = localStorage.getItem("clearDB");
   const sliceData = finishData.slice(0, 10);
   const { dispatch } = useMyContext();

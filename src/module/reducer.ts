@@ -51,12 +51,12 @@ export const createPost = (data: object) => ({
   data,
 });
 
-export const update = (data: []) => ({
+export const update = (data: [] | {}) => ({
   type: updateTodo,
   data,
 });
 
-export const successDate = (date: []) => ({
+export const successDate = (date: [] | {}) => ({
   type: success,
   date,
 });
