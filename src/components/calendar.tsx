@@ -68,7 +68,7 @@ function Calendar() {
     });
     return result;
   };
-  const maxDay: number[] = [];
+
   //선택된 달의 날짜들 반환 함수
   const returnDay = () => {
     for (const nowDay of week) {
@@ -81,7 +81,6 @@ function Calendar() {
         dayArr.push("");
       }
     }
-    console.log(dayArr);
     const settingNumber = 35;
 
     // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
