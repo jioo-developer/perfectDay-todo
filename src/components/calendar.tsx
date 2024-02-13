@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useMyContext } from "../module/MyContext";
 
 type calendarState = {
-  calendarArr: [{ title?: string; calcDay?: number }];
+  calendarArr: [{ title: string; calcDay: number }];
 };
 
 function Calendar() {
@@ -21,7 +21,7 @@ function Calendar() {
   // 선택년 월 state
   const dateTotalCount = new Date(selectedYear, selectedMonth, 0).getDate();
   // 선택년 월 일 state
-  const [select, setSelect] = useState(0);
+  const [select, setSelect] = useState<number>(0);
   // 일정을 잡기위해 선택 한 날짜
   const [promiseText, setPromise] = useState<string>("");
 
@@ -81,7 +81,11 @@ function Calendar() {
     }
 
     const dayMap = dayArr.map((value, index) => {
-      return index < 35 ? (
+      const settingNumber = 35;
+      // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
+      // 대부분의 달력은 한 달을 표시할 때 5주로 나타나지만, 때로는 6주가 필요한 경우도 있다.
+      // 6주의 경우를 포함해서 자바스크립트는 이를 대비해 최대 일수를 35로 랜더링 하게된다. 그래서 35를 쓴다.
+      return index < settingNumber ? (
         <div className="day dayDate">
           <input
             id={`day-input-${index}`}
@@ -143,42 +147,36 @@ function Calendar() {
   // 일정 제작 함수
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
-  function selectDay(params: number) {
-    return new Promise(function (res, rej) {
-      let selectDate = new Date(
-        selectedYear,
-        selectedMonth,
-        params
-        //params는 선택된 날짜의 텍스트를 숫자로 변환
-      );
+  function selectDay(params: number): number | void {
+    const selectDate = new Date(
+      selectedYear,
+      selectedMonth,
+      params
+      //params는 선택된 날짜의 텍스트를 숫자로 변환
+    );
 
-      let thisDay = new Date(nowday.year, nowday.month, nowday.date);
+    const thisDay = new Date(nowday.year, nowday.month, nowday.date);
 
-      let ResultDay = +selectDate - +thisDay;
+    const ResultDay = +selectDate - +thisDay;
 
-      let TimeResult = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
-      if (TimeResult > 0) {
-        res(TimeResult);
-      } else {
-        rej(TimeResult);
-      }
-    })
-      .then((result) => {
-        if (typeof result === "number") postPromiseFunc(result);
-      })
-      .catch((result) => {
-        if (!isNaN(result)) {
-          window.alert("이미 지난 날짜입니다.");
-        }
-      });
+    const TimeResult = Math.ceil(ResultDay / (1000 * 60 * 60 * 24));
+
+    if (TimeResult > 0) {
+      postPromiseFunc(TimeResult);
+      return TimeResult;
+    } else {
+      window.alert("이미 지난 날짜입니다.");
+    }
   }
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
 
   function postPromiseFunc(value: number) {
-    const object: PostPromiseType = {};
-    object.title = promiseText;
-    object.calcDay = value;
+    const object: PostPromiseType = {
+      title: promiseText,
+      calcDay: value,
+    };
+
     dispatch(calendarFunc(object));
     // 날짜랑 텍스트를 객체로 잘 만들어서 배열 안으로 넣어야함
     const target = document.querySelector(

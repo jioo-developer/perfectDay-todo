@@ -55,6 +55,6 @@ type finishStateprops = {
 };
 
 type PostPromiseType = {
-  title?: string;
-  calcDay?: number;
+  title: string;
+  calcDay: number;
 };

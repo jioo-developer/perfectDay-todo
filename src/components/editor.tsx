@@ -21,14 +21,12 @@ function Editor() {
   //  포스트를 만드는 함수
 
   function postLogic() {
-    const logicFac = [
-      {
-        write: write,
-        writeH: writeH < 10 ? `0${writeH}` : writeH,
-        writeM: writeM === 0 ? "00" : writeM < 10 ? `0${writeM}` : writeM,
-        clear: false,
-      },
-    ];
+    const logicFac = {
+      write: write,
+      writeH: writeH < 10 ? `0${writeH}` : writeH,
+      writeM: writeM === 0 ? "00" : writeM < 10 ? `0${writeM}` : writeM,
+      clear: false,
+    };
 
     const danger = document.querySelector(".text_area") as HTMLInputElement;
     if (danger && danger.value === "") {

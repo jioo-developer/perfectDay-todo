@@ -46,7 +46,7 @@ export const issueAction = () => ({
   type: issue,
 });
 
-export const createPost = (data: DateFac) => ({
+export const createPost = (data: todoItem) => ({
   type: todoList,
   data,
 });

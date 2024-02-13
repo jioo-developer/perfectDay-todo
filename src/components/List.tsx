@@ -26,12 +26,10 @@ function List({ getParcent }: props) {
   }
 
   // 완료시점 만드는 함수
-  function createPost(e: HTMLElement, clearArr: todoItem[]) {
-    const titleContent =
-      e.parentElement?.getElementsByClassName("today_txt")[0]?.innerHTML;
+  function createPost(clearArr: todoItem[], title: string) {
     const DateFac: DateFac = {
       ...today,
-      title: titleContent ? titleContent : "자료를 찾지 못했습니다.",
+      title: title,
       hour: new Date().getHours(),
       min: new Date().getMinutes(),
     };
@@ -56,8 +54,8 @@ function List({ getParcent }: props) {
 
   function successHandler(
     //여기선 랭크 숫자 카운트만 올림
-    e: React.MouseEvent<HTMLButtonElement>,
-    clearArr: todoItem[]
+    clearArr: todoItem[],
+    title: string
   ): void {
     if (rankSystem === null) {
       localStorage.setItem("rank", "1");
@@ -65,7 +63,7 @@ function List({ getParcent }: props) {
       const result = parseInt(rankSystem) + 1;
       localStorage.setItem("rank", `${result}`);
     }
-    createPost(e.currentTarget, clearArr);
+    createPost(clearArr, title);
   }
 
   // 할일 초기화 함수
@@ -102,10 +100,10 @@ function List({ getParcent }: props) {
                 </p>
                 <button
                   className={clearState ? "clearBtn" : ""}
-                  onClick={(e) => {
+                  onClick={() => {
                     const copyArray: todoItem[] = [...todoList];
                     copyArray[index] = { ...copyArray[index], clear: true };
-                    successHandler(e, copyArray);
+                    successHandler(copyArray, value.write);
                   }}
                 >
                   <img src="/img/before_check.svg" alt="check" />
