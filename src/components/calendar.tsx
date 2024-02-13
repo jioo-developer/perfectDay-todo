@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "../asset/calendar.scss";
 import { today } from "../module/today";
 import { calendarFunc } from "../module/reducer";
@@ -30,6 +30,8 @@ function Calendar() {
   const calendarReducer = useSelector(
     (state: calendarState) => state.calendarArr
   );
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
@@ -66,7 +68,7 @@ function Calendar() {
     });
     return result;
   };
-
+  const maxDay: number[] = [];
   //선택된 달의 날짜들 반환 함수
   const returnDay = () => {
     for (const nowDay of week) {
@@ -79,12 +81,13 @@ function Calendar() {
         dayArr.push("");
       }
     }
+    console.log(dayArr);
+    const settingNumber = 35;
 
+    // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
+    // 대부분의 달력은 한 달을 표시할 때 5주로 나타나지만, 때로는 6주가 필요한 경우도 있다.
+    // 6주의 경우를 포함해서 자바스크립트는 이를 대비해 최대 일수를 35로 랜더링 하게된다. 그래서 35를 쓴다.
     const dayMap = dayArr.map((value, index) => {
-      const settingNumber = 35;
-      // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
-      // 대부분의 달력은 한 달을 표시할 때 5주로 나타나지만, 때로는 6주가 필요한 경우도 있다.
-      // 6주의 경우를 포함해서 자바스크립트는 이를 대비해 최대 일수를 35로 랜더링 하게된다. 그래서 35를 쓴다.
       return index < settingNumber ? (
         <div className="day dayDate">
           <input
@@ -179,10 +182,12 @@ function Calendar() {
 
     dispatch(calendarFunc(object));
     // 날짜랑 텍스트를 객체로 잘 만들어서 배열 안으로 넣어야함
-    const target = document.querySelector(
-      "#d_day_txt"
-    ) as HTMLInputElement | null;
-    if (target) target.value = "";
+    const clearInput = () => {
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
+    };
+    clearInput();
     setPromise("");
   }
 
@@ -231,6 +236,7 @@ function Calendar() {
               <div className="input_wrap">
                 <input
                   id="d_day_txt"
+                  ref={inputRef}
                   onChange={(e) => setPromise(e.target.value)}
                 />
                 <div className="button_wrap">
