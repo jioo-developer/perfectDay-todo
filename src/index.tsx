@@ -5,13 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, Reducer } from "redux";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./module/reducer";
 
 const store = createStore(
-  reducer,
+  reducer as Reducer,
   composeWithDevTools(applyMiddleware(logger))
 );
 
