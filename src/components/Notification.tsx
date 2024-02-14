@@ -3,17 +3,17 @@ import "../asset/notification.scss";
 import { finishReset, issueAction } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
 
-type props = {
-  finishData: any[];
-  emitFunc: (parmas: boolean) => void;
+type finishStateprops = {
+  finishData: FinishDataType[];
+  emitFunc: (params: boolean) => void;
 };
 
-function Notification({ finishData, emitFunc }: props) {
+function Notification({ finishData, emitFunc }: finishStateprops) {
   const getFinish = localStorage.getItem("clearDB");
   const sliceData = finishData.slice(0, 10);
   const { dispatch } = useMyContext();
 
-  function notiToggle() {
+  function notiToggle(): void {
     emitFunc(false);
   }
   return (
@@ -51,7 +51,7 @@ function Notification({ finishData, emitFunc }: props) {
                         <div className="li_txt_wrap">
                           <p className="li_time">
                             {`${item.year}년 ${item.month}월 ${item.date}일 ${
-                              item.hour
+                              item.hour < 10 ? "0" + item.hour : item.hour
                             }:${item.min < 10 ? "0" + item.min : item.min}`}
                           </p>
                           <p className="li_title">{item.title}</p>

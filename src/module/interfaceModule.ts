@@ -1,16 +1,3 @@
-type dateType = {
-  year: number;
-  month: number;
-  date: number;
-  day: number;
-};
-
-type HomeRootState = {
-  mountState: boolean;
-  issue: boolean;
-  TodoList: todoItem[];
-};
-
 type todoItem = {
   write: string;
   writeH: number | string;
@@ -18,20 +5,36 @@ type todoItem = {
   clear: boolean;
 };
 
-type props = {
-  location: string;
+type RootState = {
+  mountState: boolean;
+  issue: boolean;
+  todoList: todoItem[];
 };
 
-type finishDataType = {
-  successDate: [
-    {
-      year: number;
-      month: number;
-      date: number;
-      day: number;
-      title: string;
-      hour: number;
-      min: number;
-    }
-  ];
+type dateType = {
+  year: number;
+  month: number;
+  date: number;
+  day: number;
+};
+
+interface DateFac extends dateType {
+  title: string;
+  hour: number;
+  min: number;
+}
+
+type FinishDataType = {
+  year: number;
+  month: number;
+  date: number;
+  day: number;
+  title: string;
+  hour: number;
+  min: number;
+};
+
+type PostPromiseType = {
+  title: string;
+  calcDay: number;
 };

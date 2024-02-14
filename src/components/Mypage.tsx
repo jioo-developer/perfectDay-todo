@@ -14,7 +14,6 @@ function MyPage({ currentUser }: props) {
   const localCharacter: number = parseInt(
     localStorage.getItem("profile") || "1"
   );
-  console.log(Object.entries(localCharacter).length);
 
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
@@ -22,14 +21,14 @@ function MyPage({ currentUser }: props) {
     setRank((prev) => !prev);
   }
 
-  function rankSwitch(value: boolean) {
+  function rankSwitch(value: boolean): void {
     setRank(value);
   }
 
-  function rankLogic(rankSystem: any): [string, string] | undefined {
+  function rankLogic(rankSystem: string | null): [string, string] {
+    let rankColor: string;
     if (rankSystem) {
       const num = parseInt(rankSystem, 10);
-      let rankColor: string;
       if (num >= 100) {
         rankColor = "goldenrod";
         return ["프로완벽러", rankColor];
@@ -40,6 +39,9 @@ function MyPage({ currentUser }: props) {
         rankColor = "brown";
         return ["초보완벽러", rankColor];
       }
+    } else {
+      rankColor = "brown";
+      return ["초보완벽러", rankColor];
     }
   }
 

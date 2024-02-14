@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useMyContext } from "../module/MyContext";
 
 function Editor() {
@@ -21,38 +21,41 @@ function Editor() {
   //  포스트를 만드는 함수
 
   function postLogic() {
-    const logicFac = [
-      {
-        write: write,
-        writeH:
-          writeH === 0
-            ? window.alert("시간을 입력하세요")
-            : writeH < 10
-            ? `0${writeH}`
-            : writeH,
-        writeM: writeM === 0 ? "00" : writeM < 10 ? `0${writeM}` : writeM,
-        clear: false,
-      },
-    ];
-
-    const danger = document.querySelector(".text_area") as HTMLInputElement;
-    if (danger && danger.value === "") {
-      alert("입력값을 확인해주세요.");
-    } else {
-      dispatch(createPost(logicFac));
-    }
-    const hour = document.querySelector(".hour") as HTMLInputElement;
-    const minute = document.querySelector(".minute") as HTMLInputElement;
-    if (hour && minute) {
-      hour.value = "";
-      minute.value = "";
-      setwriteH(0);
-      setwriteM(0);
-    }
+    const logicFac = {
+      write: write,
+      writeH: writeH < 10 ? `0${writeH}` : writeH,
+      writeM: writeM === 0 ? "00" : writeM < 10 ? `0${writeM}` : writeM,
+      clear: false,
+    };
+    checkValueLogic("all", logicFac);
     dispatch(editorToggle());
   }
 
   //  포스트를 만드는 함수
+
+  const titleRef = useRef<HTMLInputElement>(null);
+  const hourRef = useRef<HTMLInputElement>(null);
+  const minuteRef = useRef<HTMLInputElement>(null);
+
+  function checkValueLogic(type: string, params?: todoItem) {
+    const allRender = titleRef.current && hourRef.current && minuteRef.current;
+    if (allRender) {
+      if (type === "all" && params && titleRef.current) {
+        if (write === "" && writeH === 0) {
+          alert("스케줄을 확인해주세요.");
+        } else {
+          dispatch(createPost(params));
+          setwrite("");
+          setwriteH(0);
+          setwriteM(0);
+        }
+      } else if (type === "hour") {
+        setwriteH(0);
+      } else if (type === "minute") {
+        setwriteM(0);
+      }
+    }
+  }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
     setwrite(e.target.value);
@@ -61,8 +64,7 @@ function Editor() {
   function onChangeHour(e: ChangeEvent<HTMLInputElement>) {
     if (parseInt(e.target.value) >= 24) {
       alert("시간을 정확히 설정하세요.");
-      e.target.value = "";
-      setwriteH(0);
+      checkValueLogic("hour");
     } else {
       setwriteH(parseInt(e.target.value));
     }
@@ -70,9 +72,8 @@ function Editor() {
 
   function onChangeMinute(e: ChangeEvent<HTMLInputElement>) {
     if (parseInt(e.target.value) >= 60) {
+      checkValueLogic("minute");
       alert("시간을 정확히 설정하세요.");
-      e.target.value = "";
-      setwriteM(0);
     } else {
       setwriteM(parseInt(e.target.value));
     }
@@ -99,6 +100,7 @@ function Editor() {
             className="text_area"
             placeholder="스케줄을 입력해주세요"
             onChange={onChangeTitle}
+            ref={titleRef}
           ></input>
           <div className="date">
             <p className="day">시간</p>
@@ -110,6 +112,7 @@ function Editor() {
                 maxLength={maxLength}
                 onChange={onChangeHour}
                 autoFocus
+                ref={hourRef}
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) {
                     e.preventDefault();
@@ -120,6 +123,7 @@ function Editor() {
                 className="time_txt minute"
                 type="text"
                 maxLength={maxLength}
+                ref={minuteRef}
                 placeholder="00"
                 onChange={onChangeMinute}
                 onKeyPress={(e) => {
