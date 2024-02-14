@@ -22,6 +22,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Notification from "./components/Notification";
 
+type successType = {
+  successDate: FinishDataType[];
+};
+
 const App = () => {
   const appNavigate = useNavigate();
   const appDispatch = useDispatch();
@@ -30,7 +34,7 @@ const App = () => {
     localStorage.getItem("currentUser") || null;
   const location: string = window.location.pathname;
   const initialMount = useSelector((state: RootState) => state.mountState);
-  const finishData = useSelector((state: finishDataType) => state.successDate);
+  const finishData = useSelector((state: successType) => state.successDate);
   const issueState = useSelector((state: RootState) => state.issue);
   const todoList = useSelector((state: RootState) => state.todoList);
   const [prevData, setPrev] = useState<any>(null);
@@ -51,7 +55,7 @@ const App = () => {
 
   const dayMemo = () => {
     if (creation !== null) {
-      const parseCreation = JSON.parse(creation || "{}");
+      const parseCreation: dateType = JSON.parse(creation || "{}");
       //생성 날짜를 불러옴
       if (Object.entries(parseCreation).length > 0) {
         const start = new Date(
@@ -70,11 +74,16 @@ const App = () => {
   };
 
   const loadData = () => {
-    const clearResult = JSON.parse(localStorage.getItem("clearDB") || "{}");
-    const result = JSON.parse(localStorage.getItem("saveList") || "{}");
-    const calendarResult = JSON.parse(
+    const clearResult: FinishDataType = JSON.parse(
+      localStorage.getItem("clearDB") || "{}"
+    );
+    const result: todoItem = JSON.parse(
+      localStorage.getItem("saveList") || "{}"
+    );
+    const calendarResult: PostPromiseType = JSON.parse(
       localStorage.getItem("calendarList") || "{}"
     );
+
     if (Object.entries(clearResult).length > 0) {
       appDispatch(successDate(clearResult));
     }

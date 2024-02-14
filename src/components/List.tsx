@@ -14,7 +14,11 @@ function List({ getParcent }: props) {
 
   useEffect(() => {
     if (todoList.length > 0) {
+      console.log(todoList);
       clearCheck();
+    } else {
+      console.log(todoList);
+      console.log("----length 0");
     }
   }, [todoList]);
 

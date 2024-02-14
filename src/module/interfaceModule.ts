@@ -24,34 +24,14 @@ interface DateFac extends dateType {
   min: number;
 }
 
-type finishDataType = {
-  successDate: [
-    {
-      year: number;
-      month: number;
-      date: number;
-      day: number;
-      title: string;
-      hour: number;
-      min: number;
-    }
-  ];
-};
-
-type finishStateprops = {
-  finishData: [
-    {
-      year: number;
-      month: number;
-      date: number;
-      day: number;
-      title: string;
-      hour: number;
-      min: number;
-    }
-  ];
-
-  emitFunc: (parmas: boolean) => void;
+type FinishDataType = {
+  year: number;
+  month: number;
+  date: number;
+  day: number;
+  title: string;
+  hour: number;
+  min: number;
 };
 
 type PostPromiseType = {
