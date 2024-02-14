@@ -116,6 +116,7 @@ function Calendar() {
 
   // 오늘 날짜 체크하는 함수
   const dayRef = useRef<HTMLDivElement>(null);
+
   function todayCheck() {
     const thisMonth = new Date().getMonth() + 1;
     const todayOn = Array.from(

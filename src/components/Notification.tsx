@@ -8,7 +8,7 @@ function Notification({ finishData, emitFunc }: finishStateprops) {
   const sliceData = finishData.slice(0, 10);
   const { dispatch } = useMyContext();
 
-  function notiToggle() {
+  function notiToggle(): void {
     emitFunc(false);
   }
   return (
