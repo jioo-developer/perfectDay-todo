@@ -2,7 +2,7 @@ import { batch, useSelector } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 import { useMyContext } from "../module/MyContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 type props = {
   getParcent: (params: number) => void;
@@ -18,11 +18,18 @@ function List({ getParcent }: props) {
     }
   }, [todoList]);
 
+  const listRef = useRef<HTMLDivElement>(null);
+
   function clearCheck() {
-    const onNum = Array.from(document.querySelectorAll(".clearList")).length;
-    const allNum = Array.from(document.querySelectorAll(".list")).length;
-    const result: number = Math.floor((onNum / allNum) * 100);
-    getParcent(result);
+    const listEl = listRef.current?.children || [];
+    const listArr = Array.from(listEl) as HTMLDivElement[];
+    const clearEl = listArr.filter((item) => {
+      return item.classList.contains("clearList");
+    });
+    if (clearEl.length <= listEl.length) {
+      const result: number = Math.floor((clearEl.length / listEl.length) * 100);
+      getParcent(result);
+    }
   }
 
   // 완료시점 만드는 함수
@@ -84,33 +91,36 @@ function List({ getParcent }: props) {
               <span onClick={deleteHandler}>초기화</span>
             </div>
           </div>
-          {todoList.map((value, index) => {
-            const clearState = todoList[index].clear;
-            return (
-              <div
-                className={`list ${clearState ? "clearList" : "going"}`}
-                key={index}
-              >
-                <p className={clearState ? "clearText" : "today_date"}>
-                  {value.writeH}:{value.writeM}
-                </p>
-
-                <p className={clearState ? "clearIndent" : "today_txt"}>
-                  {value.write}
-                </p>
-                <button
-                  className={clearState ? "clearBtn" : ""}
-                  onClick={() => {
-                    const copyArray: todoItem[] = [...todoList];
-                    copyArray[index] = { ...copyArray[index], clear: true };
-                    successHandler(copyArray, value.write);
-                  }}
+          <div className="in-custom-wrap" ref={listRef}>
+            {todoList.map((value, index) => {
+              const clearState = todoList[index].clear;
+              return (
+                <div
+                  className={`list ${clearState ? "clearList" : "going"}`}
+                  key={index}
                 >
-                  <img src="/img/before_check.svg" alt="check" />
-                </button>
-              </div>
-            );
-          })}
+                  <p className={clearState ? "clearText" : "today_date"}>
+                    {value.writeH}:{value.writeM}
+                  </p>
+
+                  <p className={clearState ? "clearIndent" : "today_txt"}>
+                    {value.write}
+                  </p>
+                  <button
+                    className={clearState ? "clearBtn" : ""}
+                    disabled={clearState}
+                    onClick={() => {
+                      const copyArray: todoItem[] = [...todoList];
+                      copyArray[index] = { ...copyArray[index], clear: true };
+                      successHandler(copyArray, value.write);
+                    }}
+                  >
+                    <img src="/img/before_check.svg" alt="check" />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
     </>

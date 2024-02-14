@@ -91,7 +91,7 @@ export default function reducer(state = initialState, action: any) {
     case todoList:
       return {
         ...state,
-        todoList: [...state.todoList, ...action.data],
+        todoList: [...state.todoList, action.data],
       };
     case updateTodo:
       return {

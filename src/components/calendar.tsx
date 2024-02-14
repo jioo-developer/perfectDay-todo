@@ -31,8 +31,6 @@ function Calendar() {
     (state: calendarState) => state.calendarArr
   );
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
     if (selectedMonth === 1) {
@@ -70,6 +68,12 @@ function Calendar() {
   };
 
   //선택된 달의 날짜들 반환 함수
+
+  const settingNumber = 35;
+  // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
+  // 대부분의 달력은 한 달을 표시할 때 5주로 나타나지만, 때로는 6주가 필요한 경우도 있다.
+  // 6주의 경우를 포함해서 자바스크립트는 이를 대비해 최대 일수를 35로 랜더링 하게된다. 그래서 35를 쓴다.
+
   const returnDay = () => {
     for (const nowDay of week) {
       const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
@@ -81,11 +85,7 @@ function Calendar() {
         dayArr.push("");
       }
     }
-    const settingNumber = 35;
 
-    // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
-    // 대부분의 달력은 한 달을 표시할 때 5주로 나타나지만, 때로는 6주가 필요한 경우도 있다.
-    // 6주의 경우를 포함해서 자바스크립트는 이를 대비해 최대 일수를 35로 랜더링 하게된다. 그래서 35를 쓴다.
     const dayMap = dayArr.map((value, index) => {
       return index < settingNumber ? (
         <div className="day dayDate">
@@ -115,11 +115,12 @@ function Calendar() {
   ///선택된 달의 날짜들 반환 함수
 
   // 오늘 날짜 체크하는 함수
+  const dayRef = useRef<HTMLDivElement>(null);
   function todayCheck() {
     const thisMonth = new Date().getMonth() + 1;
-    const todayOn: HTMLElement[] = Array.prototype.slice.call(
-      document.getElementsByClassName("dayDate")
-    );
+    const todayOn = Array.from(
+      dayRef.current?.children || []
+    ) as HTMLDivElement[];
     if (todayOn.length > 0) {
       if (thisMonth === selectedMonth) {
         for (var i = 0; i < todayOn.length; i++) {
@@ -172,6 +173,7 @@ function Calendar() {
   }
 
   // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function postPromiseFunc(value: number) {
     const object: PostPromiseType = {
@@ -181,12 +183,6 @@ function Calendar() {
 
     dispatch(calendarFunc(object));
     // 날짜랑 텍스트를 객체로 잘 만들어서 배열 안으로 넣어야함
-    const clearInput = () => {
-      if (inputRef.current) {
-        inputRef.current.value = "";
-      }
-    };
-    clearInput();
     setPromise("");
   }
 
@@ -214,7 +210,9 @@ function Calendar() {
           </div>
           <div className="cal_wrap">
             <div className="days">{returnWeek()}</div>
-            <div className="date_wrap">{returnDay()}</div>
+            <div className="date_wrap" ref={dayRef}>
+              {returnDay()}
+            </div>
           </div>
           <section className="important_data">
             <div className="title_wrap">
