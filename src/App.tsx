@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./reset.css";
 import "./App.scss";
@@ -13,7 +13,9 @@ import Header from "./components/header";
 import { FirstMount } from "./module/reducer";
 import Notification from "./components/Notification";
 import { useMyContext } from "./module/MyContext";
-import { dayMemo, loadData } from "./module/exportFunction";
+import { datafetchCheck, dayMemo, loadData } from "./module/exportFunction";
+import { RootState, successType } from "./module/interfaceModule";
+import { useSelector } from "react-redux";
 
 const App = () => {
   const [prevData, setPrev] = useState<any>([]);
@@ -21,46 +23,40 @@ const App = () => {
 
   const { navigate, dispatch } = useMyContext();
 
-  const dataCheck = setInterval(() => {
-    const date = localStorage.getItem("creationDay");
-    const name = localStorage.getItem("currentUser");
-    if (date === null || name === null) {
-      localStorage.clear();
-      navigate("/login");
-    }
-  }, 30000);
-  //이거 프로미스로 catch문 할까
+  const creation = localStorage.getItem("creationDay") || null;
+  const currentUser = localStorage.getItem("currentUser") || null;
+  const location: string = window.location.pathname;
+
+  const initialMount = useSelector((state: RootState) => state.mountState);
+  const finishData = useSelector((state: successType) => state.successDate);
+  const issueState = useSelector((state: RootState) => state.issue);
+  const todoList = useSelector((state: RootState) => state.todoList);
+
+  datafetchCheck(navigate("/login"));
 
   if (location === "/login") {
-    clearInterval(dataCheck);
+    clearInterval(datafetchCheck());
   }
+
+  // 데이터 로드
 
   function emitFunc(value: boolean) {
     setboolean(value);
   }
 
   useEffect(() => {
-    if (!initialMount) {
-      dispatch(FirstMount());
-      dayMemo(creation);
-      loadData(dispatch);
-    }
     if (currentUser === null || creation === null) {
       navigate("/login");
     } else {
       if (!initialMount && location !== "/") {
         navigate("/");
+      } else {
+        dispatch(FirstMount());
+        dayMemo(creation);
+        loadData(dispatch);
       }
     }
-  }, [
-    creation,
-    currentUser,
-    dayMemo,
-    dispatch,
-    initialMount,
-    location,
-    navigate,
-  ]);
+  }, [creation, currentUser, dispatch, initialMount, location, navigate]);
 
   useEffect(() => {
     if (finishData) setPrev(finishData);
@@ -74,6 +70,8 @@ const App = () => {
     }
   }, [finishData, prevData]);
 
+  // useEffect
+
   return (
     <div className="wrap">
       {currentUser !== null && creation !== null ? (
@@ -83,7 +81,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<Home currentUser={currentUser} dayMemo={dayMemo()} />}
+            element={<Home currentUser={currentUser} creation={creation} />}
           />
           <Route path="/login" element={<Login />} />
           <Route
