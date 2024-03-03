@@ -11,24 +11,20 @@ import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
 import { useSelector } from "react-redux";
-import { MyContextProvider } from "./module/MyContext";
 import {
   FirstMount,
   calendarFunc,
   createPost,
   successDate,
 } from "./module/reducer";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Notification from "./components/Notification";
+import { useMyContext } from "./module/MyContext";
 
 type successType = {
   successDate: FinishDataType[];
 };
 
 const App = () => {
-  const appNavigate = useNavigate();
-  const appDispatch = useDispatch();
   const creation: string | null = localStorage.getItem("creationDay") || null;
   const currentUser: string | null =
     localStorage.getItem("currentUser") || null;
@@ -37,17 +33,18 @@ const App = () => {
   const finishData = useSelector((state: successType) => state.successDate);
   const issueState = useSelector((state: RootState) => state.issue);
   const todoList = useSelector((state: RootState) => state.todoList);
-  const [prevData, setPrev] = useState<any>(null);
+  const [prevData, setPrev] = useState<any>([]);
   const [finishBoolean, setboolean] = useState(false);
-
+  const { navigate, dispatch } = useMyContext();
   const dataCheck = setInterval(() => {
     const date = localStorage.getItem("creationDay");
     const name = localStorage.getItem("currentUser");
     if (date === null || name === null) {
       localStorage.clear();
-      appNavigate("/login");
+      navigate("/login");
     }
   }, 60000);
+  //이거 프로미스로 catch문 할까
 
   if (location === "/login") {
     clearInterval(dataCheck);
@@ -85,14 +82,14 @@ const App = () => {
     );
 
     if (Object.entries(clearResult).length > 0) {
-      appDispatch(successDate(clearResult));
+      dispatch(successDate(clearResult));
     }
     if (Object.entries(result).length > 0) {
-      appDispatch(createPost(result));
+      dispatch(createPost(result));
     }
 
     if (Object.entries(calendarResult).length > 0) {
-      appDispatch(calendarFunc(calendarResult));
+      dispatch(calendarFunc(calendarResult));
     }
   };
 
@@ -102,21 +99,23 @@ const App = () => {
 
   useEffect(() => {
     if (!initialMount) {
-      appDispatch(FirstMount());
+      dispatch(FirstMount());
       dayMemo();
       loadData();
     }
     if (currentUser === null || creation === null) {
-      appNavigate("/login");
+      navigate("/login");
     } else {
       if (!initialMount && location !== "/") {
-        appNavigate("/");
+        navigate("/");
       }
     }
   }, []);
 
   useEffect(() => {
-    setPrev(finishData);
+    if (finishData) {
+      setPrev(finishData);
+    }
   }, [finishData]);
 
   useEffect(() => {
@@ -124,41 +123,37 @@ const App = () => {
       if (Object.entries(prevData).length > 0 && prevData !== finishData) {
         setboolean((prev) => !prev);
       }
-    } else if (prevData === null) {
-      setPrev({});
     }
   }, [finishData, prevData]);
 
   return (
-    <MyContextProvider>
-      <div className="wrap">
-        {currentUser !== null && creation !== null ? (
-          <Header location={location} finishBoolean={finishBoolean} />
-        ) : null}
-        <div className="de-in-wrap">
-          <Routes>
-            <Route
-              path="/"
-              element={<Home currentUser={currentUser} dayMemo={dayMemo()} />}
-            />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/mypage"
-              element={<MyPage currentUser={currentUser} />}
-            />
-            <Route path="/introduce" element={<Introduce />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/canlendar" element={<Calendar />} />
-          </Routes>
-        </div>
-        {currentUser !== null && creation !== null ? (
-          <MainFooter location={location} todoList={todoList} />
-        ) : null}
-        {issueState ? (
-          <Notification finishData={finishData} emitFunc={emitFunc} />
-        ) : null}
+    <div className="wrap">
+      {currentUser !== null && creation !== null ? (
+        <Header location={location} finishBoolean={finishBoolean} />
+      ) : null}
+      <div className="de-in-wrap">
+        <Routes>
+          <Route
+            path="/"
+            element={<Home currentUser={currentUser} dayMemo={dayMemo()} />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/mypage"
+            element={<MyPage currentUser={currentUser} />}
+          />
+          <Route path="/introduce" element={<Introduce />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/canlendar" element={<Calendar />} />
+        </Routes>
       </div>
-    </MyContextProvider>
+      {currentUser !== null && creation !== null ? (
+        <MainFooter location={location} todoList={todoList} />
+      ) : null}
+      {issueState ? (
+        <Notification finishData={finishData} emitFunc={emitFunc} />
+      ) : null}
+    </div>
   );
 };
 
