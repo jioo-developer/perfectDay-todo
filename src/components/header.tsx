@@ -16,9 +16,7 @@ function Header({ location, finishBoolean }: headerProps) {
         <img
           src="/img/bell.svg"
           alt="bell"
-          onClick={() => {
-            dispatch(issueAction());
-          }}
+          onClick={() => dispatch(issueAction())}
         />
       );
     } else {
@@ -26,9 +24,7 @@ function Header({ location, finishBoolean }: headerProps) {
         <img
           src="/img/no_bell.svg"
           alt="bell"
-          onClick={() => {
-            dispatch(issueAction());
-          }}
+          onClick={() => dispatch(issueAction())}
         />
       );
     }

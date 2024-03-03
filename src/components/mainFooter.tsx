@@ -1,7 +1,7 @@
 import "../App.scss";
 import { editorToggle } from "../module/reducer";
-import { useSelector } from "react-redux";
 import { useMyContext } from "../module/MyContext";
+import { todoItem } from "../module/interfaceModule";
 type props = {
   location: string;
   todoList: todoItem[];

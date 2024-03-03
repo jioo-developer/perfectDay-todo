@@ -9,6 +9,7 @@ import { createStore, applyMiddleware, Reducer } from "redux";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./module/reducer";
+import { MyContextProvider } from "./module/MyContext";
 
 const store = createStore(
   reducer as Reducer,
@@ -19,7 +20,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <MyContextProvider>
+          <App />
+        </MyContextProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

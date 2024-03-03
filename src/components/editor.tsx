@@ -3,6 +3,7 @@ import { createPost, editorToggle } from "../module/reducer";
 import "../asset/editor.scss";
 import { ChangeEvent, useRef, useState } from "react";
 import { useMyContext } from "../module/MyContext";
+import { todoItem } from "../module/interfaceModule";
 
 function Editor() {
   const { dispatch } = useMyContext();
@@ -80,11 +81,8 @@ function Editor() {
   }
 
   function disabledCheck() {
-    if (write !== "" && writeH !== 0) {
-      return false;
-    } else {
-      return true;
-    }
+    if (write !== "" && writeH !== 0) return false;
+    else return true;
   }
   return (
     <>

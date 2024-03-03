@@ -1,13 +1,14 @@
 import { useState } from "react";
 import List from "./List";
 import Editor from "./editor";
+import { dayMemo } from "../module/exportFunction";
 
 type HomeProps = {
   currentUser: string | null;
-  dayMemo: number | undefined;
+  creation: string | null;
 };
 
-function Home({ currentUser, dayMemo }: HomeProps) {
+function Home({ currentUser, creation }: HomeProps) {
   const [clearList, setClearList] = useState<number>(0);
 
   function getParcent(value: number): void {
@@ -31,7 +32,7 @@ function Home({ currentUser, dayMemo }: HomeProps) {
         <div className="race">
           <p className="member">{currentUser}</p>
           <div className="member_caption">
-            님은 {dayMemo}일째 완벽한 하루를 사용중!!
+            님은 {creation ? dayMemo(creation) : 0}일째 완벽한 하루를 사용중!!
           </div>
         </div>
       </section>

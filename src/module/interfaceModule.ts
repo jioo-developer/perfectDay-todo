@@ -1,30 +1,30 @@
-type todoItem = {
+export type todoItem = {
   write: string;
   writeH: number | string;
   writeM: number | string;
   clear: boolean;
 };
 
-type RootState = {
+export type RootState = {
   mountState: boolean;
   issue: boolean;
   todoList: todoItem[];
 };
 
-type dateType = {
+export type dateType = {
   year: number;
   month: number;
   date: number;
   day: number;
 };
 
-interface DateFac extends dateType {
+export interface DateFac extends dateType {
   title: string;
   hour: number;
   min: number;
 }
 
-type FinishDataType = {
+export type FinishDataType = {
   year: number;
   month: number;
   date: number;
@@ -34,7 +34,11 @@ type FinishDataType = {
   min: number;
 };
 
-type PostPromiseType = {
+export type PostPromiseType = {
   title: string;
   calcDay: number;
+};
+
+export type successType = {
+  successDate: FinishDataType[];
 };

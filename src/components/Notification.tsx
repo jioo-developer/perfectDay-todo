@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
 import "../asset/notification.scss";
 import { finishReset, issueAction } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
+import { FinishDataType } from "../module/interfaceModule";
 
 type finishStateprops = {
   finishData: FinishDataType[];
@@ -16,6 +16,7 @@ function Notification({ finishData, emitFunc }: finishStateprops) {
   function notiToggle(): void {
     emitFunc(false);
   }
+
   return (
     <>
       <div className="noti_wrap">
@@ -33,6 +34,7 @@ function Notification({ finishData, emitFunc }: finishStateprops) {
               </button>
               <img
                 src="/img/clear.svg"
+                alt=""
                 onClick={() => {
                   dispatch(issueAction());
                   notiToggle();
