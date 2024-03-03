@@ -1,3 +1,5 @@
+import { DateFac, PostPromiseType, todoItem } from "./interfaceModule";
+
 const initialState = {
   editorSwitch: false,
   // 에디터 여는 state

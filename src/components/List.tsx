@@ -2,7 +2,8 @@ import { batch, useSelector } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
 import { useMyContext } from "../module/MyContext";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { DateFac, RootState, todoItem } from "../module/interfaceModule";
 
 type props = {
   getParcent: (params: number) => void;
@@ -12,29 +13,29 @@ function List({ getParcent }: props) {
   const { dispatch } = useMyContext();
   const todoList = useSelector((state: RootState) => state.todoList);
 
-  useEffect(() => {
-    if (todoList.length > 0) {
-      console.log(todoList);
-      clearCheck();
-    } else {
-      console.log(todoList);
-      console.log("----length 0");
-    }
-  }, [todoList]);
-
   const listRef = useRef<HTMLDivElement>(null);
 
-  function clearCheck() {
+  const clearCheck = useCallback(() => {
     const listEl = listRef.current?.children || [];
     const listArr = Array.from(listEl) as HTMLDivElement[];
-    const clearEl = listArr.filter((item) => {
-      return item.classList.contains("clearList");
-    });
-    if (clearEl.length <= listEl.length) {
-      const result: number = Math.floor((clearEl.length / listEl.length) * 100);
-      getParcent(result);
+    if (listArr.length > 0) {
+      const clearEl = listArr.filter((item) => {
+        return item.classList.contains("clearList");
+      });
+      if (clearEl.length <= listEl.length) {
+        const result: number = Math.floor(
+          (clearEl.length / listEl.length) * 100
+        );
+        getParcent(result);
+      }
     }
-  }
+  }, [getParcent]);
+
+  useEffect(() => {
+    if (todoList.length > 0) {
+      clearCheck();
+    }
+  }, [todoList, clearCheck]);
 
   // 완료시점 만드는 함수
   function createPost(clearArr: todoItem[], title: string) {

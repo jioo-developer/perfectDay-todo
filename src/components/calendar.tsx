@@ -4,6 +4,7 @@ import { today } from "../module/today";
 import { calendarFunc } from "../module/reducer";
 import { useSelector } from "react-redux";
 import { useMyContext } from "../module/MyContext";
+import { PostPromiseType } from "../module/interfaceModule";
 
 type calendarState = {
   calendarArr: [{ title: string; calcDay: number }];
@@ -39,7 +40,7 @@ function Calendar() {
     } else {
       setSelectedMonth(selectedMonth - 1);
     }
-  }, [selectedMonth]);
+  }, [selectedMonth, selectedYear]);
 
   //이전 달 보기 버튼
 
@@ -51,7 +52,7 @@ function Calendar() {
     } else {
       setSelectedMonth(selectedMonth + 1);
     }
-  }, [selectedMonth]);
+  }, [selectedMonth, selectedYear]);
 
   //다음 달 보기 버튼
 
@@ -117,7 +118,7 @@ function Calendar() {
   // 오늘 날짜 체크하는 함수
   const dayRef = useRef<HTMLDivElement>(null);
 
-  function todayCheck() {
+  const todayCheck = useCallback(() => {
     const thisMonth = new Date().getMonth() + 1;
     const todayOn = Array.from(
       dayRef.current?.children || []
@@ -135,7 +136,7 @@ function Calendar() {
         todayOn[nowday.date - 1].classList.remove("today");
       }
     }
-  }
+  }, [nowday.date, selectedMonth]);
 
   // 오늘 날짜 체크하는 함수
 
@@ -189,7 +190,7 @@ function Calendar() {
 
   useEffect(() => {
     todayCheck();
-  }, [selectedMonth]);
+  }, [selectedMonth, todayCheck]);
 
   return (
     <>
