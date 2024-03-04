@@ -1,4 +1,3 @@
-import { profileEnd } from "console";
 import "../asset/profile.scss";
 import { useMyContext } from "../module/MyContext";
 import { useState } from "react";
