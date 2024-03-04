@@ -37,7 +37,7 @@ const App = () => {
     if (currentUser === null || creation === null) {
       navigate("/login");
     } else {
-      if (!mountState && location !== "/") {
+      if (!mountState.mountState && location !== "/") {
         navigate("/");
       } else {
         Mountdispatch({ type: typeObject.Mount });
@@ -45,7 +45,7 @@ const App = () => {
         loadData({ finishDispatch, todoDispatch });
       }
     }
-  }, []);
+  }, [creation, currentUser, location]);
 
   useEffect(() => {
     if (successDate) setPrev(successDate);
