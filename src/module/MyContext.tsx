@@ -4,39 +4,32 @@ import React, { ReactNode, createContext, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-type MyContextProps = {
-  navigate: (params: string) => void;
-  dispatch: (params: any) => void;
+// provider 생성 ↓
+export const MyContextProvider = ({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  return (
+    <MyContext.Provider value={{ navigate, dispatch }}>
+      {/* 중괄호 두번이 관습 */}
+      {children}
+    </MyContext.Provider>
+  );
 };
 
-type MyContextProviderProps = {
-  children: ReactNode;
+export type MyContextProps = {
+  navigate: (params: string) => void;
+  dispatch: (params: any) => void;
 };
 
 const MyContext = createContext<MyContextProps>({
   navigate: () => {},
   dispatch: () => {},
 });
+// provider value에 들어가는 것들의 initiail 기본값
 
-export const MyContextProvider = ({
-  children,
-}: MyContextProviderProps): JSX.Element => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  return (
-    <MyContext.Provider value={{ navigate, dispatch }}>
-      {children}
-    </MyContext.Provider>
-  );
-};
+// create 생성 ↑
 
 export const useMyContext = (): MyContextProps => {
-  const context = useContext(MyContext);
-
-  if (!context) {
-    throw new Error("useMyContext must be used within a MyContextProvider");
-  }
-
-  return context;
+  return useContext(MyContext);
 };
