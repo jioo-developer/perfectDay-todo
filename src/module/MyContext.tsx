@@ -1,6 +1,12 @@
 // MyContext.ts
 
-import React, { ReactNode, createContext, useContext, useReducer } from "react";
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useReducer,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import reducer, { Action, initialState } from "./reducer";
 import { DateFac, todoItem } from "./interfaceModule";
@@ -8,8 +14,7 @@ import { DateFac, todoItem } from "./interfaceModule";
 // provider 생성 ↓
 export const MyContextProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
-  const [issueState, issueDispatch] = useReducer(reducer, initialState);
-  const { issue } = issueState;
+  const [issue, issueDispatch] = useState(false);
   //알림창에 관련된 상태관리
   const [finishData, finishDispatch] = useReducer(reducer, initialState);
   const { successDate } = finishData;
@@ -17,8 +22,7 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
   const [todo, todoDispatch] = useReducer(reducer, initialState);
   const { todoList } = todo;
   // 리스트에 대한 상태관리
-  const [toggleState, editDispatch] = useReducer(reducer, initialState);
-  const { editorSwitch } = toggleState;
+  const [editorSwitch, editDispatch] = useState(false);
   // 에디터 토글 상태관리
 
   return (
@@ -44,13 +48,13 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
 export type MyContextProps = {
   navigate: (params: string) => void;
   issue: boolean;
-  issueDispatch: React.Dispatch<Action>;
   successDate: DateFac[];
+  issueDispatch: React.Dispatch<React.SetStateAction<boolean>>;
   finishDispatch: React.Dispatch<Action>;
   todoList: todoItem[];
   todoDispatch: React.Dispatch<Action>;
   editorSwitch: boolean;
-  editDispatch: React.Dispatch<Action>;
+  editDispatch: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MyContext = createContext<MyContextProps>({

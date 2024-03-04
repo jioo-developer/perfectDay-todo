@@ -14,7 +14,7 @@ function MainFooter({ location }: props) {
             if (todoList.length >= 10) {
               window.alert("생성가능한 갯수를 초과하였습니다");
             } else {
-              editDispatch({ type: typeObject.editorSwitch });
+              editDispatch((prev) => !prev);
             }
           }}
         >

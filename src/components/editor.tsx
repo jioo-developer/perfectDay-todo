@@ -23,7 +23,7 @@ function Editor() {
       clear: false,
     };
     checkValueLogic("all", logicFac);
-    editDispatch({ type: typeObject.editorSwitch });
+    editDispatch((prev) => !prev);
   }
 
   //  포스트를 만드는 함수
@@ -86,7 +86,7 @@ function Editor() {
           <img
             alt=""
             src="/img/close_FILL0.svg"
-            onClick={() => editDispatch({ type: typeObject.editorSwitch })}
+            onClick={() => editDispatch((prev) => !prev)}
           />
           <input
             className="text_area"
