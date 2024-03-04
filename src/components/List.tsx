@@ -1,20 +1,17 @@
-import { batch, useSelector } from "react-redux";
+import { batch } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
+import { useCallback, useEffect, useReducer, useRef } from "react";
+import { DateFac, todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
-import { useCallback, useEffect, useRef } from "react";
-import { DateFac, RootState, todoItem } from "../module/interfaceModule";
 
 type props = {
   getParcent: (params: number) => void;
 };
 
 function List({ getParcent }: props) {
-  const { dispatch } = useMyContext();
-  const todoList = useSelector((state: RootState) => state.todoList);
-
   const listRef = useRef<HTMLDivElement>(null);
-
+  const { todoList, finishDispatch, todoDispatch } = useMyContext();
   const clearCheck = useCallback(() => {
     const listEl = listRef.current?.children || [];
     const listArr = Array.from(listEl) as HTMLDivElement[];
@@ -47,8 +44,8 @@ function List({ getParcent }: props) {
     };
 
     batch(() => {
-      dispatch(successDate(DateFac));
-      dispatch(update(clearArr));
+      finishDispatch(successDate(DateFac));
+      todoDispatch(update(clearArr));
     });
   }
 

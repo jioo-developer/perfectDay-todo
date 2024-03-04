@@ -1,9 +1,11 @@
 import "../asset/profile.scss";
-import { profileUpdate } from "../module/reducer";
+import reducer, { initialState, profileUpdate } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
+import { useReducer } from "react";
 
 function Profile() {
-  const { dispatch, navigate } = useMyContext();
+  const { navigate } = useMyContext();
+  const [profile, dispatch] = useReducer(reducer, initialState);
   const localCharacter: number = parseInt(
     localStorage.getItem("profile") || "1"
   );

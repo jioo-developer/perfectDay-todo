@@ -1,25 +1,19 @@
-import { useSelector } from "react-redux";
-import { createPost, editorToggle } from "../module/reducer";
+import reducer, {
+  createPost,
+  initialState,
+  typeObject,
+} from "../module/reducer";
 import "../asset/editor.scss";
 import { ChangeEvent, useRef, useState } from "react";
-import { useMyContext } from "../module/MyContext";
 import { todoItem } from "../module/interfaceModule";
+import { useMyContext } from "../module/MyContext";
 
 function Editor() {
-  const { dispatch } = useMyContext();
   const [write, setwrite] = useState<string>("");
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
   const maxLength = 2;
-
-  type toggleStateType = {
-    editorSwitch: boolean;
-  };
-
-  const toggleState = useSelector(
-    (state: toggleStateType) => state.editorSwitch
-  );
-  //  포스트를 만드는 함수
+  const { editorSwitch, editDispatch, todoDispatch } = useMyContext();
 
   function postLogic() {
     const logicFac = {
@@ -29,7 +23,7 @@ function Editor() {
       clear: false,
     };
     checkValueLogic("all", logicFac);
-    dispatch(editorToggle());
+    editDispatch({ type: typeObject.editorSwitch });
   }
 
   //  포스트를 만드는 함수
@@ -45,7 +39,7 @@ function Editor() {
         if (write === "" && writeH === 0) {
           alert("스케줄을 확인해주세요.");
         } else {
-          dispatch(createPost(params));
+          todoDispatch(createPost(params));
           setwrite("");
           setwriteH(0);
           setwriteM(0);
@@ -86,13 +80,13 @@ function Editor() {
   }
   return (
     <>
-      {toggleState && (
+      {editorSwitch && (
         <div className="editor">
           <b>오늘의 목표</b>
           <img
             alt=""
             src="/img/close_FILL0.svg"
-            onClick={() => dispatch(editorToggle())}
+            onClick={() => editDispatch({ type: typeObject.editorSwitch })}
           />
           <input
             className="text_area"

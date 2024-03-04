@@ -1,6 +1,22 @@
 import { DateFac, PostPromiseType, todoItem } from "./interfaceModule";
 
-const initialState = {
+interface State {
+  editorSwitch: boolean;
+  todoList: todoItem[];
+  successDate: DateFac[];
+  mountState: boolean;
+  issue: boolean;
+  profile: number;
+  bellToggle: boolean;
+  calendarArr: PostPromiseType[];
+}
+
+export interface Action {
+  type: string;
+  data?: any;
+}
+
+export const initialState: State = {
   editorSwitch: false,
   // 에디터 여는 state
   todoList: [],
@@ -14,101 +30,81 @@ const initialState = {
   profile: 1,
   // 프로필 디폴트 index state
   bellToggle: false,
-
+  // 알림 토글
   calendarArr: [],
 };
 
-const editorSwitch = "editorSwitch";
-// 에디터 여는 state
-const todoList = "todoList";
-// 할일 list state
-const success = "success";
-// 완료한 일정 state
-const issue = "issue";
-// 알림창 여닫이 state
-const profile = "profile";
-// 프로필 디폴트 index state
-const Mount = "Mount";
-// 첫 mount
-const updateTodo = "updateTodo";
-// todoList 업데이트
-const calendarArr = "calendarArr";
+export const typeObject = {
+  editorSwitch: "editorSwitch",
+  todoList: "todoList",
+  success: "success",
+  issue: "issue",
+  profile: "profile",
+  Mount: "Mount",
+  updateTodo: "updateTodo",
+  calendarArr: "calendarArr",
+  reset: "finishReset",
+};
 
-const reset = "finishReset";
-
-export const editorToggle = () => ({
-  type: editorSwitch,
-});
-
-export const FirstMount = () => ({
-  type: Mount,
-});
-
-export const issueAction = () => ({
-  type: issue,
-});
-
-export const createPost = (data: todoItem) => ({
-  type: todoList,
+export const createPost = (data: todoItem): Action => ({
+  type: typeObject.todoList,
   data,
 });
 
-export const update = (data: todoItem[]) => ({
-  type: updateTodo,
+export const update = (data: todoItem[]): Action => ({
+  type: typeObject.updateTodo,
   data,
 });
 
-export const successDate = (date: DateFac[] | DateFac) => ({
-  type: success,
-  date,
-});
-
-export const profileUpdate = (data: number) => ({
-  type: profile,
+export const successDate = (data: DateFac[] | DateFac): Action => ({
+  type: typeObject.success,
   data,
 });
 
-export const calendarFunc = (data: PostPromiseType | PostPromiseType[]) => ({
-  type: calendarArr,
+export const profileUpdate = (data: number): Action => ({
+  type: typeObject.profile,
   data,
 });
 
-export const finishReset = () => ({
-  type: reset,
+export const calendarFunc = (
+  data: PostPromiseType | PostPromiseType[]
+): Action => ({
+  type: typeObject.calendarArr,
+  data,
 });
 
-export default function reducer(state = initialState, action: any) {
+export default function reducer(state = initialState, action: Action): State {
   switch (action.type) {
-    case Mount:
+    case typeObject.Mount:
       return {
         ...state,
         mountState: true,
       };
-    case issue:
+    case typeObject.issue:
       return {
         ...state,
         issue: !state.issue,
       };
 
-    case todoList:
+    case typeObject.todoList:
       return {
         ...state,
         todoList: Array.isArray(action.data)
           ? [...state.todoList, ...action.data]
           : [...state.todoList, action.data],
       };
-    case updateTodo:
+    case typeObject.updateTodo:
       return {
         ...state,
         todoList: [...action.data],
       };
 
-    case success:
+    case typeObject.success:
       let calcData;
-      if (Array.isArray(action.date)) {
-        calcData = action.date;
+      if (Array.isArray(action.data)) {
+        calcData = action.data;
       } else {
-        calcData = [action.date];
+        calcData = [action.data];
       }
       const result = [...state.successDate, ...calcData].filter(
         (value, index, arr) => {
@@ -130,27 +126,27 @@ export default function reducer(state = initialState, action: any) {
         successDate: result,
       };
 
-    case reset:
+    case typeObject.reset:
       localStorage.removeItem("clearDB");
       return {
         ...state,
         successDate: [],
       };
 
-    case editorSwitch:
+    case typeObject.editorSwitch:
       return {
         ...state,
         editorSwitch: !state.editorSwitch,
       };
 
-    case profile:
+    case typeObject.profile:
       localStorage.setItem("profile", JSON.stringify(action.data));
       return {
         ...state,
         profile: action.data,
       };
 
-    case calendarArr:
+    case typeObject.calendarArr:
       let calresult;
       if (Array.isArray(action.data)) {
         calresult = action.data;

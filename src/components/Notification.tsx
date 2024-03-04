@@ -1,17 +1,15 @@
 import "../asset/notification.scss";
-import { finishReset, issueAction } from "../module/reducer";
+import { typeObject } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
-import { FinishDataType } from "../module/interfaceModule";
 
 type finishStateprops = {
-  finishData: FinishDataType[];
   emitFunc: (params: boolean) => void;
 };
 
-function Notification({ finishData, emitFunc }: finishStateprops) {
+function Notification({ emitFunc }: finishStateprops) {
   const getFinish = localStorage.getItem("clearDB");
-  const sliceData = finishData.slice(0, 10);
-  const { dispatch } = useMyContext();
+  const { successDate, finishDispatch, issueDispatch } = useMyContext();
+  const sliceData = successDate.slice(0, 10);
 
   function notiToggle(): void {
     emitFunc(false);
@@ -27,7 +25,7 @@ function Notification({ finishData, emitFunc }: finishStateprops) {
             <div>
               <button
                 className="noti_title"
-                onClick={() => dispatch(finishReset())}
+                onClick={() => finishDispatch({ type: typeObject.reset })}
                 disabled={getFinish === null}
               >
                 모두 지우기
@@ -36,7 +34,7 @@ function Notification({ finishData, emitFunc }: finishStateprops) {
                 src="/img/clear.svg"
                 alt=""
                 onClick={() => {
-                  dispatch(issueAction());
+                  issueDispatch({ type: typeObject.issue });
                   notiToggle();
                 }}
               />

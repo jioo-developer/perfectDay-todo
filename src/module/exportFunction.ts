@@ -1,3 +1,4 @@
+import { useMyContext } from "./MyContext";
 import {
   FinishDataType,
   PostPromiseType,
@@ -6,24 +7,19 @@ import {
 } from "./interfaceModule";
 import { calendarFunc, createPost, successDate } from "./reducer";
 
-export const loadData = (dispatch: any) => {
+const { finishDispatch, todoDispatch } = useMyContext();
+
+export const loadData = () => {
   const clearResult: FinishDataType = JSON.parse(
     localStorage.getItem("clearDB") || "{}"
   );
   const result: todoItem = JSON.parse(localStorage.getItem("saveList") || "{}");
-  const calendarResult: PostPromiseType = JSON.parse(
-    localStorage.getItem("calendarList") || "{}"
-  );
 
   if (Object.entries(clearResult).length > 0) {
-    dispatch(successDate(clearResult));
+    finishDispatch(successDate(clearResult));
   }
   if (Object.entries(result).length > 0) {
-    dispatch(createPost(result));
-  }
-
-  if (Object.entries(calendarResult).length > 0) {
-    dispatch(calendarFunc(calendarResult));
+    todoDispatch(createPost(result));
   }
 };
 

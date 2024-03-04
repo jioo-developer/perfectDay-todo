@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./reset.css";
 import "./App.scss";
@@ -10,27 +10,21 @@ import Profile from "./components/profile";
 import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
-import { FirstMount } from "./module/reducer";
+import reducer, { initialState, typeObject } from "./module/reducer";
 import Notification from "./components/Notification";
 import { useMyContext } from "./module/MyContext";
 import { datafetchCheck, dayMemo, loadData } from "./module/exportFunction";
-import { RootState, successType } from "./module/interfaceModule";
-import { useSelector } from "react-redux";
 
 const App = () => {
   const [prevData, setPrev] = useState<any>([]);
   const [finishBoolean, setboolean] = useState(false);
+  const [mountState, Mountdispatch] = useReducer(reducer, initialState);
 
-  const { navigate, dispatch } = useMyContext();
+  const { navigate, issue, successDate } = useMyContext();
 
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
   const location: string = window.location.pathname;
-
-  const initialMount = useSelector((state: RootState) => state.mountState);
-  const finishData = useSelector((state: successType) => state.successDate);
-  const issueState = useSelector((state: RootState) => state.issue);
-  const todoList = useSelector((state: RootState) => state.todoList);
 
   datafetchCheck(navigate("/login"));
 
@@ -48,27 +42,27 @@ const App = () => {
     if (currentUser === null || creation === null) {
       navigate("/login");
     } else {
-      if (!initialMount && location !== "/") {
+      if (!mountState && location !== "/") {
         navigate("/");
       } else {
-        dispatch(FirstMount());
+        Mountdispatch({ type: typeObject.Mount });
         dayMemo(creation);
-        loadData(dispatch);
+        loadData();
       }
     }
-  }, [creation, currentUser, dispatch, initialMount, location, navigate]);
+  }, []);
 
   useEffect(() => {
-    if (finishData) setPrev(finishData);
-  }, [finishData]);
+    if (successDate) setPrev(successDate);
+  }, [successDate]);
 
   useEffect(() => {
     if (prevData !== null) {
-      if (Object.entries(prevData).length > 0 && prevData !== finishData) {
+      if (Object.entries(prevData).length > 0 && prevData !== successDate) {
         setboolean((prev) => !prev);
       }
     }
-  }, [finishData, prevData]);
+  }, [successDate, prevData]);
 
   // useEffect
 
@@ -94,11 +88,9 @@ const App = () => {
         </Routes>
       </div>
       {currentUser !== null && creation !== null ? (
-        <MainFooter location={location} todoList={todoList} />
+        <MainFooter location={location} />
       ) : null}
-      {issueState ? (
-        <Notification finishData={finishData} emitFunc={emitFunc} />
-      ) : null}
+      {issue ? <Notification emitFunc={emitFunc} /> : null}
     </div>
   );
 };

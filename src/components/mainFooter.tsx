@@ -1,13 +1,11 @@
 import "../App.scss";
-import { editorToggle } from "../module/reducer";
+import { typeObject } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
-import { todoItem } from "../module/interfaceModule";
 type props = {
   location: string;
-  todoList: todoItem[];
 };
-function MainFooter({ location, todoList }: props) {
-  const { dispatch, navigate } = useMyContext();
+function MainFooter({ location }: props) {
+  const { todoList, navigate, editDispatch } = useMyContext();
   return (
     <footer className="footer_bar">
       {location === "/" ? (
@@ -16,7 +14,7 @@ function MainFooter({ location, todoList }: props) {
             if (todoList.length >= 10) {
               window.alert("생성가능한 갯수를 초과하였습니다");
             } else {
-              dispatch(editorToggle());
+              editDispatch({ type: typeObject.editorSwitch });
             }
           }}
         >
