@@ -1,13 +1,9 @@
 import { DateFac, PostPromiseType, todoItem } from "./interfaceModule";
 
 interface State {
-  editorSwitch: boolean;
   todoList: todoItem[];
   successDate: DateFac[];
-  mountState: boolean;
-  issue: boolean;
   profile: number;
-  bellToggle: boolean;
 }
 
 export interface Action {
@@ -16,29 +12,19 @@ export interface Action {
 }
 
 export const initialState: State = {
-  editorSwitch: false,
-  // 에디터 여는 state
   todoList: [],
   // 할일 list state
   successDate: [],
   // 완료한 시점 state
-  mountState: false,
-  // 첫 마운트 state
-  issue: false,
-  // 알림창 여닫이 state
   profile: 1,
   // 프로필 디폴트 index state
-  bellToggle: false,
   // 알림 토글
 };
 
 export const typeObject = {
-  editorSwitch: "editorSwitch",
   todoList: "todoList",
   success: "success",
-  issue: "issue",
   profile: "profile",
-  Mount: "Mount",
   updateTodo: "updateTodo",
   reset: "finishReset",
 };
@@ -65,17 +51,6 @@ export const profileUpdate = (data: number): Action => ({
 
 export default function reducer(state = initialState, action: Action): State {
   switch (action.type) {
-    case typeObject.Mount:
-      return {
-        ...state,
-        mountState: true,
-      };
-    case typeObject.issue:
-      return {
-        ...state,
-        issue: !state.issue,
-      };
-
     case typeObject.todoList:
       return {
         ...state,
@@ -121,12 +96,6 @@ export default function reducer(state = initialState, action: Action): State {
       return {
         ...state,
         successDate: [],
-      };
-
-    case typeObject.editorSwitch:
-      return {
-        ...state,
-        editorSwitch: !state.editorSwitch,
       };
 
     case typeObject.profile:

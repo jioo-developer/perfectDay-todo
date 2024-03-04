@@ -34,7 +34,7 @@ function Notification({ emitFunc }: finishStateprops) {
                 src="/img/clear.svg"
                 alt=""
                 onClick={() => {
-                  issueDispatch({ type: typeObject.issue });
+                  issueDispatch((prev) => !prev);
                   notiToggle();
                 }}
               />

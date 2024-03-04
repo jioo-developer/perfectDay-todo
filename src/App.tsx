@@ -10,7 +10,6 @@ import Profile from "./components/profile";
 import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
-import reducer, { initialState, typeObject } from "./module/reducer";
 import Notification from "./components/Notification";
 import { useMyContext } from "./module/MyContext";
 import { dayMemo, loadData } from "./module/exportFunction";
@@ -18,10 +17,16 @@ import { dayMemo, loadData } from "./module/exportFunction";
 const App = () => {
   const [prevData, setPrev] = useState<any>([]);
   const [finishBoolean, setboolean] = useState(false);
-  const [mountState, Mountdispatch] = useReducer(reducer, initialState);
 
-  const { navigate, issue, successDate, finishDispatch, todoDispatch } =
-    useMyContext();
+  const {
+    navigate,
+    issue,
+    successDate,
+    mountState,
+    finishDispatch,
+    todoDispatch,
+    setmount,
+  } = useMyContext();
 
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
@@ -37,10 +42,10 @@ const App = () => {
     if (currentUser === null || creation === null) {
       navigate("/login");
     } else {
-      if (!mountState.mountState && location !== "/") {
+      if (!mountState && location !== "/") {
         navigate("/");
       } else {
-        Mountdispatch({ type: typeObject.Mount });
+        setmount((prev) => !prev);
         dayMemo(creation);
         loadData({ finishDispatch, todoDispatch });
       }

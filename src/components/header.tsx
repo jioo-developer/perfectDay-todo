@@ -16,7 +16,7 @@ function Header({ location, finishBoolean }: headerProps) {
         <img
           src="/img/bell.svg"
           alt="bell"
-          onClick={() => issueDispatch({ type: typeObject.issue })}
+          onClick={() => issueDispatch((prev) => !prev)}
         />
       );
     } else {
@@ -24,7 +24,7 @@ function Header({ location, finishBoolean }: headerProps) {
         <img
           src="/img/no_bell.svg"
           alt="bell"
-          onClick={() => issueDispatch({ type: typeObject.issue })}
+          onClick={() => issueDispatch((prev) => !prev)}
         />
       );
     }

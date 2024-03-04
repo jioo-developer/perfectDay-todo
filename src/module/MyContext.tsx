@@ -14,8 +14,6 @@ import { DateFac, todoItem } from "./interfaceModule";
 // provider 생성 ↓
 export const MyContextProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
-  const [issue, issueDispatch] = useState(false);
-  //알림창에 관련된 상태관리
   const [finishData, finishDispatch] = useReducer(reducer, initialState);
   const { successDate } = finishData;
   //완료된 일정에 대한 상태관리
@@ -24,7 +22,10 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
   // 리스트에 대한 상태관리
   const [editorSwitch, editDispatch] = useState(false);
   // 에디터 토글 상태관리
+  const [issue, issueDispatch] = useState(false);
+  //알림창에 관련된 상태관리
 
+  const [mountState, setmount] = useState(false);
   return (
     <MyContext.Provider
       value={{
@@ -37,6 +38,8 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
         todoDispatch,
         editorSwitch,
         editDispatch,
+        mountState,
+        setmount,
       }}
     >
       {/* 중괄호 두번이 관습 */}
@@ -55,18 +58,22 @@ export type MyContextProps = {
   todoDispatch: React.Dispatch<Action>;
   editorSwitch: boolean;
   editDispatch: React.Dispatch<React.SetStateAction<boolean>>;
+  mountState: boolean;
+  setmount: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MyContext = createContext<MyContextProps>({
   navigate: () => {},
-  issue: initialState.issue,
+  issue: false,
   issueDispatch: () => {},
   successDate: initialState.successDate,
   finishDispatch: () => {},
   todoList: initialState.todoList,
   todoDispatch: () => {},
-  editorSwitch: initialState.editorSwitch,
+  editorSwitch: false,
   editDispatch: () => {},
+  mountState: false,
+  setmount: () => {},
 });
 // provider value에 들어가는 것들의 initiail 기본값
 
