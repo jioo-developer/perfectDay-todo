@@ -1,17 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "../asset/calendar.scss";
 import { today } from "../module/today";
-import { calendarFunc } from "../module/reducer";
-import { useSelector } from "react-redux";
-import { useMyContext } from "../module/MyContext";
 import { PostPromiseType } from "../module/interfaceModule";
 
-type calendarState = {
-  calendarArr: [{ title: string; calcDay: number }];
-};
-
 function Calendar() {
-  const { dispatch } = useMyContext();
   const nowday = { ...today };
   today.day = new Date().getDay();
 
@@ -26,11 +18,31 @@ function Calendar() {
   // 일정을 잡기위해 선택 한 날짜
   const [promiseText, setPromise] = useState<string>("");
 
+  const [calendarArr, CalDispatch] = useState<PostPromiseType[]>([]);
+
+  useEffect(() => {
+    const calendarResult: PostPromiseType = JSON.parse(
+      localStorage.getItem("calendarList") || "{}"
+    );
+    if (Object.entries(calendarResult).length > 0) {
+      calendarHanlder(calendarResult);
+    }
+  }, []);
+
   const dayArr: (string | number)[] = [];
 
-  const calendarReducer = useSelector(
-    (state: calendarState) => state.calendarArr
-  );
+  function calendarHanlder(params: PostPromiseType | PostPromiseType[]) {
+    let calResult;
+    if (Array.isArray(params)) {
+      calResult = params;
+    } else {
+      calResult = [params];
+    }
+    const copyArr = [...calendarArr];
+    copyArr.push(...calResult);
+    localStorage.setItem("calendarList", JSON.stringify(copyArr));
+    CalDispatch(copyArr);
+  }
 
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
@@ -183,7 +195,7 @@ function Calendar() {
       calcDay: value,
     };
 
-    dispatch(calendarFunc(object));
+    calendarHanlder(object);
     // 날짜랑 텍스트를 객체로 잘 만들어서 배열 안으로 넣어야함
     setPromise("");
   }
@@ -219,8 +231,8 @@ function Calendar() {
           <section className="important_data">
             <div className="title_wrap">
               <div className="date_title">일정예약</div>
-              {calendarReducer.length > 0
-                ? calendarReducer.map((value, index) => {
+              {calendarArr.length > 0
+                ? calendarArr.map((value, index) => {
                     return (
                       <div className="date_txt">
                         <p className="txt" key={index}>

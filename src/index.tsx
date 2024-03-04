@@ -4,26 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware, Reducer } from "redux";
-import logger from "redux-logger";
-import { composeWithDevTools } from "redux-devtools-extension";
-import reducer from "./module/reducer";
 import { MyContextProvider } from "./module/MyContext";
-
-const store = createStore(
-  reducer as Reducer,
-  composeWithDevTools(applyMiddleware(logger))
-);
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <MyContextProvider>
-          <App />
-        </MyContextProvider>
-      </Provider>
+      <MyContextProvider>
+        <App />
+      </MyContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,12 +1,11 @@
 import "../asset/profile.scss";
-import { profileUpdate } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
+import { useState } from "react";
 
 function Profile() {
-  const { dispatch, navigate } = useMyContext();
-  const localCharacter: number = parseInt(
-    localStorage.getItem("profile") || "1"
-  );
+  const { navigate } = useMyContext();
+  const [profile, setProfile] = useState(0);
+  const localCharacter = localStorage.getItem("profile") || null;
   const profileList = [1, 2, 3, 4, 5, 6];
 
   return (
@@ -14,7 +13,12 @@ function Profile() {
       <section className="section01">
         <div className="my_profile">
           <figure>
-            <img src={`/img/profile${localCharacter}.svg`} alt="" />
+            <img
+              src={`/img/profile${
+                localCharacter ? localCharacter : profile
+              }.svg`}
+              alt=""
+            />
           </figure>
           <figcaption>현재프로필</figcaption>
         </div>
@@ -26,7 +30,11 @@ function Profile() {
               <figure
                 className="select_profile"
                 key={i}
-                onClick={() => dispatch(profileUpdate(i + 1))}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setProfile(i + 1);
+                  localStorage.setItem("profile", `${i + 1}`);
+                }}
                 //이미지를 누르면 해당 i + 1(0부터 시작해서)가 dispatch로 보내짐
               >
                 <img src={`/img/profile${i + 1}.svg`} alt="" />

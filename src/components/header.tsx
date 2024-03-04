@@ -1,6 +1,6 @@
 import Clock from "./clock";
-import { issueAction } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
+import { typeObject } from "../module/reducer";
 
 type headerProps = {
   finishBoolean: boolean;
@@ -8,7 +8,7 @@ type headerProps = {
 };
 
 function Header({ location, finishBoolean }: headerProps) {
-  const { navigate, dispatch } = useMyContext();
+  const { navigate, issueDispatch } = useMyContext();
 
   function bellFunc() {
     if (finishBoolean) {
@@ -16,7 +16,7 @@ function Header({ location, finishBoolean }: headerProps) {
         <img
           src="/img/bell.svg"
           alt="bell"
-          onClick={() => dispatch(issueAction())}
+          onClick={() => issueDispatch((prev) => !prev)}
         />
       );
     } else {
@@ -24,7 +24,7 @@ function Header({ location, finishBoolean }: headerProps) {
         <img
           src="/img/no_bell.svg"
           alt="bell"
-          onClick={() => dispatch(issueAction())}
+          onClick={() => issueDispatch((prev) => !prev)}
         />
       );
     }
