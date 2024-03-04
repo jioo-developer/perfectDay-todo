@@ -153,11 +153,11 @@ export default function reducer(state = initialState, action: Action): State {
       } else {
         calresult = [action.data];
       }
-      const result2 = [...state.calendarArr, ...calresult];
-      localStorage.setItem("calendarList", JSON.stringify(result2));
+      // const result2 = [...state.calendarArr, ...calresult];
+      // localStorage.setItem("calendarList", JSON.stringify(result2));
       return {
         ...state,
-        calendarArr: result2,
+        calendarArr: [],
       };
     default:
       return state;

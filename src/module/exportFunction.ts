@@ -1,20 +1,21 @@
-import { useMyContext } from "./MyContext";
 import {
   FinishDataType,
   PostPromiseType,
   dateType,
   todoItem,
 } from "./interfaceModule";
-import { calendarFunc, createPost, successDate } from "./reducer";
+import { Action, calendarFunc, createPost, successDate } from "./reducer";
 
-const { finishDispatch, todoDispatch } = useMyContext();
+type propsType = {
+  finishDispatch: React.Dispatch<Action>;
+  todoDispatch: React.Dispatch<Action>;
+};
 
-export const loadData = () => {
+export const loadData = ({ finishDispatch, todoDispatch }: propsType) => {
   const clearResult: FinishDataType = JSON.parse(
     localStorage.getItem("clearDB") || "{}"
   );
   const result: todoItem = JSON.parse(localStorage.getItem("saveList") || "{}");
-
   if (Object.entries(clearResult).length > 0) {
     finishDispatch(successDate(clearResult));
   }

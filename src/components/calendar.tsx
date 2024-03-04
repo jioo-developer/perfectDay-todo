@@ -18,16 +18,13 @@ function Calendar() {
   const [select, setSelect] = useState<number>(0);
   // 일정을 잡기위해 선택 한 날짜
   const [promiseText, setPromise] = useState<string>("");
-
   const [calendarReducer, dispatch] = useReducer(reducer, initialState);
-
+  const { calendarArr } = calendarReducer;
   const calendarResult: PostPromiseType = JSON.parse(
     localStorage.getItem("calendarList") || "{}"
   );
 
-  if (Object.entries(calendarResult).length > 0) {
-    dispatch(calendarFunc(calendarResult));
-  }
+  // if (calendarResult) dispatch(calendarFunc(calendarResult));
 
   const dayArr: (string | number)[] = [];
 
@@ -218,8 +215,8 @@ function Calendar() {
           <section className="important_data">
             <div className="title_wrap">
               <div className="date_title">일정예약</div>
-              {calendarReducer.calendarArr.length > 0
-                ? calendarReducer.calendarArr.map((value, index) => {
+              {calendarArr.length > 0
+                ? calendarArr.map((value, index) => {
                     return (
                       <div className="date_txt">
                         <p className="txt" key={index}>

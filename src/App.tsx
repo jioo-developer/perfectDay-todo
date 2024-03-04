@@ -13,24 +13,19 @@ import Header from "./components/header";
 import reducer, { initialState, typeObject } from "./module/reducer";
 import Notification from "./components/Notification";
 import { useMyContext } from "./module/MyContext";
-import { datafetchCheck, dayMemo, loadData } from "./module/exportFunction";
+import { dayMemo, loadData } from "./module/exportFunction";
 
 const App = () => {
   const [prevData, setPrev] = useState<any>([]);
   const [finishBoolean, setboolean] = useState(false);
   const [mountState, Mountdispatch] = useReducer(reducer, initialState);
 
-  const { navigate, issue, successDate } = useMyContext();
+  const { navigate, issue, successDate, finishDispatch, todoDispatch } =
+    useMyContext();
 
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
   const location: string = window.location.pathname;
-
-  datafetchCheck(navigate("/login"));
-
-  if (location === "/login") {
-    clearInterval(datafetchCheck());
-  }
 
   // 데이터 로드
 
@@ -47,7 +42,7 @@ const App = () => {
       } else {
         Mountdispatch({ type: typeObject.Mount });
         dayMemo(creation);
-        loadData();
+        loadData({ finishDispatch, todoDispatch });
       }
     }
   }, []);
