@@ -8,7 +8,6 @@ interface State {
   issue: boolean;
   profile: number;
   bellToggle: boolean;
-  calendarArr: PostPromiseType[];
 }
 
 export interface Action {
@@ -31,7 +30,6 @@ export const initialState: State = {
   // 프로필 디폴트 index state
   bellToggle: false,
   // 알림 토글
-  calendarArr: [],
 };
 
 export const typeObject = {
@@ -42,7 +40,6 @@ export const typeObject = {
   profile: "profile",
   Mount: "Mount",
   updateTodo: "updateTodo",
-  calendarArr: "calendarArr",
   reset: "finishReset",
 };
 
@@ -63,13 +60,6 @@ export const successDate = (data: DateFac[] | DateFac): Action => ({
 
 export const profileUpdate = (data: number): Action => ({
   type: typeObject.profile,
-  data,
-});
-
-export const calendarFunc = (
-  data: PostPromiseType | PostPromiseType[]
-): Action => ({
-  type: typeObject.calendarArr,
   data,
 });
 
@@ -146,19 +136,6 @@ export default function reducer(state = initialState, action: Action): State {
         profile: action.data,
       };
 
-    case typeObject.calendarArr:
-      let calresult;
-      if (Array.isArray(action.data)) {
-        calresult = action.data;
-      } else {
-        calresult = [action.data];
-      }
-      // const result2 = [...state.calendarArr, ...calresult];
-      // localStorage.setItem("calendarList", JSON.stringify(result2));
-      return {
-        ...state,
-        calendarArr: [],
-      };
     default:
       return state;
   }

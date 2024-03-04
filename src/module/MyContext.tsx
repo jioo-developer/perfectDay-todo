@@ -3,12 +3,7 @@
 import React, { ReactNode, createContext, useContext, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import reducer, { Action, initialState } from "./reducer";
-import {
-  DateFac,
-  PostPromiseType,
-  successType,
-  todoItem,
-} from "./interfaceModule";
+import { DateFac, todoItem } from "./interfaceModule";
 
 // provider 생성 ↓
 export const MyContextProvider = ({ children }: { children: ReactNode }) => {
@@ -25,8 +20,7 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
   const [toggleState, editDispatch] = useReducer(reducer, initialState);
   const { editorSwitch } = toggleState;
   // 에디터 토글 상태관리
-  const [calendarReducer, caldispatch] = useReducer(reducer, initialState);
-  const { calendarArr } = calendarReducer;
+
   return (
     <MyContext.Provider
       value={{
@@ -39,8 +33,6 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
         todoDispatch,
         editorSwitch,
         editDispatch,
-        calendarArr,
-        caldispatch,
       }}
     >
       {/* 중괄호 두번이 관습 */}
@@ -59,8 +51,6 @@ export type MyContextProps = {
   todoDispatch: React.Dispatch<Action>;
   editorSwitch: boolean;
   editDispatch: React.Dispatch<Action>;
-  calendarArr: PostPromiseType[];
-  caldispatch: React.Dispatch<Action>;
 };
 
 const MyContext = createContext<MyContextProps>({
@@ -73,8 +63,6 @@ const MyContext = createContext<MyContextProps>({
   todoDispatch: () => {},
   editorSwitch: initialState.editorSwitch,
   editDispatch: () => {},
-  calendarArr: initialState.calendarArr,
-  caldispatch: () => {},
 });
 // provider value에 들어가는 것들의 initiail 기본값
 

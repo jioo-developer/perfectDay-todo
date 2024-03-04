@@ -4,7 +4,7 @@ import {
   dateType,
   todoItem,
 } from "./interfaceModule";
-import { Action, calendarFunc, createPost, successDate } from "./reducer";
+import { Action, createPost, successDate } from "./reducer";
 
 type propsType = {
   finishDispatch: React.Dispatch<Action>;
@@ -16,6 +16,7 @@ export const loadData = ({ finishDispatch, todoDispatch }: propsType) => {
     localStorage.getItem("clearDB") || "{}"
   );
   const result: todoItem = JSON.parse(localStorage.getItem("saveList") || "{}");
+
   if (Object.entries(clearResult).length > 0) {
     finishDispatch(successDate(clearResult));
   }
