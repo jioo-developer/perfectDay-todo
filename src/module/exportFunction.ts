@@ -1,10 +1,4 @@
-import { useCallback } from "react";
-import {
-  FinishDataType,
-  PostPromiseType,
-  dateType,
-  todoItem,
-} from "./interfaceModule";
+import { FinishDataType, dateType, todoItem } from "./interfaceModule";
 import { Action, createPost, successDate } from "./reducer";
 
 type propsType = {
@@ -26,7 +20,7 @@ export const loadData = ({ finishDispatch, todoDispatch }: propsType) => {
   }
 };
 
-export const dayMemo = useCallback((creation: string) => {
+export const dayMemo = (creation: string) => {
   if (creation !== null) {
     const parseCreation: dateType = JSON.parse(creation || "{}");
     //생성 날짜를 불러옴
@@ -44,7 +38,7 @@ export const dayMemo = useCallback((creation: string) => {
   } else {
     window.location.reload();
   }
-}, []);
+};
 
 export function datafetchCheck(navigate?: any) {
   const dataCheck = setInterval(() => {
