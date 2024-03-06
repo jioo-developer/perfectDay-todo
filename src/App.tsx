@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { useCallback, useEffect, useMemo } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./reset.css";
 import "./App.scss";
 import Login from "./components/Login";
@@ -12,52 +12,45 @@ import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
 import Notification from "./components/Notification";
 import { useMyContext } from "./module/MyContext";
-import { dayMemo, loadData } from "./module/exportFunction";
-import { DateFac } from "./module/interfaceModule";
+import { datafetchCheck, loadData } from "./module/exportFunction";
 
 const App = () => {
-  const [prevData, setPrev] = useState<DateFac[]>([]);
-  const [finishBoolean, setboolean] = useState(false);
-
-  const { navigate, issue, successDate, finishDispatch, todoDispatch } =
-    useMyContext();
-
+  const { issue, successDate, finishDispatch, todoDispatch } = useMyContext();
+  const location = useLocation();
+  const memoizedValue = useMemo(
+    () => ({
+      issue,
+      successDate,
+      finishDispatch,
+      todoDispatch,
+    }),
+    [issue, successDate, finishDispatch, todoDispatch]
+  );
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
-  const location: string = window.location.pathname;
 
   // 데이터 로드
 
-  function emitFunc(value: boolean) {
-    setboolean(value);
-  }
-
-  useEffect(() => {
-    if (successDate) {
-      setPrev(successDate);
-    }
-    if (currentUser === null || creation === null) {
-      navigate("/login");
-    } else {
-      dayMemo(creation);
-      loadData({ finishDispatch, todoDispatch });
-    }
+  const memoizeLoadData = useCallback(() => {
+    loadData(memoizedValue.finishDispatch, memoizedValue.todoDispatch);
   }, []);
 
   useEffect(() => {
-    if (prevData !== null) {
-      if (Object.entries(prevData).length > 0 && prevData !== successDate) {
-        setboolean((prev) => !prev);
-      }
-    }
-  }, [successDate, prevData]);
+    memoizeLoadData();
+  }, [memoizeLoadData]);
 
-  // useEffect
+  useEffect(() => {
+    const dataCheckInterval = datafetchCheck();
+    if (location.pathname === "/sign") {
+      clearInterval(dataCheckInterval);
+    }
+    return () => clearInterval(dataCheckInterval);
+  }, [location.pathname]);
 
   return (
     <div className="wrap">
       {currentUser !== null && creation !== null ? (
-        <Header location={location} finishBoolean={finishBoolean} />
+        <Header location={location.pathname} />
       ) : null}
       <div className="de-in-wrap">
         <Routes>
@@ -76,9 +69,9 @@ const App = () => {
         </Routes>
       </div>
       {currentUser !== null && creation !== null ? (
-        <MainFooter location={location} />
+        <MainFooter location={location.pathname} />
       ) : null}
-      {issue ? <Notification emitFunc={emitFunc} /> : null}
+      {memoizedValue.issue ? <Notification /> : null}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { DateFac, PostPromiseType, todoItem } from "./interfaceModule";
+import { DateFac, todoItem } from "./interfaceModule";
 
 interface State {
   todoList: todoItem[];
@@ -52,11 +52,12 @@ export const profileUpdate = (data: number): Action => ({
 export default function reducer(state = initialState, action: Action): State {
   switch (action.type) {
     case typeObject.todoList:
+      const newSetArr = Array.isArray(action.data)
+        ? [...state.todoList, ...action.data]
+        : [...state.todoList, action.data];
       return {
         ...state,
-        todoList: Array.isArray(action.data)
-          ? [...state.todoList, ...action.data]
-          : [...state.todoList, action.data],
+        todoList: newSetArr,
       };
     case typeObject.updateTodo:
       return {
@@ -71,7 +72,19 @@ export default function reducer(state = initialState, action: Action): State {
       } else {
         calcData = [action.data];
       }
-      const result = [...state.successDate, ...calcData];
+      const result = [...state.successDate, ...calcData].filter(
+        (value, idx, arr) => {
+          return (
+            arr.findIndex((item) => {
+              return (
+                item.title === value.title &&
+                item.hour === value.hour &&
+                item.min === value.min
+              );
+            }) === idx
+          );
+        }
+      );
       localStorage.setItem("clearDB", JSON.stringify(result));
       return {
         ...state,

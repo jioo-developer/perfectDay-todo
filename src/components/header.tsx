@@ -1,17 +1,11 @@
 import Clock from "./clock";
 import { useMyContext } from "../module/MyContext";
-import { typeObject } from "../module/reducer";
 
-type headerProps = {
-  finishBoolean: boolean;
-  location: string;
-};
-
-function Header({ location, finishBoolean }: headerProps) {
-  const { navigate, issueDispatch } = useMyContext();
+function Header({ location }: { location: string }) {
+  const { navigate, issueDispatch, bellToggle } = useMyContext();
 
   function bellFunc() {
-    if (finishBoolean) {
+    if (bellToggle) {
       return (
         <img
           src="/img/bell.svg"

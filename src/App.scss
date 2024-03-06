@@ -80,6 +80,17 @@
 
     img {
       width: 115px;
+      height: 0;
+      animation: fadeIn 0.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        height: 0;
+      }
+      to {
+        height: auto;
+      }
     }
   }
 

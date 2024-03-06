@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { dayMemo } from "../module/exportFunction";
@@ -7,17 +7,19 @@ type HomeProps = {
   currentUser: string | null;
   creation: string | null;
 };
-
+// 랜더링체크
 function Home({ currentUser, creation }: HomeProps) {
   const [clearList, setClearList] = useState<number>(0);
-  const [imgInit, setInit] = useState(false);
+
   function getParcent(value: number): void {
     setClearList(value);
   }
 
-  useEffect(() => {
-    setInit(true);
-  }, [dayMemo]);
+  const memorizeDay = useMemo(() => {
+    if (creation) {
+      return dayMemo(creation);
+    }
+  }, [creation]);
 
   return (
     <>
@@ -31,20 +33,18 @@ function Home({ currentUser, creation }: HomeProps) {
 
             <p className="caption">만큼 완벽한 하루를 보내셨습니다!</p>
           </div>
-          {imgInit ? (
-            clearList < 50 ? (
-              <img src="/img/50.svg" alt="" />
-            ) : clearList >= 50 && clearList < 100 ? (
-              <img src="/img/75.svg" alt="" />
-            ) : (
-              <img src="/img/wow.svg" alt="" />
-            )
-          ) : null}
+          {clearList < 50 ? (
+            <img src="/img/50.svg" alt="" />
+          ) : clearList >= 50 && clearList < 100 ? (
+            <img src="/img/75.svg" alt="" />
+          ) : (
+            <img src="/img/wow.svg" alt="" />
+          )}
         </div>
         <div className="race">
           <p className="member">{currentUser}</p>
           <div className="member_caption">
-            님은 {creation ? dayMemo(creation) : 0}일째 완벽한 하루를 사용중!!
+            님은 {creation ? memorizeDay : 0}일째 완벽한 하루를 사용중!!
           </div>
         </div>
       </section>

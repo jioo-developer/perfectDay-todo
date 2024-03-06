@@ -6,7 +6,6 @@ import { useMyContext } from "../module/MyContext";
 type props = {
   currentUser: string | null;
 };
-
 function MyPage({ currentUser }: props) {
   const { navigate } = useMyContext();
   const rankSystem = localStorage.getItem("rank");

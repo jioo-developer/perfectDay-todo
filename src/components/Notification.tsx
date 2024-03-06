@@ -2,18 +2,11 @@ import "../asset/notification.scss";
 import { typeObject } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
 
-type finishStateprops = {
-  emitFunc: (params: boolean) => void;
-};
-
-function Notification({ emitFunc }: finishStateprops) {
+function Notification() {
   const getFinish = localStorage.getItem("clearDB");
-  const { successDate, finishDispatch, issueDispatch } = useMyContext();
+  const { successDate, finishDispatch, issueDispatch, setBell } =
+    useMyContext();
   const sliceData = successDate.slice(0, 10);
-
-  function notiToggle(): void {
-    emitFunc(false);
-  }
 
   return (
     <>
@@ -34,8 +27,8 @@ function Notification({ emitFunc }: finishStateprops) {
                 src="/img/clear.svg"
                 alt=""
                 onClick={() => {
-                  issueDispatch((prev) => !prev);
-                  notiToggle();
+                  issueDispatch(false);
+                  setBell(false);
                 }}
               />
             </div>

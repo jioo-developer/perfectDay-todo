@@ -1,42 +1,48 @@
 import { FinishDataType, dateType, todoItem } from "./interfaceModule";
 import { Action, createPost, successDate } from "./reducer";
 
-type propsType = {
-  finishDispatch: React.Dispatch<Action>;
-  todoDispatch: React.Dispatch<Action>;
-};
+const location: string = window.location.pathname;
 
-export const loadData = ({ finishDispatch, todoDispatch }: propsType) => {
-  const clearResult: FinishDataType = JSON.parse(
-    localStorage.getItem("clearDB") || "{}"
-  );
-  const result: todoItem = JSON.parse(localStorage.getItem("saveList") || "{}");
+export const loadData = (
+  finishDispatch: React.Dispatch<Action>,
+  todoDispatch: React.Dispatch<Action>
+) => {
+  if (location === "/") {
+    const clearResult: FinishDataType = JSON.parse(
+      localStorage.getItem("clearDB") || "{}"
+    );
+    const result: todoItem = JSON.parse(
+      localStorage.getItem("saveList") || "{}"
+    );
 
-  if (Object.entries(clearResult).length > 0) {
-    finishDispatch(successDate(clearResult));
-  }
-  if (Object.entries(result).length > 0) {
-    todoDispatch(createPost(result));
+    if (Object.entries(clearResult).length > 0) {
+      finishDispatch(successDate(clearResult));
+    }
+    if (Object.entries(result).length > 0) {
+      todoDispatch(createPost(result));
+    }
   }
 };
 
 export const dayMemo = (creation: string) => {
-  if (creation !== null) {
-    const parseCreation: dateType = JSON.parse(creation || "{}");
-    //생성 날짜를 불러옴
-    if (Object.entries(parseCreation).length > 0) {
-      const start = new Date(
-        `${parseCreation.year},${parseCreation.month},
+  if (location === "/") {
+    if (creation !== null) {
+      const parseCreation: dateType = JSON.parse(creation || "{}");
+      //생성 날짜를 불러옴
+      if (Object.entries(parseCreation).length > 0) {
+        const start = new Date(
+          `${parseCreation.year},${parseCreation.month},
           ${parseCreation.date - 1}`
-      );
-      // 생성일자
-      const diff = +new Date() - +start;
-      // 현재 일에서 생성일자를 뺌
-      const nowDay = 1000 * 60 * 60 * 24;
-      return Math.floor(diff / nowDay);
+        );
+        // 생성일자
+        const diff = +new Date() - +start;
+        // 현재 일에서 생성일자를 뺌
+        const nowDay = 1000 * 60 * 60 * 24;
+        return Math.floor(diff / nowDay);
+      }
+    } else {
+      window.location.reload();
     }
-  } else {
-    window.location.reload();
   }
 };
 

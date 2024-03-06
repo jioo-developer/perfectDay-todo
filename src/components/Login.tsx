@@ -7,7 +7,6 @@ import { useMyContext } from "../module/MyContext";
 const Login = () => {
   const { navigate } = useMyContext();
   const [nickName, setNickName] = useState<string>("");
-
   function signUp(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const loadDate = localStorage.getItem("creationDay");

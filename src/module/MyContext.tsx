@@ -15,14 +15,25 @@ import { DateFac, todoItem } from "./interfaceModule";
 export const MyContextProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const [finishData, finishDispatch] = useReducer(reducer, initialState);
-  const { successDate } = finishData;
+  const successDate = finishData.successDate;
   //완료된 일정에 대한 상태관리
   const [todo, todoDispatch] = useReducer(reducer, initialState);
-  const { todoList } = todo;
+  const todoList = todo.todoList.filter((value, idx, arr) => {
+    return (
+      arr.findIndex((item) => {
+        return (
+          item.write === value.write &&
+          item.writeH === value.writeH &&
+          item.writeM === value.writeM
+        );
+      }) === idx
+    );
+  });
   // 리스트에 대한 상태관리
   const [editorSwitch, editDispatch] = useState(false);
   // 에디터 토글 상태관리
   const [issue, issueDispatch] = useState(false);
+  const [bellToggle, setBell] = useState(false);
   //알림창에 관련된 상태관리
 
   return (
@@ -37,6 +48,8 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
         todoDispatch,
         editorSwitch,
         editDispatch,
+        bellToggle,
+        setBell,
       }}
     >
       {/* 중괄호 두번이 관습 */}
@@ -55,6 +68,8 @@ export type MyContextProps = {
   todoDispatch: React.Dispatch<Action>;
   editorSwitch: boolean;
   editDispatch: React.Dispatch<React.SetStateAction<boolean>>;
+  bellToggle: boolean;
+  setBell: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MyContext = createContext<MyContextProps>({
@@ -67,6 +82,8 @@ const MyContext = createContext<MyContextProps>({
   todoDispatch: () => {},
   editorSwitch: false,
   editDispatch: () => {},
+  bellToggle: false,
+  setBell: () => {},
 });
 // provider value에 들어가는 것들의 initiail 기본값
 

@@ -1,24 +1,24 @@
-import { batch } from "react-redux";
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { DateFac, todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
 
 type props = {
   getParcent: (params: number) => void;
 };
-
 function List({ getParcent }: props) {
   const listRef = useRef<HTMLDivElement>(null);
-  const { todoList, finishDispatch, todoDispatch } = useMyContext();
-  const clearCheck = useCallback(() => {
+  const { todoList, finishDispatch, todoDispatch, setBell } = useMyContext();
+
+  const clearCheck = () => {
     const listEl = listRef.current?.children || [];
     const listArr = Array.from(listEl) as HTMLDivElement[];
-    if (listArr.length > 0) {
-      const clearEl = listArr.filter((item) => {
-        return item.classList.contains("clearList");
-      });
+
+    const clearEl = listArr.filter((item) => {
+      return item.classList.contains("clearList");
+    });
+    if (clearEl.length > 0) {
       if (clearEl.length <= listEl.length) {
         const result: number = Math.floor(
           (clearEl.length / listEl.length) * 100
@@ -26,13 +26,13 @@ function List({ getParcent }: props) {
         getParcent(result);
       }
     }
-  }, [getParcent]);
+  };
 
   useEffect(() => {
     if (todoList.length > 0) {
       clearCheck();
     }
-  }, [todoList, clearCheck]);
+  }, [todoList]);
 
   // 완료시점 만드는 함수
   function createPost(clearArr: todoItem[], title: string) {
@@ -42,11 +42,9 @@ function List({ getParcent }: props) {
       hour: new Date().getHours(),
       min: new Date().getMinutes(),
     };
-
-    batch(() => {
-      finishDispatch(successDate(DateFac));
-      todoDispatch(update(clearArr));
-    });
+    setBell(true);
+    finishDispatch(successDate(DateFac));
+    todoDispatch(update(clearArr));
   }
 
   // 완료시점 만드는 함수
@@ -77,7 +75,7 @@ function List({ getParcent }: props) {
 
   // 할일 초기화 함수
 
-  function deleteHandler(): void {
+  function deleteHandler() {
     localStorage.removeItem("saveList");
     window.location.reload();
   }

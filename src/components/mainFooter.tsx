@@ -1,5 +1,4 @@
 import "../App.scss";
-import { typeObject } from "../module/reducer";
 import { useMyContext } from "../module/MyContext";
 type props = {
   location: string;
@@ -14,7 +13,7 @@ function MainFooter({ location }: props) {
             if (todoList.length >= 10) {
               window.alert("생성가능한 갯수를 초과하였습니다");
             } else {
-              editDispatch((prev) => !prev);
+              editDispatch(true);
             }
           }}
         >
