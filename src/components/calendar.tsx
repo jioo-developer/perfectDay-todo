@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "../asset/calendar.scss";
 import { today } from "../module/today";
 import { PostPromiseType } from "../module/interfaceModule";
@@ -20,6 +20,8 @@ function Calendar() {
 
   const [calendarArr, CalDispatch] = useState<PostPromiseType[]>([]);
 
+  const dayArr: (string | number)[] = [];
+
   useEffect(() => {
     const calendarResult: PostPromiseType = JSON.parse(
       localStorage.getItem("calendarList") || "{}"
@@ -28,8 +30,6 @@ function Calendar() {
       calendarHanlder(calendarResult);
     }
   }, []);
-
-  const dayArr: (string | number)[] = [];
 
   function calendarHanlder(params: PostPromiseType | PostPromiseType[]) {
     let calResult;
@@ -40,6 +40,13 @@ function Calendar() {
     }
     const copyArr = [...calendarArr];
     copyArr.push(...calResult);
+    copyArr.filter((value, idx, arr) => {
+      return (
+        arr.findIndex((item) => {
+          return item.title === value.title && item.calcDay === value.calcDay;
+        }) === idx
+      );
+    });
     localStorage.setItem("calendarList", JSON.stringify(copyArr));
     CalDispatch(copyArr);
   }
@@ -79,6 +86,8 @@ function Calendar() {
     });
     return result;
   };
+
+  const memoriseWeek = useMemo(() => returnWeek(), [week]);
 
   //선택된 달의 날짜들 반환 함수
 
@@ -223,7 +232,7 @@ function Calendar() {
             </div>
           </div>
           <div className="cal_wrap">
-            <div className="days">{returnWeek()}</div>
+            <div className="days">{memoriseWeek}</div>
             <div className="date_wrap" ref={dayRef}>
               {returnDay()}
             </div>
