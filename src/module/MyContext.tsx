@@ -25,7 +25,6 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
   const [issue, issueDispatch] = useState(false);
   //알림창에 관련된 상태관리
 
-  const [mountState, setmount] = useState(false);
   return (
     <MyContext.Provider
       value={{
@@ -38,8 +37,6 @@ export const MyContextProvider = ({ children }: { children: ReactNode }) => {
         todoDispatch,
         editorSwitch,
         editDispatch,
-        mountState,
-        setmount,
       }}
     >
       {/* 중괄호 두번이 관습 */}
@@ -58,8 +55,6 @@ export type MyContextProps = {
   todoDispatch: React.Dispatch<Action>;
   editorSwitch: boolean;
   editDispatch: React.Dispatch<React.SetStateAction<boolean>>;
-  mountState: boolean;
-  setmount: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MyContext = createContext<MyContextProps>({
@@ -72,8 +67,6 @@ const MyContext = createContext<MyContextProps>({
   todoDispatch: () => {},
   editorSwitch: false,
   editDispatch: () => {},
-  mountState: false,
-  setmount: () => {},
 });
 // provider value에 들어가는 것들의 initiail 기본값
 

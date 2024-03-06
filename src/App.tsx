@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./reset.css";
 import "./App.scss";
@@ -13,20 +13,14 @@ import Header from "./components/header";
 import Notification from "./components/Notification";
 import { useMyContext } from "./module/MyContext";
 import { dayMemo, loadData } from "./module/exportFunction";
+import { DateFac } from "./module/interfaceModule";
 
 const App = () => {
-  const [prevData, setPrev] = useState<any>([]);
+  const [prevData, setPrev] = useState<DateFac[]>([]);
   const [finishBoolean, setboolean] = useState(false);
 
-  const {
-    navigate,
-    issue,
-    successDate,
-    mountState,
-    finishDispatch,
-    todoDispatch,
-    setmount,
-  } = useMyContext();
+  const { navigate, issue, successDate, finishDispatch, todoDispatch } =
+    useMyContext();
 
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
@@ -39,22 +33,16 @@ const App = () => {
   }
 
   useEffect(() => {
+    if (successDate) {
+      setPrev(successDate);
+    }
     if (currentUser === null || creation === null) {
       navigate("/login");
     } else {
-      if (!mountState && location !== "/") {
-        navigate("/");
-      } else {
-        setmount((prev) => !prev);
-        dayMemo(creation);
-        loadData({ finishDispatch, todoDispatch });
-      }
+      dayMemo(creation);
+      loadData({ finishDispatch, todoDispatch });
     }
-  }, [creation, currentUser, location]);
-
-  useEffect(() => {
-    if (successDate) setPrev(successDate);
-  }, [successDate]);
+  }, []);
 
   useEffect(() => {
     if (prevData !== null) {
