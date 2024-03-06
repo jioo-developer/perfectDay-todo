@@ -11,7 +11,7 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 <br />
 <br />
 
-<div style="border-bottom:none; font-size:20px;">프로젝트 아이디어 : 오늘 하루 일과를 기입하는 todoList 앱을 사용 중 나도 한번 만들어 볼까 하는 생각으로 시작</div>
+## 프로젝트 아이디어 : 오늘 하루 일과를 기입하는 todoList 앱을 사용 중 나도 한번 만들어 볼까 하는 생각으로 시작
 
 ## 1단계
 
