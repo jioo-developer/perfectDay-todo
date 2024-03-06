@@ -1,20 +1,18 @@
-# I-SOC 홈페이지 제작
-
-fullName : ICT융합 해양스마트시티 방재인력양성교육사업단(대학원)
+# 완벽한 그날 사이드 프로젝트
 
 ## ✏️ working day
 
-작업일 : 2021.09 ~ 2021.12.31
+작업일 : 개인프로젝트
 <br />
 
 ## 📃 using lang
 
-php,html,css,js,gruboard,phpmyadmin
+TypeScript,React,React-Router-dom,ContextAPI,SCSS
 <br />
 
 ## 1단계
 
-### 📝 요구 사항
+### 📝 기능 설계
 
 - 대학원에 들어오고 싶은 학생들이 브로슈어 처럼 볼 수 있는 홈페이지 제작을 바람.
 - 원내 직원이 게시판을 관리 할 수 있게 제작을 바람.
@@ -34,37 +32,3 @@ php,html,css,js,gruboard,phpmyadmin
 - 게시판 프레임워크 중 가장 가벼운 그누보드를 차용
 - 그누보드 프레임워크 내부 관리자 페이지와 최근게시판 플러그인을 채택
 - 그누보드 내 한문게시판과 영문게시판을 따로 만듬으로 써 게시판 연동을 막음
-
-## 2단계
-
-### 📝 요구 사항
-
-- 관리자페이지가 먹통 일시 대처법
-- 연구성과 페이지 리스트에 1년에 한번씩 내용이 추가 되어야함. 사진참조 (100개 가량)
-  <br/>
-  <img src="000.PNG" alt="" />
-
-### ✔ 체크해야 할 사항
-
-- [x] 호스팅 회사에서 PHPMYADMIN을 지원 하는 지 체크
-- [x] 이건 유지보수 해주는 퍼블리셔나 개발자가 어떻게 하면 데이터와 html 코드를 편하게 넣을 수 있을 까 고민
-
-### 🚀 기능 구현
-
-- 관리자 페이지에 오류 해결이 안될 경우 유지보수 하는 사람이 PHYMYADMIN으로 강제 해결 할 수 있게 달아줌.
-- 리액트에서 array.map으로 Element를 구현 하는 걸 모티브 삼아 reactMapLogic.js를 제작
-
-```
-export const txtData = [
-  {
-    title:
-      "Bismuth FilmCoated Gold Ultramicroelectrode Array for Simultaneous Quantification of Pb(II) and Cd(II) by Square Wave Anodic Stripping Voltammetry",
-    name: "Sensors",
-    date: "2021.03",
-    other: "SCI",
-  }
-]
-```
-
-이렇게 객체 데이터가 담인 배열을 준비 후<br />
-reactMapLogic의 파라미터에 넣고 title,name,date,other에 맞게 reactMapLogic에서 Element를 뿌려줌
