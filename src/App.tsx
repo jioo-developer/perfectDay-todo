@@ -32,7 +32,11 @@ const App = () => {
   // 데이터 로드
 
   const memoizeLoadData = useCallback(() => {
-    loadData(memoizedValue.finishDispatch, memoizedValue.todoDispatch);
+    loadData(
+      memoizedValue.finishDispatch,
+      memoizedValue.todoDispatch,
+      location.pathname
+    );
   }, []);
 
   useEffect(() => {
@@ -56,7 +60,13 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<Home currentUser={currentUser} creation={creation} />}
+            element={
+              <Home
+                currentUser={currentUser}
+                creation={creation}
+                location={location.pathname}
+              />
+            }
           />
           <Route path="/login" element={<Login />} />
           <Route

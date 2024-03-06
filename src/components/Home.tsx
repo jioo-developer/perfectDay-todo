@@ -6,9 +6,10 @@ import { dayMemo } from "../module/exportFunction";
 type HomeProps = {
   currentUser: string | null;
   creation: string | null;
+  location: string;
 };
 // 랜더링체크
-function Home({ currentUser, creation }: HomeProps) {
+function Home({ currentUser, creation, location }: HomeProps) {
   const [clearList, setClearList] = useState<number>(0);
 
   function getParcent(value: number): void {
@@ -16,10 +17,8 @@ function Home({ currentUser, creation }: HomeProps) {
   }
 
   const memorizeDay = useMemo(() => {
-    if (creation) {
-      return dayMemo(creation);
-    }
-  }, [creation]);
+    return dayMemo(creation as string, location as string);
+  }, [creation, currentUser, location]);
 
   return (
     <>

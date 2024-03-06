@@ -1,11 +1,10 @@
 import { FinishDataType, dateType, todoItem } from "./interfaceModule";
 import { Action, createPost, successDate } from "./reducer";
 
-const location: string = window.location.pathname;
-
 export const loadData = (
   finishDispatch: React.Dispatch<Action>,
-  todoDispatch: React.Dispatch<Action>
+  todoDispatch: React.Dispatch<Action>,
+  location: string
 ) => {
   if (location === "/") {
     const clearResult: FinishDataType = JSON.parse(
@@ -24,7 +23,7 @@ export const loadData = (
   }
 };
 
-export const dayMemo = (creation: string) => {
+export const dayMemo = (creation: string, location: string) => {
   if (location === "/") {
     if (creation !== null) {
       const parseCreation: dateType = JSON.parse(creation || "{}");
