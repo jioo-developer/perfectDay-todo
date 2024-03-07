@@ -3,7 +3,6 @@ import { useMyContext } from "../module/MyContext";
 
 function Header({ location }: { location: string }) {
   const { navigate, issueDispatch, bellToggle } = useMyContext();
-
   function bellFunc() {
     if (bellToggle) {
       return (

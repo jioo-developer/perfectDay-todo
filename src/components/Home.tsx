@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { dayMemo } from "../module/exportFunction";
@@ -6,19 +6,17 @@ import { dayMemo } from "../module/exportFunction";
 type HomeProps = {
   currentUser: string | null;
   creation: string | null;
-  location: string;
 };
 // 랜더링체크
-function Home({ currentUser, creation, location }: HomeProps) {
+function Home({ currentUser, creation }: HomeProps) {
   const [clearList, setClearList] = useState<number>(0);
-
   function getParcent(value: number): void {
     setClearList(value);
   }
 
   const memorizeDay = useMemo(() => {
-    return dayMemo(creation as string, location as string);
-  }, [creation, currentUser, location]);
+    return dayMemo(creation as string);
+  }, [creation, currentUser]);
 
   return (
     <>
@@ -43,7 +41,7 @@ function Home({ currentUser, creation, location }: HomeProps) {
         <div className="race">
           <p className="member">{currentUser}</p>
           <div className="member_caption">
-            님은 {creation ? memorizeDay : 0}일째 완벽한 하루를 사용중!!
+            님은 {memorizeDay}일째 완벽한 하루를 사용중!!
           </div>
         </div>
       </section>

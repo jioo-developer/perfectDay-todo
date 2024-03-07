@@ -16,6 +16,7 @@ function Calendar() {
   // 선택년 월 일 state
   const [select, setSelect] = useState<number>(0);
   // 일정을 잡기위해 선택 한 날짜
+
   const [promiseText, setPromise] = useState<string>("");
 
   const [calendarArr, CalDispatch] = useState<PostPromiseType[]>([]);
@@ -76,7 +77,7 @@ function Calendar() {
   //다음 달 보기 버튼
 
   //주 반환 함수
-  const returnWeek = () => {
+  const returnWeek = useMemo(() => {
     const result = week.map((value, index) => {
       return (
         <div className="day" key={index}>
@@ -85,9 +86,7 @@ function Calendar() {
       );
     });
     return result;
-  };
-
-  const memoriseWeek = useMemo(() => returnWeek(), [week]);
+  }, [week]);
 
   //선택된 달의 날짜들 반환 함수
 
@@ -108,29 +107,31 @@ function Calendar() {
       }
     }
 
-    const dayMap = dayArr.map((value, index) => {
-      return index < settingNumber ? (
-        <div className="day dayDate">
-          <input
-            id={`day-input-${index}`}
-            className="day-inputs"
-            style={{ display: "none" }}
-            name="date-radio"
-            key={index}
-            type="radio"
-            onChange={(e) => {
-              if (e.target.nextElementSibling) {
-                const transNumber = parseInt(
-                  e.target.nextElementSibling.innerHTML
-                );
-                setSelect(transNumber);
-              }
-            }}
-          />
-          <label htmlFor={`day-input-${index}`}>{value}</label>
-        </div>
-      ) : null;
-    });
+    const dayMap = useMemo(() => {
+      return dayArr.map((value, index) => {
+        return index < settingNumber ? (
+          <div className="day dayDate">
+            <input
+              id={`day-input-${index}`}
+              className="day-inputs"
+              style={{ display: "none" }}
+              name="date-radio"
+              key={index}
+              type="radio"
+              onChange={(e) => {
+                if (e.target.nextElementSibling) {
+                  const transNumber = parseInt(
+                    e.target.nextElementSibling.innerHTML
+                  );
+                  setSelect(transNumber);
+                }
+              }}
+            />
+            <label htmlFor={`day-input-${index}`}>{value}</label>
+          </div>
+        ) : null;
+      });
+    }, [dayArr, settingNumber]);
     return dayMap;
   };
 
@@ -232,7 +233,7 @@ function Calendar() {
             </div>
           </div>
           <div className="cal_wrap">
-            <div className="days">{memoriseWeek}</div>
+            <div className="days">{returnWeek}</div>
             <div className="date_wrap" ref={dayRef}>
               {returnDay()}
             </div>
