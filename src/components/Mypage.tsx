@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "../asset/mypage.scss";
 import Rank from "./rank";
 import { useMyContext } from "../module/MyContext";
@@ -8,8 +8,9 @@ type props = {
 };
 function MyPage({ currentUser }: props) {
   const { navigate } = useMyContext();
-  const rankSystem = localStorage.getItem("rank");
   const [rankToggle, setRank] = useState(false);
+
+  const rankSystem = localStorage.getItem("rank");
   const localCharacter: number = parseInt(
     localStorage.getItem("profile") || "1"
   );
@@ -44,7 +45,9 @@ function MyPage({ currentUser }: props) {
     }
   }
 
-  const rankData = rankLogic(rankSystem);
+  const rankData = useMemo(() => {
+    return rankLogic(rankSystem);
+  }, [rankSystem]);
   // 프로필 데이터가 저장 되 있는지 확인하는 함수
 
   return (
