@@ -3,26 +3,6 @@ import { useMyContext } from "../module/MyContext";
 
 function Header({ location }: { location: string }) {
   const { navigate, issueDispatch, bellToggle } = useMyContext();
-  function bellFunc() {
-    if (bellToggle) {
-      return (
-        <img
-          src="/img/bell.svg"
-          alt="bell"
-          onClick={() => issueDispatch((prev) => !prev)}
-        />
-      );
-    } else {
-      return (
-        <img
-          src="/img/no_bell.svg"
-          alt="bell"
-          onClick={() => issueDispatch((prev) => !prev)}
-        />
-      );
-    }
-  }
-
   return (
     <header className="main_header pd-x20">
       <Clock />
@@ -43,7 +23,13 @@ function Header({ location }: { location: string }) {
             ? "프로필변경"
             : null}
         </p>
-        {location === "/" ? bellFunc() : null}
+        {location === "/" ? (
+          <img
+            src={bellToggle ? "/img/bell.svg" : "/img/no_bell.svg"}
+            alt="bell"
+            onClick={() => issueDispatch((prev) => !prev)}
+          />
+        ) : null}
       </div>
     </header>
   );

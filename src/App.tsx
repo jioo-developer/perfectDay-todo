@@ -15,24 +15,14 @@ import { useMyContext } from "./module/MyContext";
 import { datafetchCheck, loadData } from "./module/exportFunction";
 
 const App = () => {
-  const { issue, successDate, finishDispatch, todoDispatch } = useMyContext();
   const location = useLocation();
-  const memoizedValue = useMemo(
-    () => ({
-      issue,
-      successDate,
-      finishDispatch,
-      todoDispatch,
-    }),
-    [issue, successDate, finishDispatch, todoDispatch]
-  );
+
+  const { issue, finishDispatch, todoDispatch } = useMyContext();
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
 
-  // 데이터 로드
-
   const memoizeLoadData = useCallback(() => {
-    loadData(memoizedValue.finishDispatch, memoizedValue.todoDispatch);
+    loadData(finishDispatch, todoDispatch);
   }, []);
 
   useEffect(() => {
@@ -71,7 +61,7 @@ const App = () => {
       {currentUser !== null && creation !== null ? (
         <MainFooter location={location.pathname} />
       ) : null}
-      {memoizedValue.issue ? <Notification /> : null}
+      {issue ? <Notification /> : null}
     </div>
   );
 };

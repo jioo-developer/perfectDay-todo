@@ -6,6 +6,7 @@ import { PostPromiseType } from "../module/interfaceModule";
 function Calendar() {
   const nowday = { ...today };
   today.day = new Date().getDay();
+  // 현재 날짜
 
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const [selectedYear, setSelectedYear] = useState(nowday.year);
@@ -14,43 +15,30 @@ function Calendar() {
   // 선택년 월 state
   const dateTotalCount = new Date(selectedYear, selectedMonth, 0).getDate();
   // 선택년 월 일 state
+
+  // 년/월/일/요일 까지
+
+  // 일정 잡는데 필요한 state들
+
+  // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [select, setSelect] = useState<number>(0);
   // 일정을 잡기위해 선택 한 날짜
 
   const [promiseText, setPromise] = useState<string>("");
 
   const [calendarArr, CalDispatch] = useState<PostPromiseType[]>([]);
-
-  const dayArr: (string | number)[] = [];
+  // 일정 잡는데 필요한 state
 
   useEffect(() => {
-    const calendarResult: PostPromiseType = JSON.parse(
-      localStorage.getItem("calendarList") || "{}"
+    const calendarResult: PostPromiseType[] = JSON.parse(
+      localStorage.getItem("calendarList") || "[]"
     );
-    if (Object.entries(calendarResult).length > 0) {
+    if (calendarResult.length > 0) {
       calendarHanlder(calendarResult);
     }
   }, []);
-
-  function calendarHanlder(params: PostPromiseType | PostPromiseType[]) {
-    let calResult;
-    if (Array.isArray(params)) {
-      calResult = params;
-    } else {
-      calResult = [params];
-    }
-    const copyArr = [...calendarArr];
-    copyArr.push(...calResult);
-    copyArr.filter((value, idx, arr) => {
-      return (
-        arr.findIndex((item) => {
-          return item.title === value.title && item.calcDay === value.calcDay;
-        }) === idx
-      );
-    });
-    localStorage.setItem("calendarList", JSON.stringify(copyArr));
-    CalDispatch(copyArr);
-  }
 
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
@@ -77,39 +65,55 @@ function Calendar() {
   //다음 달 보기 버튼
 
   //주 반환 함수
+
   const returnWeek = useMemo(() => {
-    const result = week.map((value, index) => {
+    return week.map((value, index) => {
       return (
-        <div className="day" key={index}>
+        <div className="day" key={`week-${index}`}>
           {value}
         </div>
       );
     });
-    return result;
   }, [week]);
 
-  //선택된 달의 날짜들 반환 함수
-
-  const settingNumber = 35;
+  const settingNumber = 36;
   // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
   // 대부분의 달력은 한 달을 표시할 때 5주로 나타나지만, 때로는 6주가 필요한 경우도 있다.
   // 6주의 경우를 포함해서 자바스크립트는 이를 대비해 최대 일수를 35로 랜더링 하게된다. 그래서 35를 쓴다.
+  // 인줄 알았는데 2월에 윤달인 29일 인 경우엔 36이란다...
 
-  const returnDay = () => {
-    for (const nowDay of week) {
-      const day = new Date(selectedYear, selectedMonth - 1, 1).getDay();
-      if (week[day] === nowDay) {
+  const createDate = useMemo(() => {
+    const dayArr: (string | number)[] = [];
+    for (const item of week) {
+      //일 ~ 토 까지를 반복문으로 돌림
+      const monthFirstday: number = new Date(
+        selectedYear,
+        selectedMonth - 1,
+        1
+      ).getDay();
+      //선택한 년,(월-1)에서 첫번째 일자를 선택
+
+      // 2024년 3월 1일 기준으로 일/월/화/수/목/금 (0,1,2,3,4,5) 라서 day는 5를 출력
+
+      if (week[monthFirstday] === item) {
+        // 아 선택한 년/월 기준으로 1일의 요일과 week 배열안의 요일이 같을 때 1일이 맞아 떨어지니까
+        // 2중 for문을 시작하는구만
+
         for (let i = 0; i < dateTotalCount; i++) {
           dayArr.push(i + 1);
         }
       } else {
         dayArr.push("");
+        // 아닐 땐 for of 문으로 dayArr에 ""을 넣는거고
       }
     }
+    return dayArr;
+  }, [selectedMonth, selectedYear]);
 
-    const dayMap = useMemo(() => {
-      return dayArr.map((value, index) => {
-        return index < settingNumber ? (
+  const returnDay = useMemo(() => {
+    const result = createDate.map((value, index) => {
+      if (index < settingNumber) {
+        return (
           <div className="day dayDate">
             <input
               id={`day-input-${index}`}
@@ -129,11 +133,11 @@ function Calendar() {
             />
             <label htmlFor={`day-input-${index}`}>{value}</label>
           </div>
-        ) : null;
-      });
-    }, [dayArr, settingNumber]);
-    return dayMap;
-  };
+        );
+      }
+    });
+    return result.filter((item) => item !== undefined);
+  }, [createDate]);
 
   ///선택된 달의 날짜들 반환 함수
 
@@ -196,9 +200,6 @@ function Calendar() {
     }
   }
 
-  // 일정 예약에 필요한 날짜를 선택 할 때 날짜가 지정되는 함수
-  const inputRef = useRef<HTMLInputElement>(null);
-
   function postPromiseFunc(value: number) {
     const object: PostPromiseType = {
       title: promiseText,
@@ -207,12 +208,31 @@ function Calendar() {
 
     calendarHanlder(object);
     // 날짜랑 텍스트를 객체로 잘 만들어서 배열 안으로 넣어야함
-    setPromise("");
+  }
+
+  function calendarHanlder(params: PostPromiseType | PostPromiseType[]) {
+    let calResult;
+    if (Array.isArray(params)) {
+      calResult = params;
+    } else {
+      calResult = [params];
+    }
+    const copyArr = [...calendarArr];
+    copyArr.push(calResult[0]);
+    const filterArr = copyArr.filter((value, idx, arr) => {
+      return (
+        arr.findIndex((item) => {
+          return item.title === value.title && item.calcDay === value.calcDay;
+        }) === idx
+      );
+    });
+    localStorage.setItem("calendarList", JSON.stringify(filterArr));
+    CalDispatch(filterArr);
   }
 
   useEffect(() => {
     todayCheck();
-  }, [selectedMonth, todayCheck]);
+  }, [selectedMonth]);
 
   return (
     <>
@@ -235,7 +255,7 @@ function Calendar() {
           <div className="cal_wrap">
             <div className="days">{returnWeek}</div>
             <div className="date_wrap" ref={dayRef}>
-              {returnDay()}
+              {returnDay}
             </div>
           </div>
           <section className="important_data">

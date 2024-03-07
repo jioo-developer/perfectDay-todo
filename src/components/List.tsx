@@ -7,9 +7,16 @@ import { useMyContext } from "../module/MyContext";
 type props = {
   getParcent: (params: number) => void;
 };
+
 function List({ getParcent }: props) {
   const listRef = useRef<HTMLDivElement>(null);
   const { todoList, finishDispatch, todoDispatch, setBell } = useMyContext();
+
+  useEffect(() => {
+    if (todoList.length > 0) {
+      clearCheck();
+    }
+  }, [todoList]);
 
   const clearCheck = () => {
     const listEl = listRef.current?.children || [];
@@ -18,6 +25,7 @@ function List({ getParcent }: props) {
     const clearEl = listArr.filter((item) => {
       return item.classList.contains("clearList");
     });
+
     if (clearEl.length > 0) {
       if (clearEl.length <= listEl.length) {
         const result: number = Math.floor(
@@ -28,35 +36,6 @@ function List({ getParcent }: props) {
     }
   };
 
-  useEffect(() => {
-    if (todoList.length > 0) {
-      clearCheck();
-    }
-  }, [todoList]);
-
-  // 완료시점 만드는 함수
-  function createPost(clearArr: todoItem[], title: string) {
-    const DateFac: DateFac = {
-      ...today,
-      title: title,
-      hour: new Date().getHours(),
-      min: new Date().getMinutes(),
-    };
-    setBell(true);
-    finishDispatch(successDate(DateFac));
-    todoDispatch(update(clearArr));
-  }
-
-  // 완료시점 만드는 함수
-
-  // 리스트 저장 함수
-  function saveHandler(): void {
-    if (window.confirm("현재까지의 리스트를 저장합니다")) {
-      localStorage.setItem("saveList", JSON.stringify(todoList));
-    }
-  }
-
-  // 클리어를 실행하는 함수
   const rankSystem: string | null = localStorage.getItem("rank");
 
   function successHandler(
@@ -73,7 +52,23 @@ function List({ getParcent }: props) {
     createPost(clearArr, title);
   }
 
-  // 할일 초기화 함수
+  function createPost(clearArr: todoItem[], title: string) {
+    const DateFac: DateFac = {
+      ...today,
+      title: title,
+      hour: new Date().getHours(),
+      min: new Date().getMinutes(),
+    };
+    setBell(true);
+    finishDispatch(successDate(DateFac));
+    todoDispatch(update(clearArr));
+  }
+
+  function saveHandler() {
+    if (window.confirm("현재까지의 리스트를 저장합니다")) {
+      localStorage.setItem("saveList", JSON.stringify(todoList));
+    }
+  }
 
   function deleteHandler() {
     localStorage.removeItem("saveList");

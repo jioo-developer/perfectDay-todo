@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import List from "./List";
 import Editor from "./editor";
 import { dayMemo } from "../module/exportFunction";
@@ -7,9 +7,10 @@ type HomeProps = {
   currentUser: string | null;
   creation: string | null;
 };
-// 랜더링체크
-function Home({ currentUser, creation }: HomeProps) {
+
+const Home = React.memo(({ currentUser, creation }: HomeProps) => {
   const [clearList, setClearList] = useState<number>(0);
+
   function getParcent(value: number): void {
     setClearList(value);
   }
@@ -49,6 +50,6 @@ function Home({ currentUser, creation }: HomeProps) {
       <Editor />
     </>
   );
-}
+});
 
 export default Home;

@@ -29,7 +29,7 @@ export const typeObject = {
   reset: "finishReset",
 };
 
-export const createPost = (data: todoItem): Action => ({
+export const createPost = (data: todoItem | todoItem[]): Action => ({
   type: typeObject.todoList,
   data,
 });
