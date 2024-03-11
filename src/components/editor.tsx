@@ -1,10 +1,6 @@
-import reducer, {
-  createPost,
-  initialState,
-  typeObject,
-} from "../module/reducer";
+import { createPost } from "../module/reducer";
 import "../asset/editor.scss";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useMemo, useRef, useState } from "react";
 import { todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
 
@@ -13,8 +9,7 @@ function Editor() {
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
   const maxLength = 2;
-  const { editorSwitch, editDispatch, todoDispatch } = useMyContext();
-
+  const { editorSwitch, todoList, editDispatch, todoDispatch } = useMyContext();
   function postLogic() {
     const logicFac = {
       write: write,
@@ -23,7 +18,6 @@ function Editor() {
       clear: false,
     };
     checkValueLogic("all", logicFac);
-    editDispatch((prev) => !prev);
   }
 
   //  포스트를 만드는 함수
@@ -32,6 +26,16 @@ function Editor() {
   const hourRef = useRef<HTMLInputElement>(null);
   const minuteRef = useRef<HTMLInputElement>(null);
 
+  const checkArr = useMemo(
+    () => (params: todoItem) => {
+      if (todoList.length > 0) {
+        return todoList.some(
+          (item) => JSON.stringify(item) === JSON.stringify(params)
+        );
+      }
+    },
+    [todoList]
+  );
   function checkValueLogic(type: string, params?: todoItem) {
     const allRender = titleRef.current && hourRef.current && minuteRef.current;
     if (allRender) {
@@ -39,14 +43,19 @@ function Editor() {
         if (write === "" && writeH === 0) {
           alert("스케줄을 확인해주세요.");
         } else {
-          todoDispatch(createPost(params));
-          const cookieCheck = document.cookie;
-          if (!cookieCheck.includes("one-daylist")) {
-            setCookie("one-daylist", "done", 1);
+          if (!checkArr(params)) {
+            todoDispatch(createPost(params));
+            const cookieCheck = document.cookie;
+            if (!cookieCheck.includes("one-daylist")) {
+              setCookie("one-daylist", "done", 1);
+            }
+          } else {
+            window.alert("이미 해당 일정이 있습니다.");
           }
           setwrite("");
           setwriteH(0);
           setwriteM(0);
+          editDispatch(false);
         }
       } else if (type === "hour") {
         setwriteH(0);
@@ -99,13 +108,19 @@ function Editor() {
           <img
             alt=""
             src="/img/close_FILL0.svg"
-            onClick={() => editDispatch((prev) => !prev)}
+            onClick={() => {
+              setwrite("");
+              setwriteH(0);
+              setwriteM(0);
+              editDispatch(false);
+            }}
           />
           <input
             className="text_area"
             placeholder="스케줄을 입력해주세요"
             onChange={onChangeTitle}
             ref={titleRef}
+            autoFocus
           ></input>
           <div className="date">
             <p className="day">시간</p>
@@ -116,7 +131,6 @@ function Editor() {
                 placeholder="00"
                 maxLength={maxLength}
                 onChange={onChangeHour}
-                autoFocus
                 ref={hourRef}
                 onKeyPress={(e) => {
                   if (!/[0-9]/.test(e.key)) {
