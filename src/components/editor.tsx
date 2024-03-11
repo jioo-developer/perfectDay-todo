@@ -58,8 +58,10 @@ function Editor() {
           editDispatch(false);
         }
       } else if (type === "hour") {
+        alert("시간을 정확히 설정하세요.");
         setwriteH(0);
       } else if (type === "minute") {
+        alert("시간을 정확히 설정하세요.");
         setwriteM(0);
       }
     }
@@ -80,7 +82,6 @@ function Editor() {
 
   function onChangeHour(e: ChangeEvent<HTMLInputElement>) {
     if (parseInt(e.target.value) >= 24) {
-      alert("시간을 정확히 설정하세요.");
       checkValueLogic("hour");
     } else {
       setwriteH(parseInt(e.target.value));
@@ -90,7 +91,6 @@ function Editor() {
   function onChangeMinute(e: ChangeEvent<HTMLInputElement>) {
     if (parseInt(e.target.value) >= 60) {
       checkValueLogic("minute");
-      alert("시간을 정확히 설정하세요.");
     } else {
       setwriteM(parseInt(e.target.value));
     }
@@ -118,6 +118,7 @@ function Editor() {
           <input
             className="text_area"
             placeholder="스케줄을 입력해주세요"
+            value={write}
             onChange={onChangeTitle}
             ref={titleRef}
             autoFocus
@@ -128,6 +129,7 @@ function Editor() {
               <input
                 className="time_txt hour"
                 type="text"
+                value={writeH}
                 placeholder="00"
                 maxLength={maxLength}
                 onChange={onChangeHour}
@@ -142,6 +144,7 @@ function Editor() {
                 className="time_txt minute"
                 type="text"
                 maxLength={maxLength}
+                value={writeM}
                 ref={minuteRef}
                 placeholder="00"
                 onChange={onChangeMinute}
