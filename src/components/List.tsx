@@ -1,6 +1,6 @@
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { DateFac, todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
 
@@ -9,9 +9,7 @@ type props = {
 };
 
 function List({ getParcent }: props) {
-  const listRef = useRef<HTMLDivElement>(null);
   const { todoList, finishDispatch, todoDispatch, setBell } = useMyContext();
-
   useEffect(() => {
     if (todoList.length > 0) {
       clearCheck();
@@ -19,17 +17,14 @@ function List({ getParcent }: props) {
   }, [todoList]);
 
   const clearCheck = () => {
-    const listEl = listRef.current?.children || [];
-    const listArr = Array.from(listEl) as HTMLDivElement[];
-
-    const clearEl = listArr.filter((item) => {
-      return item.classList.contains("clearList");
+    const clearEl = todoList.filter((item) => {
+      return item.clear === true;
     });
 
     if (clearEl.length > 0) {
-      if (clearEl.length <= listEl.length) {
+      if (clearEl.length <= todoList.length) {
         const result: number = Math.floor(
-          (clearEl.length / listEl.length) * 100
+          (clearEl.length / todoList.length) * 100
         );
         getParcent(result);
       }
@@ -86,7 +81,7 @@ function List({ getParcent }: props) {
               <span onClick={deleteHandler}>초기화</span>
             </div>
           </div>
-          <div className="in-custom-wrap" ref={listRef}>
+          <div className="in-custom-wrap">
             {todoList.map((value, index) => {
               const clearState = todoList[index].clear;
               return (

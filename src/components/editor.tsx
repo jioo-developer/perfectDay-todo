@@ -9,6 +9,7 @@ function Editor() {
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
   const maxLength = 2;
+
   const { editorSwitch, todoList, editDispatch, todoDispatch } = useMyContext();
   function postLogic() {
     const logicFac = {
@@ -47,7 +48,7 @@ function Editor() {
             todoDispatch(createPost(params));
             const cookieCheck = document.cookie;
             if (!cookieCheck.includes("one-daylist")) {
-              setCookie("one-daylist", "done", 1);
+              setCookie("one-daylist", "done");
             }
           } else {
             window.alert("이미 해당 일정이 있습니다.");
@@ -58,20 +59,30 @@ function Editor() {
           editDispatch(false);
         }
       } else if (type === "hour") {
+        alert("시간을 정확히 설정하세요.");
         setwriteH(0);
       } else if (type === "minute") {
+        alert("시간을 정확히 설정하세요.");
         setwriteM(0);
       }
     }
   }
 
-  const time = new Date();
-
-  function setCookie(name: string, value: string, expiredays: number) {
-    time.setDate(time.getDate() + expiredays);
-    document.cookie = `${name}=${escape(
+  function setCookie(name: string, value: string) {
+    const time = new Date();
+    const result = new Date(
+      time.getFullYear(),
+      time.getMonth(),
+      time.getDate(),
+      23,
+      59,
+      59
+    );
+    result.setMilliseconds(999);
+    result.setHours(result.getHours() + 9);
+    document.cookie = `${name}=${encodeURIComponent(
       value
-    )}; expires=${time.toUTCString()};`;
+    )}; expires=${result.toUTCString()};`;
   }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
@@ -80,7 +91,6 @@ function Editor() {
 
   function onChangeHour(e: ChangeEvent<HTMLInputElement>) {
     if (parseInt(e.target.value) >= 24) {
-      alert("시간을 정확히 설정하세요.");
       checkValueLogic("hour");
     } else {
       setwriteH(parseInt(e.target.value));
@@ -90,7 +100,6 @@ function Editor() {
   function onChangeMinute(e: ChangeEvent<HTMLInputElement>) {
     if (parseInt(e.target.value) >= 60) {
       checkValueLogic("minute");
-      alert("시간을 정확히 설정하세요.");
     } else {
       setwriteM(parseInt(e.target.value));
     }
@@ -100,6 +109,7 @@ function Editor() {
     if (write !== "" && writeH !== 0) return false;
     else return true;
   }
+
   return (
     <>
       {editorSwitch && (
@@ -118,6 +128,7 @@ function Editor() {
           <input
             className="text_area"
             placeholder="스케줄을 입력해주세요"
+            value={write}
             onChange={onChangeTitle}
             ref={titleRef}
             autoFocus
@@ -128,6 +139,7 @@ function Editor() {
               <input
                 className="time_txt hour"
                 type="text"
+                value={writeH ? writeH : 0}
                 placeholder="00"
                 maxLength={maxLength}
                 onChange={onChangeHour}
@@ -143,6 +155,7 @@ function Editor() {
                 type="text"
                 maxLength={maxLength}
                 ref={minuteRef}
+                value={writeM ? writeM : 0}
                 placeholder="00"
                 onChange={onChangeMinute}
                 onKeyPress={(e) => {
