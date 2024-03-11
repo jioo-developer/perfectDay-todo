@@ -134,6 +134,8 @@ function Calendar() {
             <label htmlFor={`day-input-${index}`}>{value}</label>
           </div>
         );
+      } else {
+        return console.log("---");
       }
     });
     return result.filter((item) => item !== undefined);
