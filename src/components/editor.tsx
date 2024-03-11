@@ -9,6 +9,7 @@ function Editor() {
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
   const maxLength = 2;
+
   const { editorSwitch, todoList, editDispatch, todoDispatch } = useMyContext();
   function postLogic() {
     const logicFac = {
@@ -47,7 +48,7 @@ function Editor() {
             todoDispatch(createPost(params));
             const cookieCheck = document.cookie;
             if (!cookieCheck.includes("one-daylist")) {
-              setCookie("one-daylist", "done", 1);
+              setCookie("one-daylist", "done");
             }
           } else {
             window.alert("이미 해당 일정이 있습니다.");
@@ -67,13 +68,21 @@ function Editor() {
     }
   }
 
-  const time = new Date();
-
-  function setCookie(name: string, value: string, expiredays: number) {
-    time.setDate(time.getDate() + expiredays);
-    document.cookie = `${name}=${escape(
+  function setCookie(name: string, value: string) {
+    const time = new Date();
+    const result = new Date(
+      time.getFullYear(),
+      time.getMonth(),
+      time.getDate(),
+      23,
+      59,
+      59
+    );
+    result.setMilliseconds(999);
+    result.setHours(result.getHours() + 9);
+    document.cookie = `${name}=${encodeURIComponent(
       value
-    )}; expires=${time.toUTCString()};`;
+    )}; expires=${result.toUTCString()};`;
   }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
@@ -100,6 +109,7 @@ function Editor() {
     if (write !== "" && writeH !== 0) return false;
     else return true;
   }
+
   return (
     <>
       {editorSwitch && (
@@ -129,7 +139,7 @@ function Editor() {
               <input
                 className="time_txt hour"
                 type="text"
-                value={writeH}
+                value={writeH ? writeH : 0}
                 placeholder="00"
                 maxLength={maxLength}
                 onChange={onChangeHour}
@@ -144,8 +154,8 @@ function Editor() {
                 className="time_txt minute"
                 type="text"
                 maxLength={maxLength}
-                value={writeM}
                 ref={minuteRef}
+                value={writeM ? writeM : 0}
                 placeholder="00"
                 onChange={onChangeMinute}
                 onKeyPress={(e) => {
