@@ -17,9 +17,17 @@ import { datafetchCheck, loadData } from "./module/exportFunction";
 const App = () => {
   const location = useLocation();
 
-  const { issue, finishDispatch, todoDispatch } = useMyContext();
+  const { issue, finishDispatch, todoDispatch, todoList } = useMyContext();
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
+
+  const cookieCheck = document.cookie;
+
+  useEffect(() => {
+    if (todoList.length === 0 && cookieCheck.includes("one-daylist")) {
+      document.cookie = `one-daylist=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+  }, []);
 
   const memoizeLoadData = useCallback(() => {
     loadData(finishDispatch, todoDispatch);

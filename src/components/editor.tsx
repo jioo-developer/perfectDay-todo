@@ -1,6 +1,6 @@
 import { createPost } from "../module/reducer";
 import "../asset/editor.scss";
-import { ChangeEvent, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
 
@@ -9,6 +9,9 @@ function Editor() {
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
   const maxLength = 2;
+
+  const time = new Date();
+
   const { editorSwitch, todoList, editDispatch, todoDispatch } = useMyContext();
   function postLogic() {
     const logicFac = {
@@ -47,7 +50,16 @@ function Editor() {
             todoDispatch(createPost(params));
             const cookieCheck = document.cookie;
             if (!cookieCheck.includes("one-daylist")) {
-              setCookie("one-daylist", "done", 1);
+              const now = new Date();
+              const midnight = new Date(now);
+              midnight.setHours(24, 0, 0, 0);
+              const timeDifference = midnight.getTime() - now.getTime();
+
+              const hoursUntilMidnight = Math.ceil(
+                timeDifference / (1000 * 60 * 60)
+              );
+
+              setCookie("one-daylist", "done", hoursUntilMidnight);
             }
           } else {
             window.alert("이미 해당 일정이 있습니다.");
@@ -67,10 +79,9 @@ function Editor() {
     }
   }
 
-  const time = new Date();
-
-  function setCookie(name: string, value: string, expiredays: number) {
-    time.setDate(time.getDate() + expiredays);
+  function setCookie(name: string, value: string, expiredhours: number) {
+    const time = new Date();
+    time.setTime(time.getTime() + expiredhours * 60 * 60 * 1000);
     document.cookie = `${name}=${escape(
       value
     )}; expires=${time.toUTCString()};`;
@@ -100,6 +111,7 @@ function Editor() {
     if (write !== "" && writeH !== 0) return false;
     else return true;
   }
+
   return (
     <>
       {editorSwitch && (
@@ -129,7 +141,7 @@ function Editor() {
               <input
                 className="time_txt hour"
                 type="text"
-                value={writeH}
+                value={writeH ? writeH : 0}
                 placeholder="00"
                 maxLength={maxLength}
                 onChange={onChangeHour}
@@ -144,8 +156,8 @@ function Editor() {
                 className="time_txt minute"
                 type="text"
                 maxLength={maxLength}
-                value={writeM}
                 ref={minuteRef}
+                value={writeM ? writeM : 0}
                 placeholder="00"
                 onChange={onChangeMinute}
                 onKeyPress={(e) => {
