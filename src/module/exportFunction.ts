@@ -16,7 +16,9 @@ export const loadData = (
   if (clearResult.length > 0) {
     finishDispatch(successDate(clearResult));
   }
-  if (result.length > 0) {
+  const cookieCheck = document.cookie;
+
+  if (result.length > 0 && cookieCheck.includes("one-daylist")) {
     todoDispatch(createPost(result));
   }
 };

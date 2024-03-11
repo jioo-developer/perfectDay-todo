@@ -45,6 +45,10 @@ function Editor() {
         } else {
           if (!checkArr(params)) {
             todoDispatch(createPost(params));
+            const cookieCheck = document.cookie;
+            if (!cookieCheck.includes("one-daylist")) {
+              setCookie("one-daylist", "done", 1);
+            }
           } else {
             window.alert("이미 해당 일정이 있습니다.");
           }
@@ -59,6 +63,15 @@ function Editor() {
         setwriteM(0);
       }
     }
+  }
+
+  const time = new Date();
+
+  function setCookie(name: string, value: string, expiredays: number) {
+    time.setDate(time.getDate() + expiredays);
+    document.cookie = `${name}=${escape(
+      value
+    )}; expires=${time.toUTCString()};`;
   }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
