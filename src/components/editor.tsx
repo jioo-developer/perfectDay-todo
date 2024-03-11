@@ -50,16 +50,7 @@ function Editor() {
             todoDispatch(createPost(params));
             const cookieCheck = document.cookie;
             if (!cookieCheck.includes("one-daylist")) {
-              const now = new Date();
-              const midnight = new Date(now);
-              midnight.setHours(24, 0, 0, 0);
-              const timeDifference = midnight.getTime() - now.getTime();
-
-              const hoursUntilMidnight = Math.ceil(
-                timeDifference / (1000 * 60 * 60)
-              );
-
-              setCookie("one-daylist", "done", hoursUntilMidnight);
+              setCookie("one-daylist", "done");
             }
           } else {
             window.alert("이미 해당 일정이 있습니다.");
@@ -79,12 +70,18 @@ function Editor() {
     }
   }
 
-  function setCookie(name: string, value: string, expiredhours: number) {
-    const time = new Date();
-    time.setTime(time.getTime() + expiredhours * 60 * 60 * 1000);
-    document.cookie = `${name}=${escape(
+  function setCookie(name: string, value: string) {
+    time.setDate(time.getDate() + 1);
+    const date = new Date(
+      time.getFullYear(),
+      time.getMonth(),
+      time.getDate() + 1
+    );
+    const utcString = date.setUTCHours(date.getUTCHours() + 9);
+    const result = utcString.toString();
+    document.cookie = `${name}=${encodeURIComponent(
       value
-    )}; expires=${time.toUTCString()};`;
+    )}; expires=${result};`;
   }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
