@@ -20,6 +20,8 @@ export const loadData = (
 
   if (result.length > 0 && cookieCheck.includes("one-daylist")) {
     todoDispatch(createPost(result));
+  } else {
+    localStorage.removeItem("saveList");
   }
 };
 
