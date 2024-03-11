@@ -41,7 +41,7 @@ function Editor() {
     const allRender = titleRef.current && hourRef.current && minuteRef.current;
     if (allRender) {
       if (type === "all" && params && titleRef.current) {
-        if (write === "" && writeH === 0) {
+        if ((write === "" && writeH === 0) || (write === "" && isNaN(writeH))) {
           alert("스케줄을 확인해주세요.");
         } else {
           if (!checkArr(params)) {
@@ -106,8 +106,11 @@ function Editor() {
   }
 
   function disabledCheck() {
-    if (write !== "" && writeH !== 0) return false;
-    else return true;
+    if (write !== "" && writeH !== 0 && !isNaN(writeH)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   return (
@@ -139,7 +142,7 @@ function Editor() {
               <input
                 className="time_txt hour"
                 type="text"
-                value={writeH ? writeH : 0}
+                value={!isNaN(writeH) ? writeH : 0}
                 placeholder="00"
                 maxLength={maxLength}
                 onChange={onChangeHour}
@@ -155,7 +158,7 @@ function Editor() {
                 type="text"
                 maxLength={maxLength}
                 ref={minuteRef}
-                value={writeM ? writeM : 0}
+                value={!isNaN(writeM) ? writeM : 0}
                 placeholder="00"
                 onChange={onChangeMinute}
                 onKeyPress={(e) => {

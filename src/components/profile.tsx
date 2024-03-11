@@ -25,7 +25,7 @@ function Profile() {
       </section>
       <section className="section02">
         <div className="in_wrap">
-          {profileList.map(function (a, i) {
+          {profileList.map((a, i) => {
             return (
               <figure
                 className="select_profile"
