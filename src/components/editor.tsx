@@ -40,6 +40,10 @@ function Editor() {
           alert("스케줄을 확인해주세요.");
         } else {
           todoDispatch(createPost(params));
+          const cookieCheck = document.cookie;
+          if (!cookieCheck.includes("one-daylist")) {
+            setCookie("one-daylist", "done", 1);
+          }
           setwrite("");
           setwriteH(0);
           setwriteM(0);
@@ -50,6 +54,15 @@ function Editor() {
         setwriteM(0);
       }
     }
+  }
+
+  const time = new Date();
+
+  function setCookie(name: string, value: string, expiredays: number) {
+    time.setDate(time.getDate() + expiredays);
+    document.cookie = `${name}=${escape(
+      value
+    )}; expires=${time.toUTCString()};`;
   }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {

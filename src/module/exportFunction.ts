@@ -15,7 +15,13 @@ export const loadData = ({ finishDispatch, todoDispatch }: propsType) => {
   if (Object.entries(clearResult).length > 0) {
     finishDispatch(successDate(clearResult));
   }
-  if (Object.entries(result).length > 0) {
+
+  const cookieCheck = document.cookie;
+
+  if (
+    Object.entries(result).length > 0 &&
+    cookieCheck.includes("one-daylist")
+  ) {
     todoDispatch(createPost(result));
   }
 };

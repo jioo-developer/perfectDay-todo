@@ -80,7 +80,7 @@ function MyPage({ currentUser }: props) {
               프로필이미지변경
               <img src="/img/my_arrow.svg" alt="" />
             </li>
-            <li onClick={() => rankSwitch}>
+            <li onClick={() => rankSwitch()}>
               등급표
               <img src="/img/my_arrow.svg" alt="" />
             </li>
