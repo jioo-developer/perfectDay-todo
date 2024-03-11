@@ -1,6 +1,6 @@
 import { createPost } from "../module/reducer";
 import "../asset/editor.scss";
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useMemo, useRef, useState } from "react";
 import { todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
 
@@ -9,8 +9,6 @@ function Editor() {
   const [writeH, setwriteH] = useState<number>(0);
   const [writeM, setwriteM] = useState<number>(0);
   const maxLength = 2;
-
-  const time = new Date();
 
   const { editorSwitch, todoList, editDispatch, todoDispatch } = useMyContext();
   function postLogic() {
@@ -71,17 +69,20 @@ function Editor() {
   }
 
   function setCookie(name: string, value: string) {
-    time.setDate(time.getDate() + 1);
-    const date = new Date(
+    const time = new Date();
+    const result = new Date(
       time.getFullYear(),
       time.getMonth(),
-      time.getDate() + 1
+      time.getDate(),
+      23,
+      59,
+      59
     );
-    const utcString = date.setUTCHours(date.getUTCHours() + 9);
-    const result = utcString.toString();
+    result.setMilliseconds(999);
+    result.setHours(result.getHours() + 9);
     document.cookie = `${name}=${encodeURIComponent(
       value
-    )}; expires=${result};`;
+    )}; expires=${result.toUTCString()};`;
   }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
