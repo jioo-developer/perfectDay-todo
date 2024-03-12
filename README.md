@@ -41,6 +41,3 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 - 기능 구현 1 : 일과 완료된 갯수 / 총 할일의 배열길이 \* 100
 - 기능 구현 2 : 쿠키를 사용하여 오늘 자정이 되면 localstorage를 지우게 함
 - 기능 구현 3 : 밑 이미지로 대체
-<div>
-  <img src="./public/img/date.jpg" alt="" />
-</div>
