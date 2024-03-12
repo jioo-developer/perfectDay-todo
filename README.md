@@ -40,6 +40,6 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 - 기능 구현 3 : 밑 이미지로 대체
 <div>
   <img src="./public/img/month.PNG" alt=""  width="300" height="300" />
-  <img src="./public/img/week.PNG.PNG" alt="" width="300" height="300" />
+  <img src="./public/img/week.PNG" alt="" width="300" height="300" />
   <img src="./public/img/day.PNG" alt="" width="300" height="300" />
 </div>
