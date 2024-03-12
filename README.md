@@ -16,15 +16,14 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 오늘 하루 일과를 기입하는 todoList 앱을 사용 중 나도 한번 만들어 볼까 하는 생각으로 시작
 
 <br />
-<br />
 
 ## Preview
 
-  <img src="./public/img/preview1.PNG" alt=""  width="392" height="300" />
-  <img src="./public/img/preview2.PNG" alt=""  width="392" height="300" />
-  <img src="./public/img/preview3.PNG" alt=""  width="392" height="300" />
-  <img src="./public/img/preview4.PNG" alt=""  width="392" height="300" />
-  <img src="./public/img/preview5.PNG" alt=""  width="392" height="300" />
+  <img src="./public/img/preview1.PNG" alt=""  width="392" />
+  <img src="./public/img/preview2.PNG" alt=""  width="392" />
+  <img src="./public/img/preview3.PNG" alt=""  width="392" />
+  <img src="./public/img/preview4.PNG" alt=""  width="392" />
+  <img src="./public/img/preview5.PNG" alt=""  width="392" />
 
 ### 📝 기능 설계
 
