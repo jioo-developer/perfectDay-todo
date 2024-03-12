@@ -42,6 +42,5 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 - 기능 구현 3 : 밑 이미지로 대체
 <div style="display:flex; gap:0 10px">
   <img src="./public/img/month.PNG" alt="" />
-  <img src="./public/img/week.PNG" alt="" />
   <img src="./public/img/day.PNG" alt="" />
 </div>
