@@ -20,7 +20,7 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
   <img src="./public/img/preview.jpg" alt="" />
 
-### 📝 기능 설계
+### 📌 주요기능
 
 - 하루 총 일과 / 완료된 일과를 퍼센트로 계산해서 50%/75%/100% 구간마다 이미지를 다르게 노출시켜 일과 완료 단계를 나눔
 - 인터넷이 끊켜도 데이터를 저장할 수 있게 localstorage를 사용 (완벽한 하루 이기 때문에 하루 지나면 데이터는 사라짐)
