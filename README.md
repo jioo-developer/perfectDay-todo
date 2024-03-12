@@ -1,8 +1,8 @@
 # 완벽한 그날 프로젝트
 
-## ✏️ working day
+## ✏️ working categorize
 
-작업일 : 개인 사이드 프로젝트
+개인 사이드 프로젝트
 <br />
 
 ## 📃 using lang
