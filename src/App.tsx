@@ -21,8 +21,6 @@ const App = () => {
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
 
-  const cookieCheck = document.cookie;
-
   const memoizeLoadData = useCallback(() => {
     loadData(finishDispatch, todoDispatch);
   }, []);
