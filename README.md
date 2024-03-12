@@ -31,10 +31,16 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
 - [x] 일과 리스트를 추가 할 때 마다 계속 퍼센트가 바뀌어야 함
 - [x] 일과 데이터는 하루 지나면 삭제 되어야함
+- [x] 라이브러리를 쓰지 않고 캘린더 구현
 
 ### 🚀 기능 구현
 
-- 기능 구현 1 : 할일을 todoList라고 칭함, todoList가 늘어날 때 마다 객체 데이터의 clear가 true인 배열의 길이 / 총 todoList의 배열길이 \* 100을 함
-- 기능 구현 2 : 쿠키를 사용하여 1일로 설정 후
-- 그누보드 프레임워크 내부 관리자 페이지와 최근게시판 플러그인을 채택
-- 그누보드 내 한문게시판과 영문게시판을 따로 만듬으로 써 게시판 연동을 막음
+- 기능 구현 1 : 할일이 늘어날 때 마다 객체 데이터의 clear가 true인 배열의 길이 / 총 할일의 배열길이 \* 100을 함
+  <img src="./public/img/initialObject.PNG" alt="" />
+- 기능 구현 2 : 쿠키를 사용하여 오늘 자정이 되면 localstorage를 지우게 함
+- 기능 구현 3 : 밑 이미지로 대체
+<div>
+  <img src="./public/img/month.PNG" alt="" />
+  <img src="./public/img/week.PNG" alt="" />
+  <img src="./public/img/day.PNG" alt="" />
+</div>
