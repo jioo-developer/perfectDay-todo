@@ -38,10 +38,7 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
 ### 🚀 기능 구현
 
-- 기능 구현 1 : 할일이 늘어날 때 마다 객체 데이터의 clear가 true인 객체만 필터해서 추려지는 배열의 길이 / 총 할일의 배열길이 \* 100
-  <br />
-  <br />
-  <img src="./public/img/initialObject.PNG" alt="" />
+- 기능 구현 1 : 일과 완료된 갯수 / 총 할일의 배열길이 \* 100
 - 기능 구현 2 : 쿠키를 사용하여 오늘 자정이 되면 localstorage를 지우게 함
 - 기능 구현 3 : 밑 이미지로 대체
 <div>
