@@ -38,7 +38,8 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
   <img src="./public/img/initialObject.PNG" alt="" />
 - 기능 구현 2 : 쿠키를 사용하여 오늘 자정이 되면 localstorage를 지우게 함
 - 기능 구현 3 : 밑 이미지로 대체
-<div style="display:flex; gap:0 10px">
-  <img src="./public/img/month.PNG" alt="" />
-  <img src="./public/img/day.PNG" alt="" />
+<div>
+  <img src="./public/img/month.PNG" alt=""  width="300" height="300" />
+  <img src="./public/img/week.PNG.PNG" alt="" width="300" height="300" />
+  <img src="./public/img/day.PNG" alt="" width="300" height="300" />
 </div>
