@@ -20,11 +20,11 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
 ## Preview
 
-  <img src="./public/img/preview1.PNG" alt=""  width="300" height="300" />
-  <img src="./public/img/preview2.PNG" alt=""  width="300" height="300" />
-  <img src="./public/img/preview3.PNG" alt=""  width="300" height="300" />
-  <img src="./public/img/preview4.PNG" alt=""  width="300" height="300" />
-  <img src="./public/img/preview5.PNG" alt=""  width="300" height="300" />
+  <img src="./public/img/preview1.PNG" alt=""  width="392" height="300" />
+  <img src="./public/img/preview2.PNG" alt=""  width="392" height="300" />
+  <img src="./public/img/preview3.PNG" alt=""  width="392" height="300" />
+  <img src="./public/img/preview4.PNG" alt=""  width="392" height="300" />
+  <img src="./public/img/preview5.PNG" alt=""  width="392" height="300" />
 
 ### 📝 기능 설계
 
