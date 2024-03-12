@@ -15,9 +15,8 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
 ## 프로젝트 아이디어
 
-<br />
-
 오늘 하루 일과를 기입하는 todoList 앱을 사용 중 나도 한번 만들어 볼까 하는 생각으로 시작
+<br />
 <br />
 
 ## Preview
