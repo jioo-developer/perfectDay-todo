@@ -1,6 +1,6 @@
 # 완벽한 그날 프로젝트
 
-## ✏️ working categorize
+## ✏️ working category
 
 개인 사이드 프로젝트
 <br />
