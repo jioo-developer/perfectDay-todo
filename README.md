@@ -14,16 +14,11 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 ## 프로젝트 아이디어
 
 오늘 하루 일과를 기입하는 todoList 앱을 사용 중 나도 한번 만들어 볼까 하는 생각으로 시작
-
 <br />
 
 ## Preview
 
-  <img src="./public/img/preview1.PNG" alt=""  width="392" />
-  <img src="./public/img/preview2.PNG" alt=""  width="392" />
-  <img src="./public/img/preview3.PNG" alt=""  width="392" />
-  <img src="./public/img/preview4.PNG" alt=""  width="392" />
-  <img src="./public/img/preview5.PNG" alt=""  width="392" />
+  <img src="./public/img/preview.jpg" alt="" />
 
 ### 📝 기능 설계
 
@@ -50,7 +45,5 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 - 기능 구현 2 : 쿠키를 사용하여 오늘 자정이 되면 localstorage를 지우게 함
 - 기능 구현 3 : 밑 이미지로 대체
 <div>
-  <img src="./public/img/month.PNG" alt=""  width="300" height="300" />
-  <img src="./public/img/week.PNG" alt="" width="300" height="300" />
-  <img src="./public/img/day.PNG" alt="" width="300" height="300" />
+  <img src="./public/img/date.jpg" alt="" />
 </div>
