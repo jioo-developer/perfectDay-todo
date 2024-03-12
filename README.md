@@ -1,4 +1,4 @@
-<strong>완벽한 그날 프로젝트</strong>
+# 완벽한 그날 프로젝트
 
 ## ✏️ working category
 
