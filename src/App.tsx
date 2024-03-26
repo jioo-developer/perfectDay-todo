@@ -17,7 +17,7 @@ import { datafetchCheck, loadData } from "./module/exportFunction";
 const App = () => {
   const location = useLocation();
 
-  const { issue, finishDispatch, todoDispatch } = useMyContext();
+  const { issue, finishDispatch, todoDispatch, navigate } = useMyContext();
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
 
@@ -30,12 +30,12 @@ const App = () => {
   }, [memoizeLoadData]);
 
   useEffect(() => {
-    const dataCheckInterval = datafetchCheck();
+    const dataCheckInterval = datafetchCheck(navigate);
     if (location.pathname === "/sign") {
       clearInterval(dataCheckInterval);
     }
     return () => clearInterval(dataCheckInterval);
-  }, [location.pathname]);
+  }, []);
 
   return (
     <div className="wrap">

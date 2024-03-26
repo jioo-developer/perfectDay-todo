@@ -47,13 +47,14 @@ export function datafetchCheck(navigate?: any) {
     console.log("interval");
     const date = localStorage.getItem("creationDay");
     const name = localStorage.getItem("currentUser");
+    console.log(date);
     if (date === null || name === null) {
       localStorage.clear();
       if (navigate && typeof navigate === "function") {
         navigate("/login");
       }
     }
-  }, 30000);
+  }, 60000);
   return dataCheck;
   //이거 프로미스로 catch문 할까
 }
