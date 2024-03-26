@@ -4,7 +4,8 @@
 
 개인 사이드 프로젝트
 <br />
-using project : https://gitlab.com/jioo-developer/perfectDay-todo
+<br />
+🖥️ using project : https://gitlab.com/jioo-developer/perfectDay-todo
 <br />
 
 ## 📃 using lang
