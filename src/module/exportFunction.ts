@@ -54,7 +54,7 @@ export function datafetchCheck(navigate?: any) {
         navigate("/login");
       }
     }
-  }, 60000);
+  }, 10000);
   return dataCheck;
   //이거 프로미스로 catch문 할까
 }
