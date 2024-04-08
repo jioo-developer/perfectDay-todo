@@ -5,7 +5,7 @@
 개인 사이드 프로젝트
 <br />
 <br />
-🖥️ using project : https://gitlab.com/jioo-developer/perfectDay-todo
+🖥️ using project : https://perfect-day.netlify.app
 <br />
 
 ## 📃 using lang
