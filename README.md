@@ -74,9 +74,9 @@ login페이지로 이동<br />
 
 #### 1번째 사례
 
-dayMemo : 현재 일에서 생성일자를 빼서 흐른 일수를 출력하는 함수
+문제가 되는 함수 : dayMemo : 현재 일에서 생성일자를 빼서 흐른 일수를 출력하는 함수
 
-문제 : return이 있는 함수라서 재 랜더링 될때마다 함수를 호출함<br />
+문제인식 : return이 있는 함수라서 재 랜더링 될때마다 함수를 호출함<br />
 
 해결법 : const memorizeDay = useMemo(()=>{
 return dayMemo(creation)
@@ -86,7 +86,8 @@ memorizeDay 변수에 useMemo를 연결해서 useMemo의 콜백 함수로 dayMem
 
 #### 2번째 사례
 
-캘린더에 쓰이는 함수들 메모처리<br /><br />
+#### 캘린더에 쓰이는 함수들 메모처리<br /><br />
+
 prevMonth/nextMonth/createDate/returnDay/todayCheck<br />
 useCallback을 사용하여 selectMonth/selectedYear에 의존성을 걸어 년도나 달이 바뀔때만 실행되게 작성
 
