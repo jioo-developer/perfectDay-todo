@@ -50,10 +50,10 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
 트러블 슈팅에 사용 되는 변수들
 
-creationDay : 생성일자
-CurrentUser : 유저 닉네임
-LoadData : 완료된 일정이나 캘린더에 작성된 일정을 불러와서 연결 시켜줌
-dayMemo : 생성일자를 localstorage로 불러와서 현재일로 부터 몇일이 지났는지 계산해줌
+creationDay : 생성일자<br />
+CurrentUser : 유저 닉네임<br />
+LoadData : 완료된 일정이나 캘린더에 작성된 일정을 불러와서 연결 시켜줌<br />
+dayMemo : 생성일자를 localstorage로 불러와서 현재일로 부터 몇일이 지났는지 계산해줌<br />
 
 트러블 슈팅 1
 
