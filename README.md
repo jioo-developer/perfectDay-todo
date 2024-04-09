@@ -64,8 +64,9 @@ setInterval를 사용 하기로 판단<br /><br />
 해결법 : 5초마다 setInterval을 사용해서 localstorage를 불러온 다음에 둘중 하나라도 null이 있으면 해당 로컬스토리를 지우고 useNavigate를 사용하여
 login페이지로 이동<br />
 
+<hr />
 #### 트러블 슈팅 2
-
+<br />
 memorise shooting
 
 컴포넌트가 재 랜더링 될 때 변수나 리턴이 있는 모든 함수가 재 실행 되는데 이때 바뀌지 않는 값을 메모 처리 하는 것을 말함
