@@ -48,14 +48,14 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
 ### 🧑🏻‍💻 트러블 슈팅
 
-트러블 슈팅에 사용 되는 변수들
+#### 트러블 슈팅에 사용 되는 변수들
 
 creationDay : 생성일자<br />
 CurrentUser : 유저 닉네임<br />
 LoadData : 완료된 일정이나 캘린더에 작성된 일정을 불러와서 연결 시켜줌<br />
 dayMemo : 생성일자를 localstorage로 불러와서 현재일로 부터 몇일이 지났는지 계산해줌<br />
 
-트러블 슈팅 1
+#### 트러블 슈팅 1
 
 문제발견 : 앱 이용 중 사용기록 삭제나 로컬 스토리지를 조작 했을 때 해당 변수의 데이터가 없는데도 작동을 하게 됨.<br /><br />
 문제인식 : 정해진 시간마다 계속 데이터를 체크해주고 데이터가 없으면 login 페이지로 redirect 시켜주려고 함<br /><br />
@@ -64,7 +64,7 @@ setInterval를 사용 하기로 판단<br /><br />
 해결법 : 5초마다 setInterval을 사용해서 localstorage를 불러온 다음에 둘중 하나라도 null이 있으면 해당 로컬스토리를 지우고 useNavigate를 사용하여
 login페이지로 이동<br />
 
-트러블 슈팅 2
+#### 트러블 슈팅 2
 
 memorise shooting
 
