@@ -21,13 +21,9 @@ const App = () => {
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
 
-  const memoizeLoadData = useCallback(() => {
+  useEffect(() => {
     loadData(finishDispatch, todoDispatch);
   }, []);
-
-  useEffect(() => {
-    memoizeLoadData();
-  }, [memoizeLoadData]);
 
   useEffect(() => {
     const dataCheckInterval = datafetchCheck(navigate);

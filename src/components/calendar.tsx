@@ -31,15 +31,6 @@ function Calendar() {
   const [calendarArr, CalDispatch] = useState<PostPromiseType[]>([]);
   // 일정 잡는데 필요한 state
 
-  useEffect(() => {
-    const calendarResult: PostPromiseType[] = JSON.parse(
-      localStorage.getItem("calendarList") || "[]"
-    );
-    if (calendarResult.length > 0) {
-      calendarHanlder(calendarResult);
-    }
-  }, []);
-
   //이전 달 보기 버튼
   const prevMonth = useCallback(() => {
     if (selectedMonth === 1) {
@@ -66,7 +57,7 @@ function Calendar() {
 
   //주 반환 함수
 
-  const returnWeek = useMemo(() => {
+  const returnWeek = () => {
     return week.map((value, index) => {
       return (
         <div className="day" key={`week-${index}`}>
@@ -74,7 +65,7 @@ function Calendar() {
         </div>
       );
     });
-  }, [week]);
+  };
 
   const settingNumber = 36;
   // 35는 달력에서 한 달을 표시하는데 필요한 최대 일 수이다.
@@ -168,6 +159,10 @@ function Calendar() {
 
   // 오늘 날짜 체크하는 함수
 
+  useEffect(() => {
+    todayCheck();
+  }, [selectedMonth]);
+
   // 일정 제작 함수
   function postPromise() {
     if (promiseText !== "" && select !== 0) {
@@ -233,8 +228,13 @@ function Calendar() {
   }
 
   useEffect(() => {
-    todayCheck();
-  }, [selectedMonth]);
+    const calendarResult: PostPromiseType[] = JSON.parse(
+      localStorage.getItem("calendarList") || "[]"
+    );
+    if (calendarResult.length > 0) {
+      calendarHanlder(calendarResult);
+    }
+  }, []);
 
   return (
     <>
