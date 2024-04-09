@@ -48,7 +48,7 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 
 ### 🧑🏻‍💻 트러블 슈팅
 
-#### 트러블 슈팅에 사용 되는 변수들
+#### 트러블 슈팅에 사용 되는 변수 또는 함수들
 
 creationDay : 생성일자<br />
 CurrentUser : 유저 닉네임<br />
@@ -68,8 +68,6 @@ login페이지로 이동<br />
 
 #### 트러블 슈팅 2
 
-<br />
-
 컴포넌트가 재 랜더링 될 때 변수나 리턴이 있는 모든 함수가 재 실행 되는데 이때 바뀌지 않는 값을 메모 처리 하는 것을 말함
 
 #### 1번째 사례
@@ -81,7 +79,7 @@ login페이지로 이동<br />
 해결법 : const memorizeDay = useMemo(()=>{
 return dayMemo(creation)
 })
-<br />
+<br /><br />
 memorizeDay 변수에 useMemo를 연결해서 useMemo의 콜백 함수로 dayMemo를 실행하면 결론적으로 return number이 출력된다.
 
 #### 2번째 사례
