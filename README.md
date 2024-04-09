@@ -86,7 +86,7 @@ memorizeDay 변수에 useMemo를 연결해서 useMemo의 콜백 함수로 dayMem
 
 #### 2번째 사례
 
-#### 캘린더에 쓰이는 함수들 메모처리<br /><br />
+#### 캘린더에 쓰이는 함수들 메모처리<br />
 
 prevMonth/nextMonth/createDate/returnDay/todayCheck<br />
 useCallback을 사용하여 selectMonth/selectedYear에 의존성을 걸어 년도나 달이 바뀔때만 실행되게 작성
