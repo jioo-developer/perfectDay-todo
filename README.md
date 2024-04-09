@@ -72,7 +72,7 @@ login페이지로 이동<br />
 
 컴포넌트가 재 랜더링 될 때 변수나 리턴이 있는 모든 함수가 재 실행 되는데 이때 바뀌지 않는 값을 메모 처리 하는 것을 말함
 
-1번째 사례
+#### 1번째 사례
 
 dayMemo : 현재 일에서 생성일자를 빼서 흐른 일수를 출력하는 함수
 
@@ -84,10 +84,10 @@ return dayMemo(creation)
 <br />
 memorizeDay 변수에 useMemo를 연결해서 useMemo의 콜백 함수로 dayMemo를 실행하면 결론적으로 return number이 출력된다.
 
-2번째 사례
+#### 2번째 사례
 
-캘린더 날짜들 메모
-prevMonth/nextMonth/createDate/returnDay/todayCheck
+캘린더에 쓰이는 함수들 메모처리<br />
+prevMonth/nextMonth/createDate/returnDay/todayCheck<br />
 useCallback을 사용하여 selectMonth/selectedYear에 의존성을 걸어 년도나 달이 바뀔때만 실행되게 작성
 
 prevMonth/nextMonth
