@@ -37,6 +37,7 @@ function Editor() {
     },
     [todoList]
   );
+  //이미 있는 일정인지 체크
   function checkValueLogic(type: string, params?: todoItem) {
     const allRender = titleRef.current && hourRef.current && minuteRef.current;
     if (allRender) {

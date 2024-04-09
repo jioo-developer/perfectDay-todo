@@ -45,3 +45,7 @@ TypeScript,React,React-Router-dom,ContextAPI,SCSS
 - 체크사항 기능 구현 1 : 일과 완료된 갯수 / 총 할일의 배열길이 \* 100
 - 체크사항 기능 구현 2 : 쿠키를 사용하여 오늘 자정이 되면 localstorage를 지우게 함
 - 체크사항 기능 구현 3 : calendar.tsx 주석 참조
+
+### 🧑🏻‍💻 트러블 슈팅
+
+- memorise

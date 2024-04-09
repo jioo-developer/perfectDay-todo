@@ -47,7 +47,6 @@ export function datafetchCheck(navigate?: any) {
     console.log("interval");
     const date = localStorage.getItem("creationDay");
     const name = localStorage.getItem("currentUser");
-    console.log(date);
     if (date === null || name === null) {
       localStorage.clear();
       if (navigate && typeof navigate === "function") {
