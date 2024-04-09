@@ -65,9 +65,10 @@ setInterval를 사용 하기로 판단<br /><br />
 login페이지로 이동<br />
 
 <hr />
+
 #### 트러블 슈팅 2
+
 <br />
-memorise shooting
 
 컴포넌트가 재 랜더링 될 때 변수나 리턴이 있는 모든 함수가 재 실행 되는데 이때 바뀌지 않는 값을 메모 처리 하는 것을 말함
 
@@ -75,10 +76,12 @@ memorise shooting
 
 dayMemo : 현재 일에서 생성일자를 빼서 흐른 일수를 출력하는 함수
 
-문제 : 근데 이거 return이 있는 함수라서 재 랜더링 될때마다 함수를 호출함
+문제 : return이 있는 함수라서 재 랜더링 될때마다 함수를 호출함<br />
+
 해결법 : const memorizeDay = useMemo(()=>{
 return dayMemo(creation)
 })
+<br />
 memorizeDay 변수에 useMemo를 연결해서 useMemo의 콜백 함수로 dayMemo를 실행하면 결론적으로 return number이 출력된다.
 
 2번째 사례
