@@ -14,7 +14,8 @@ const Login = () => {
     if (loadDate === null && loadUser === null) {
       settingFunc();
     } else {
-      localStorage.clear();
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("creationDay");
       settingFunc();
     }
   }

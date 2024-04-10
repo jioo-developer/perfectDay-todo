@@ -48,7 +48,8 @@ export function datafetchCheck(navigate?: any) {
     const date = localStorage.getItem("creationDay");
     const name = localStorage.getItem("currentUser");
     if (date === null || name === null) {
-      localStorage.clear();
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("creationDay");
       if (navigate && typeof navigate === "function") {
         navigate("/login");
       }
