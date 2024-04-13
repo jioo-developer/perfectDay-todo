@@ -58,3 +58,20 @@ export function datafetchCheck(navigate?: any) {
   return dataCheck;
   //이거 프로미스로 catch문 할까
 }
+
+export function setCookie() {
+  const time = new Date();
+  const result = new Date(
+    time.getFullYear(),
+    time.getMonth(),
+    time.getDate(),
+    23,
+    59,
+    59
+  );
+  result.setMilliseconds(999);
+  result.setHours(result.getHours() + 9);
+  document.cookie = `oneDaylist=${encodeURIComponent(
+    "done"
+  )}; expires=${result.toUTCString()};`;
+}

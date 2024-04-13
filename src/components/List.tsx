@@ -1,6 +1,6 @@
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DateFac, todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
 
@@ -11,6 +11,7 @@ type props = {
 function List({ getParcent }: props) {
   const { todoList, finishDispatch, todoDispatch, setBell } = useMyContext();
   const [deleteToggle, setDelete] = useState(false);
+
   useEffect(() => {
     if (todoList.length > 0) {
       clearCheck();
@@ -32,13 +33,12 @@ function List({ getParcent }: props) {
     }
   };
 
-  const rankSystem: string | null = localStorage.getItem("rank");
-
   function successHandler(
     //여기선 랭크 숫자 카운트만 올림
     clearArr: todoItem[],
     title: string
   ): void {
+    const rankSystem: string | null = localStorage.getItem("rank");
     if (rankSystem === null) {
       localStorage.setItem("rank", "1");
     } else {
@@ -87,8 +87,12 @@ function List({ getParcent }: props) {
           <div className="schedule">
             <p>일정스케줄</p>
             <div>
-              <span onClick={saveHandler}>저장</span>
-              <span onClick={() => setDelete(true)}>삭제</span>
+              <button>
+                <span onClick={saveHandler}>저장</span>
+              </button>
+              <button>
+                <span onClick={() => setDelete(true)}>삭제</span>
+              </button>
             </div>
           </div>
           <div className="in-custom-wrap">

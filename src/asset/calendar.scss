@@ -104,12 +104,15 @@
   }
   .date_arrow {
     display: inherit;
-    color: #747474;
-    font-size: 20px;
     margin: 0 !important;
     position: relative;
     bottom: 3px;
     right: 15px;
+    button {
+      color: #747474;
+      font-size: 20px;
+      font-family: "AppleSDGothicNeoSB";
+    }
   }
 
   .date_title:last-child {
@@ -190,6 +193,9 @@ hr {
 
 .change_btn {
   cursor: pointer;
+  border: 0;
+  outline: none;
+  font-size: 18.5px;
 }
 
 .prev_btn {
@@ -251,7 +257,7 @@ hr {
   cursor: pointer;
 }
 
-.day-inputs:checked + label {
+.day:active {
   background: #80c4fd;
   color: #fff !important;
 }

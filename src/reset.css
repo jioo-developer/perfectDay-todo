@@ -62,9 +62,9 @@ footer {
 }
 
 footer {
- position: absolute;
- bottom: 0;
- left: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 footer p {
@@ -110,8 +110,12 @@ iframe {
   display: none;
 }
 
-
-.pd-x20{
+.pd-x20 {
   padding: 0 20px;
   box-sizing: border-box;
+}
+
+button {
+  border: 0;
+  outline: none;
 }
