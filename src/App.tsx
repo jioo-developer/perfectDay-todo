@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./reset.css";
 import "./App.scss";
@@ -7,35 +7,31 @@ import Home from "./components/Home";
 import MyPage from "./components/Mypage";
 import Introduce from "./components/introduce";
 import Profile from "./components/profile";
-import Calendar from "./components/calendar";
 import MainFooter from "./components/mainFooter";
 import Header from "./components/header";
 import Notification from "./components/Notification";
 import { useMyContext } from "./module/MyContext";
 import { datafetchCheck, loadData } from "./module/exportFunction";
+import MyCalendar from "./components/MyCalendar";
 
 const App = () => {
   const location = useLocation();
 
-  const { issue, finishDispatch, todoDispatch } = useMyContext();
+  const { issue, finishDispatch, todoDispatch, navigate } = useMyContext();
   const creation = localStorage.getItem("creationDay") || null;
   const currentUser = localStorage.getItem("currentUser") || null;
 
-  const memoizeLoadData = useCallback(() => {
+  useEffect(() => {
     loadData(finishDispatch, todoDispatch);
   }, []);
 
   useEffect(() => {
-    memoizeLoadData();
-  }, [memoizeLoadData]);
-
-  useEffect(() => {
-    const dataCheckInterval = datafetchCheck();
+    const dataCheckInterval = datafetchCheck(navigate);
     if (location.pathname === "/sign") {
       clearInterval(dataCheckInterval);
     }
     return () => clearInterval(dataCheckInterval);
-  }, [location.pathname]);
+  }, []);
 
   return (
     <div className="wrap">
@@ -55,7 +51,7 @@ const App = () => {
           />
           <Route path="/introduce" element={<Introduce />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/canlendar" element={<Calendar />} />
+          <Route path="/canlendar" element={<MyCalendar />} />
         </Routes>
       </div>
       {currentUser !== null && creation !== null ? (

@@ -48,12 +48,30 @@ export function datafetchCheck(navigate?: any) {
     const date = localStorage.getItem("creationDay");
     const name = localStorage.getItem("currentUser");
     if (date === null || name === null) {
-      localStorage.clear();
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("creationDay");
       if (navigate && typeof navigate === "function") {
         navigate("/login");
       }
     }
-  }, 30000);
+  }, 5000);
   return dataCheck;
   //이거 프로미스로 catch문 할까
+}
+
+export function setCookie() {
+  const time = new Date();
+  const result = new Date(
+    time.getFullYear(),
+    time.getMonth(),
+    time.getDate(),
+    23,
+    59,
+    59
+  );
+  result.setMilliseconds(999);
+  result.setHours(result.getHours() + 9);
+  document.cookie = `oneDaylist=${encodeURIComponent(
+    "done"
+  )}; expires=${result.toUTCString()};`;
 }

@@ -151,21 +151,24 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
     border-bottom: 1px solid #ccc;
     box-sizing: border-box;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
+
+    div {
+      display: flex;
+      align-items: center;
+    }
 
     span {
       font-size: 14px;
       color: #f7c667;
       font-family: "AppleSDGothicNeoSB";
-      margin-bottom: 4px;
       cursor: pointer;
     }
 
     span:first-child {
-      margin-right: 15px;
+      margin-right: 10px;
     }
 
     p {
@@ -173,6 +176,7 @@
       font-size: 16px;
       color: #545454;
       line-height: 1.15;
+      margin-top: 1px;
     }
 
     .reset {
@@ -222,6 +226,12 @@
     font-family: "AppleSDGothicNeoM";
     text-decoration: line-through;
   }
+}
+
+.list > div {
+  display: flex;
+  align-items: center;
+  gap: 0 10px;
 }
 
 .footer_bar {
@@ -285,4 +295,15 @@
 .clearBtn {
   opacity: 0 !important;
   background: transparent !important;
+}
+
+.list-input {
+  display: flex;
+  width: 100%;
+}
+
+.section02 input {
+  width: auto;
+  position: relative;
+  bottom: 1.5px;
 }

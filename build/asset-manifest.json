@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e8d84057.css",
+    "main.js": "/static/js/main.8287383e.js",
+    "static/js/592.2606d8d8.chunk.js": "/static/js/592.2606d8d8.chunk.js",
+    "static/media/AppleSDGothicNeoR.eot": "/static/media/AppleSDGothicNeoR.2c8eadf7cfb85211a047.eot",
+    "static/media/AppleSDGothicNeoSB.eot": "/static/media/AppleSDGothicNeoSB.d1f5bc8bfcfa0d3436c4.eot",
+    "static/media/AppleSDGothicNeoM.eot": "/static/media/AppleSDGothicNeoM.c1f6e829f30553447fd3.eot",
+    "static/media/AppleSDGothicNeoSB.woff": "/static/media/AppleSDGothicNeoSB.1b08ca06090568459c43.woff",
+    "static/media/AppleSDGothicNeoR.woff": "/static/media/AppleSDGothicNeoR.0258443374ccb74fac0d.woff",
+    "static/media/AppleSDGothicNeoM.woff": "/static/media/AppleSDGothicNeoM.25422d84bc0b10c76726.woff",
+    "index.html": "/index.html",
+    "main.e8d84057.css.map": "/static/css/main.e8d84057.css.map",
+    "main.8287383e.js.map": "/static/js/main.8287383e.js.map",
+    "592.2606d8d8.chunk.js.map": "/static/js/592.2606d8d8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8d84057.css",
+    "static/js/main.8287383e.js"
+  ]
+}

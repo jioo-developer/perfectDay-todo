@@ -1,4 +1,4 @@
-import Clock from "./clock";
+import Clock from "../module/clock";
 import { useMyContext } from "../module/MyContext";
 
 function Header({ location }: { location: string }) {
@@ -24,11 +24,13 @@ function Header({ location }: { location: string }) {
             : null}
         </p>
         {location === "/" ? (
-          <img
-            src={bellToggle ? "/img/bell.svg" : "/img/no_bell.svg"}
-            alt="bell"
-            onClick={() => issueDispatch((prev) => !prev)}
-          />
+          <button>
+            <img
+              src={bellToggle ? "/img/bell.svg" : "/img/no_bell.svg"}
+              alt="bell"
+              onClick={() => issueDispatch((prev) => !prev)}
+            />
+          </button>
         ) : null}
       </div>
     </header>

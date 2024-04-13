@@ -3,6 +3,7 @@ import "../asset/editor.scss";
 import { ChangeEvent, useMemo, useRef, useState } from "react";
 import { todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
+import { setCookie } from "../module/exportFunction";
 
 function Editor() {
   const [write, setwrite] = useState<string>("");
@@ -11,6 +12,7 @@ function Editor() {
   const maxLength = 2;
 
   const { editorSwitch, todoList, editDispatch, todoDispatch } = useMyContext();
+
   function postLogic() {
     const logicFac = {
       write: write,
@@ -21,11 +23,42 @@ function Editor() {
     checkValueLogic("all", logicFac);
   }
 
-  //  포스트를 만드는 함수
+  function checkValueLogic(type: string, params?: todoItem) {
+    const allRender = titleRef.current && hourRef.current && minuteRef.current;
+    if (allRender) {
+      if (type === "all" && !currentCheck()) {
+        if (params && !checkArr(params)) {
+          todoDispatch(createPost(params));
+          //쿠키확인
+          const cookieCheck = document.cookie;
+          if (!cookieCheck.includes("oneDaylist")) {
+            setCookie();
+          }
+          //쿠키확인
+        } else {
+          window.alert("스케줄을 확인해주세요.");
+        }
+        setwrite("");
+        setwriteH(0);
+        setwriteM(0);
+        editDispatch(false);
+      } else if (type === "hour") {
+        alert("시간을 정확히 설정하세요.");
+        setwriteH(0);
+      } else if (type === "minute") {
+        alert("시간을 정확히 설정하세요.");
+        setwriteM(0);
+      }
+    }
+  }
 
-  const titleRef = useRef<HTMLInputElement>(null);
-  const hourRef = useRef<HTMLInputElement>(null);
-  const minuteRef = useRef<HTMLInputElement>(null);
+  const currentCheck = () => {
+    if ((write === "" && writeH === 0) || (write === "" && isNaN(writeH))) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const checkArr = useMemo(
     () => (params: todoItem) => {
@@ -37,53 +70,10 @@ function Editor() {
     },
     [todoList]
   );
-  function checkValueLogic(type: string, params?: todoItem) {
-    const allRender = titleRef.current && hourRef.current && minuteRef.current;
-    if (allRender) {
-      if (type === "all" && params && titleRef.current) {
-        if ((write === "" && writeH === 0) || (write === "" && isNaN(writeH))) {
-          alert("스케줄을 확인해주세요.");
-        } else {
-          if (!checkArr(params)) {
-            todoDispatch(createPost(params));
-            const cookieCheck = document.cookie;
-            if (!cookieCheck.includes("one-daylist")) {
-              setCookie("one-daylist", "done");
-            }
-          } else {
-            window.alert("이미 해당 일정이 있습니다.");
-          }
-          setwrite("");
-          setwriteH(0);
-          setwriteM(0);
-          editDispatch(false);
-        }
-      } else if (type === "hour") {
-        alert("시간을 정확히 설정하세요.");
-        setwriteH(0);
-      } else if (type === "minute") {
-        alert("시간을 정확히 설정하세요.");
-        setwriteM(0);
-      }
-    }
-  }
 
-  function setCookie(name: string, value: string) {
-    const time = new Date();
-    const result = new Date(
-      time.getFullYear(),
-      time.getMonth(),
-      time.getDate(),
-      23,
-      59,
-      59
-    );
-    result.setMilliseconds(999);
-    result.setHours(result.getHours() + 9);
-    document.cookie = `${name}=${encodeURIComponent(
-      value
-    )}; expires=${result.toUTCString()};`;
-  }
+  const titleRef = useRef<HTMLInputElement>(null);
+  const hourRef = useRef<HTMLInputElement>(null);
+  const minuteRef = useRef<HTMLInputElement>(null);
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
     setwrite(e.target.value);

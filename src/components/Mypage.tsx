@@ -108,7 +108,8 @@ function MyPage({ currentUser }: props) {
             <li
               onClick={() => {
                 if (window.confirm("리셋을 시작합니다")) {
-                  window.localStorage.clear();
+                  localStorage.removeItem("currentUser");
+                  localStorage.removeItem("creationDay");
                   navigate("/login");
                   window.location.reload();
                 }

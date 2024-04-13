@@ -1,6 +1,6 @@
 import { successDate, update } from "../module/reducer";
 import { today } from "../module/today";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DateFac, todoItem } from "../module/interfaceModule";
 import { useMyContext } from "../module/MyContext";
 
@@ -10,6 +10,8 @@ type props = {
 
 function List({ getParcent }: props) {
   const { todoList, finishDispatch, todoDispatch, setBell } = useMyContext();
+  const [deleteToggle, setDelete] = useState(false);
+
   useEffect(() => {
     if (todoList.length > 0) {
       clearCheck();
@@ -31,13 +33,12 @@ function List({ getParcent }: props) {
     }
   };
 
-  const rankSystem: string | null = localStorage.getItem("rank");
-
   function successHandler(
     //여기선 랭크 숫자 카운트만 올림
     clearArr: todoItem[],
     title: string
   ): void {
+    const rankSystem: string | null = localStorage.getItem("rank");
     if (rankSystem === null) {
       localStorage.setItem("rank", "1");
     } else {
@@ -65,9 +66,18 @@ function List({ getParcent }: props) {
     }
   }
 
-  function deleteHandler() {
-    localStorage.removeItem("saveList");
-    window.location.reload();
+  function deleteTodo(value: number) {
+    const result = todoList.filter((item, index) => index !== value);
+    const loadStorage: todoItem[] = JSON.parse(
+      localStorage.getItem("saveList") || "[]"
+    );
+    if (loadStorage.length > 1) {
+      localStorage.removeItem("saveList");
+      localStorage.setItem("saveList", JSON.stringify(result));
+    } else if (loadStorage.length === 1) {
+      localStorage.removeItem("saveList");
+    }
+    todoDispatch(update(result));
   }
 
   return (
@@ -77,8 +87,12 @@ function List({ getParcent }: props) {
           <div className="schedule">
             <p>일정스케줄</p>
             <div>
-              <span onClick={saveHandler}>저장</span>
-              <span onClick={deleteHandler}>초기화</span>
+              <button>
+                <span onClick={saveHandler}>저장</span>
+              </button>
+              <button>
+                <span onClick={() => setDelete(true)}>삭제</span>
+              </button>
             </div>
           </div>
           <div className="in-custom-wrap">
@@ -89,9 +103,20 @@ function List({ getParcent }: props) {
                   className={`list ${clearState ? "clearList" : "going"}`}
                   key={index}
                 >
-                  <p className={clearState ? "clearText" : "today_date"}>
-                    {value.writeH}:{value.writeM}
-                  </p>
+                  <div>
+                    {deleteToggle && !clearState ? (
+                      <button type="button" onClick={() => deleteTodo(index)}>
+                        <img
+                          src="/img/delete.png"
+                          alt=""
+                          style={{ marginBottom: 3, width: 20 }}
+                        />
+                      </button>
+                    ) : null}
+                    <p className={clearState ? "clearText" : "today_date"}>
+                      {value.writeH}:{value.writeM}
+                    </p>
+                  </div>
 
                   <p className={clearState ? "clearIndent" : "today_txt"}>
                     {value.write}
