@@ -14,7 +14,7 @@ function Introduce() {
             <br></br>
             일정을 체크하고 끝냄으로 써 하루를 완벽하게 끝내보세요
           </p>
-          <p className="enter" onClick={() => navigate("/")}>
+          <p className="enter" onClick={() => navigate("/Mypage")}>
             확인
           </p>
         </div>

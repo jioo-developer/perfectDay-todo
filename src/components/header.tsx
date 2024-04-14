@@ -8,9 +8,11 @@ function Header({ location }: { location: string }) {
       <Clock />
       <div className="title_header">
         {location === "/" ? (
-          <figure className="main_nav" onClick={() => navigate("/Mypage")}>
-            <img src="./img/nav.svg" alt="nav" />
-          </figure>
+          <button>
+            <figure className="main_nav" onClick={() => navigate("/Mypage")}>
+              <img src="./img/nav.svg" alt="nav" />
+            </figure>
+          </button>
         ) : null}
         <p className="main_titles">
           {location === "/"

@@ -91,7 +91,9 @@ function List({ getParcent }: props) {
                 <span onClick={saveHandler}>저장</span>
               </button>
               <button>
-                <span onClick={() => setDelete(true)}>삭제</span>
+                <span onClick={() => setDelete((prev) => !prev)}>
+                  {deleteToggle ? "취소" : "삭제"}
+                </span>
               </button>
             </div>
           </div>

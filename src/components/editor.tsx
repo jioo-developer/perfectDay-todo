@@ -54,9 +54,9 @@ function Editor() {
 
   const currentCheck = () => {
     if ((write === "" && writeH === 0) || (write === "" && isNaN(writeH))) {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   };
 
